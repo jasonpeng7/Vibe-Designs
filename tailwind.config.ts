@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					glow: 'hsl(var(--primary-glow))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -42,7 +43,8 @@ export default {
 				},
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					foreground: 'hsl(var(--accent-foreground))',
+					glow: 'hsl(var(--accent-glow))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -50,7 +52,8 @@ export default {
 				},
 				card: {
 					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+					foreground: 'hsl(var(--card-foreground))',
+					elevated: 'hsl(var(--card-elevated))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -62,6 +65,20 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-card': 'var(--gradient-card)'
+			},
+			boxShadow: {
+				'primary': 'var(--shadow-primary)',
+				'accent': 'var(--shadow-accent)',
+				'elegant': 'var(--shadow-elegant)'
+			},
+			animation: {
+				'gradient-shift': 'gradient-shift 3s ease-in-out infinite',
+				'float': 'float 6s ease-in-out infinite'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
