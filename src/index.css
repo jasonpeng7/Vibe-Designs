@@ -76,8 +76,6 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  }
-
   /* Custom component styles */
   .hero-text {
     background: var(--gradient-primary);
@@ -128,7 +126,6 @@
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
   }
-}
 
 @layer base {
   * {
