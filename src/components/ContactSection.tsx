@@ -12,6 +12,10 @@ import {
 import { Mail, Calendar, Phone, ArrowRight } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
+interface SubmitError {
+  error?: string;
+}
+
 const ContactSection = () => {
   const [selectedPlan, setSelectedPlan] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -108,15 +112,16 @@ const ContactSection = () => {
         // Reset form
         if (formRef.current) {
           formRef.current.reset();
-          setSelectedPlan(""); // Clear selected plan
+          setSelectedPlan("");
         }
       } else {
         let errorMessage =
           "Failed to submit consultation request. Please try again.";
         try {
-          const errorData = await response.json();
+          const errorData = (await response.json()) as SubmitError;
           errorMessage = errorData.error || errorMessage;
         } catch {
+          // If parsing JSON fails, fall back to the generic error
           errorMessage = `Error ${response.status}: ${response.statusText}`;
         }
         setSubmitMessage({
@@ -160,8 +165,8 @@ const ContactSection = () => {
                 Get Your Free Project Consultation
               </CardTitle>
               <p className="text-muted-foreground">
-                Tell us about your project and we'll get back to you within 24
-                hours with a custom proposal.
+                Tell us about your <span className="hero-text">vision</span> and
+                we&apos;ll get back to you as soon as possible.
               </p>
             </CardHeader>
             <CardContent>
@@ -257,11 +262,11 @@ const ContactSection = () => {
 
                 <div>
                   <label className="text-sm font-medium mb-2 block">
-                    Project Details *
+                    Additional Details *
                   </label>
                   <Textarea
                     name="projectDetails"
-                    placeholder="Tell us about your project goals, timeline, and any specific requirements..."
+                    placeholder="Tell us more about your project goals, timeline, or any specific requirements you weren't able to mention above..."
                     className="bg-secondary border-border min-h-[120px]"
                     required
                   />
@@ -316,7 +321,7 @@ const ContactSection = () => {
               </CardContent>
             </Card>
 
-            <Card className="card-glow">
+            {/* <Card className="card-glow">
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mr-4">
@@ -336,7 +341,7 @@ const ContactSection = () => {
                   Book Now
                 </Button>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </div>
