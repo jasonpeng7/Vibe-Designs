@@ -49,16 +49,16 @@ const HeroSection = () => {
 
           {/* Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
-            Your next <span className="hero-text">website</span> should do more
-            than look good. Turn <span className="hero-text"> visitors</span>{" "}
-            into <span className="hero-text">buyers</span>.{" "}
-            <span className="hero-text">24/7</span>.
+            Your website is an <span className="hero-text">investment</span>.
+            Our sites <span className="hero-text"> pay</span> for themselves by
+            bringing in a new <span className="hero-text">market</span>.
           </h1>
 
           {/* Supporting text */}
           <p className="text-md md:text-2xl text-muted-foreground max-w-2xl mx-auto">
             We create websites that don't just look great — they work 24/7 to
-            bring you leads, calls, and customers.
+            bring you leads, calls, and customers. The digital market is huge,
+            let&apos;s make it yours <span className="hero-text">today</span>.
           </p>
 
           {/* CTAs */}
