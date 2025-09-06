@@ -1,61 +1,61 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight } from "lucide-react";
+import { useState } from "react";
 
 const PricingSection = () => {
   const plans = [
     {
-      name: "Essential Web",
-      price: "$499",
-      description:
-        "Perfect for small businesses ready to establish their online presence",
-      features: [
-        "Custom website design",
-        "Mobile-responsive development",
-        "Basic SEO optimization",
-        "Contact form integration",
-        "1-month of free support",
-        "Domain setup",
-      ],
-      designBuild: "$499",
-      hostingDomain: "$10/month",
-      maintenance: "$5/month",
-      popular: false,
-    },
-    {
-      name: "Essential Pro",
-      price: "$999",
+      name: "Elevate",
+      price: "$1,499",
       description:
         "For growing businesses that need advanced features and conversion optimization",
       features: [
-        "Tailored website design",
-        "API integration",
-        "Contact form integration",
+        "Everything in Launch, plus...",
+        "Additional pages + tailored design",
+        "External services integration(payments, bookings, etc.)",
         "Advanced SEO & analytics",
-        "1 year free support",
-        "Domain setup",
+        "3 months of free support",
       ],
-      designBuild: "$999",
-      hostingDomain: "$15/month",
-      maintenance: "$10/month",
+      designBuild: "$1,499",
+      hostingDomain: "$25/month",
+      maintenance: "$75+/month",
+      popular: false,
+    },
+    {
+      name: "Launch",
+      price: "$899",
+      description:
+        "Perfect for small businesses ready to establish their online presence",
+      features: [
+        "3–5 page website (homepage, about, services, contact, etc.)",
+        "Mobile-responsive development",
+        "Basic SEO optimization",
+        "Contact form integration",
+        "1 month of free support",
+        "Domain + hosting setup assistance",
+      ],
+      designBuild: "$899",
+      hostingDomain: "$25/month",
+      maintenance: "$50/month",
       popular: true,
     },
     {
-      name: "Enterprise",
+      name: "Vision",
       price: "Contact",
       description:
         "Fully custom solutions for enterprises with complex requirements",
       features: [
-        "Unlimited pages & features",
-        "Tailored web design",
-        "Priority + 2 years free support",
-        "Payment gateway integration",
-        "Custom training",
-        "Domain setup",
+        "Everything in Elevate, plus...",
+        "Large-scale or complex site architecture",
+        "E-commerce or membership functionality",
+        "Enhanced performance & security features",
+        "Ongoing strategy & consultation",
+        "Dedicated support team",
       ],
       designBuild: "Custom Quote",
-      hostingDomain: "Up to $200/month",
-      maintenance: "Up to $100/month",
+      hostingDomain: "$25/month",
+      maintenance: "Up to $500/month",
       popular: false,
     },
   ];
@@ -76,7 +76,6 @@ const PricingSection = () => {
       });
     }
   };
-
   return (
     <section id="pricing" className="pt-20pb-0 sm:py-20 px-2">
       <div className="container mx-auto max-w-6xl">
@@ -127,7 +126,7 @@ const PricingSection = () => {
                 </p>
               </CardHeader>
               <CardContent className="space-y-6">
-                <ul className="space-y-3">
+                <ul className="space-y-3 md:min-h-[250px]">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-start">
                       <Check className="w-5 h-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
