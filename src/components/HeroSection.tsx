@@ -113,10 +113,12 @@ const HeroSection = () => {
       <div
         className="absolute bottom-32 right-16 w-16 h-16 bg-accent/20 rounded-full floating"
         style={{ animationDelay: "2s" }}
+        role="presentation"
       />
       <div
         className="absolute top-1/2 right-8 w-12 h-12 bg-primary-glow/20 rounded-full floating"
         style={{ animationDelay: "4s" }}
+        role="presentation"
       />
     </section>
   );
