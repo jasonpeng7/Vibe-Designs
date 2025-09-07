@@ -10,7 +10,7 @@ const Footer = () => {
             <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
               <img
                 src="/vibe_lgo.png"
-                alt="ViBE Design Logo"
+                alt="ViBE Design"
                 className="w-22 h-10"
               />
               <span className="text-2xl font-bold">ViBE Design</span>
