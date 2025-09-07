@@ -94,8 +94,8 @@ const ContactSection = () => {
         projectDetails: projectDetails,
       };
 
-      // Send to your Gmail API function
-      const response = await fetch("http://localhost:8787/", {
+      // send to  Gmail API function
+      const response = await fetch("/api/booking-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
