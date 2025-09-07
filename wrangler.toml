@@ -2,8 +2,7 @@ name = "vibe-designs"
 pages_build_output_dir = "dist"
 compatibility_date = "2024-09-05"
 
-[env.production]
-[vars]
+[env.production.vars]
 GMAIL_SENDER = "fovtality9599@gmail.com"
 GMAIL_TO = "vbewebdesign@gmail.com"
 ALLOWED_ORIGIN = "https://vibe-designs.pages.dev"
