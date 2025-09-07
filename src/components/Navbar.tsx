@@ -45,7 +45,13 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <img src="/vibe_lgo.png" alt="VBE Design" className="h-10 w-auto" />
+            <a href="/">
+              <img
+                src="/vibe_lgo.png"
+                alt="VBE Design"
+                className="h-10 w-auto"
+              />
+            </a>
           </div>
 
           {/* Desktop Navigation */}
