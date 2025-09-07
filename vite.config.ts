@@ -11,7 +11,6 @@ export default defineConfig({
     sitemap({
       hostname: "https://www.vbedigital.com",
       dynamicRoutes: ["/", "/privacy-policy", "/terms-of-service"],
-      robots: [{ userAgent: "*", allow: "/" }],
     }),
   ],
   css: {
