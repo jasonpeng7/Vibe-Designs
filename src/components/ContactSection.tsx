@@ -95,7 +95,7 @@ const ContactSection = () => {
       };
 
       // send to  Gmail API function
-      const response = await fetch("/api/booking-email", {
+      const response = await fetch("/booking-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
