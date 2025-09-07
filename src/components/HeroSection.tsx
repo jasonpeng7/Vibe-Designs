@@ -34,10 +34,10 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-hero" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto pt-20 px-6 text-center pb-10">
+      <div className="relative z-10 container mx-auto pt-28 px-6 text-center pb-10">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Trust indicators */}
-          <ScrollAnimation delay={0.2}>
+          {/* <ScrollAnimation delay={0.2}>
             <div className="flex items-center justify-center gap-2 text-accent mb-4">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
@@ -48,7 +48,7 @@ const HeroSection = () => {
                 Trusted by local businesses
               </span>
             </div>
-          </ScrollAnimation>
+          </ScrollAnimation> */}
 
           {/* Headline */}
           <ScrollAnimation delay={0.4}>
