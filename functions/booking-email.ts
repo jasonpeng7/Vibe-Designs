@@ -3,6 +3,8 @@ interface Env {
   GMAIL_TO?: string;
   GMAIL_CLIENT_ID?: string;
   GMAIL_CLIENT_SECRET?: string;
+  GCALENDAR_ID?: string;
+  GCALENDAR_ENABLED?: string;
   GMAIL_REFRESH_TOKEN?: string;
   ALLOWED_ORIGIN?: string;
 }
@@ -62,8 +64,11 @@ function json(obj: unknown, status: number = 200): Response {
   });
 }
 
-// Main handler function
-async function handleRequest(request: Request, env: Env): Promise<Response> {
+// main handler function
+export async function handleBookingEmailRequest(
+  request: Request,
+  env: Env
+): Promise<Response> {
   if (request.method === "OPTIONS") {
     return corsResponse(env, new Response(null, { status: 204 }));
   }
@@ -222,10 +227,10 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
   }
 }
 
-// Export for Wrangler
+// export for Wrangler
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    return handleRequest(request, env);
+    return handleBookingEmailRequest(request, env);
   },
 };
 
@@ -237,7 +242,7 @@ export async function onRequest({
   request: Request;
   env: Env;
 }) {
-  return handleRequest(request, env);
+  return handleBookingEmailRequest(request, env);
 }
 
 // helper functions
