@@ -8,11 +8,7 @@ const Footer = () => {
           {/* Brand Identity */}
           <div className="text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
-              <img
-                src="/vibe_lgo.png"
-                alt="ViBE Design"
-                className="w-22 h-10"
-              />
+              <img src="/vibe.png" alt="ViBE Design" className="w-22 h-10" />
               <span className="text-2xl font-bold">ViBE Design</span>
             </div>
             <p className="text-muted-foreground text-sm">
