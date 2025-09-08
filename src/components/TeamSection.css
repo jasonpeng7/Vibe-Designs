@@ -1,0 +1,161 @@
+/* TeamSection.css */
+
+.team-section-container {
+  background-color: hsl(220, 30%, 15%);
+  /* A simple CSS grain texture */
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 3px 3px;
+  overflow: hidden; /* Important for containing animations */
+}
+
+/* Card container - sets up 3D context for tilt */
+.team-card-container {
+  position: relative;
+  width: 14rem; /* 224px */
+  height: 14rem;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.sticker-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* This will be used by JS to apply the tilt */
+  transform: perspective(1000px) rotateX(var(--rotateX, 0))
+    rotateY(var(--rotateY, 0));
+}
+
+.team-card-container:hover .sticker-wrapper {
+  transform: translateY(-10px) perspective(1000px) rotateX(var(--rotateX, 0))
+    rotateY(var(--rotateY, 0));
+}
+
+.team-card-container:hover .sticker-image {
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* -- Heritage Seal -- */
+.heritage-seal {
+  position: absolute;
+  bottom: -1rem;
+  right: -1rem;
+  width: 5rem; /* 80px */
+  height: 5rem;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(-40px) rotate(-12deg) scale(0.88);
+}
+
+.in-view .heritage-seal {
+  animation: stamp-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: inherit; /* Inherit stagger from ScrollAnimation */
+}
+
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) rotate(-12deg) scale(0.88);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+/* Hover Grow/Glow */
+.team-card-container:hover .heritage-seal .seal-body {
+  transform-origin: center;
+  transition: transform 0.3s ease-out;
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 10px hsl(45, 100%, 70%, 0.7));
+}
+
+/* Click Press Animation */
+.heritage-seal.pressed .seal-body {
+  animation: press-in 0.4s ease-out;
+}
+
+@keyframes press-in {
+  0% {
+    transform: scale(1.06);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1.06);
+  }
+}
+
+/* Click Particle Ring */
+.heritage-seal .particle-ring {
+  opacity: 0;
+  transform-origin: center;
+  transform: scale(0.8);
+}
+
+.heritage-seal.pressed .particle-ring {
+  animation: particle-burst 0.4s ease-out;
+}
+
+@keyframes particle-burst {
+  0% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* Info Layer */
+.info-layer {
+  position: absolute;
+  bottom: -2rem; /* Start below the sticker */
+  left: 50%;
+  width: 120%;
+  padding: 1rem;
+  padding-top: 2rem; /* Space for the seal overlap */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 5;
+
+  opacity: 0;
+  transform: translateY(1rem) translateX(-50%);
+  transition: opacity 0.24s ease-out, transform 0.24s ease-out;
+}
+
+.team-card-container:hover .info-layer {
+  opacity: 1;
+  transform: translateY(0) translateX(-50%);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .heritage-seal,
+  .sticker-wrapper,
+  .team-card-container:hover .sticker-wrapper,
+  .info-layer {
+    transition: opacity 0.3s ease-out;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .in-view .heritage-seal,
+  .team-card-container:hover .info-layer {
+    opacity: 1;
+  }
+}
