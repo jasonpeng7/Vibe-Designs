@@ -5,6 +5,7 @@ import PricingSection from "@/components/PricingSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import MaxWidthWrapper from "@/components/ui/MaxWidthWrapper";
 
 const Index = () => {
   return (
@@ -14,11 +15,13 @@ const Index = () => {
         description="Our creative web agency build high-performance websites for small businesses that drive growth and generate leads. Establish your online presence today."
       />
       <main className="min-h-screen bg-background text-foreground">
-        <HeroSection />
-        <PortfolioSection />
-        <ServicesSection />
-        <PricingSection />
-        <ContactSection />
+        <MaxWidthWrapper>
+          <HeroSection />
+          <PortfolioSection />
+          <ServicesSection />
+          <PricingSection />
+          <ContactSection />
+        </MaxWidthWrapper>
         <Footer />
       </main>
     </>
