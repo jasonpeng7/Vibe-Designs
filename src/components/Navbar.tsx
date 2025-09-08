@@ -79,6 +79,13 @@ const Navbar = () => {
             </Button>
             <Button
               variant="ghost"
+              onClick={() => handleNavClick("team")}
+              className="text-white focus:outline-none focus:ring-0"
+            >
+              Team
+            </Button>
+            <Button
+              variant="ghost"
               onClick={() => handleNavClick("contact")}
               className="text-white focus:outline-none focus:ring-0"
             >
@@ -127,6 +134,13 @@ const Navbar = () => {
                 className="text-white justify-start focus:outline-none focus:ring-0"
               >
                 Pricing
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => handleNavClick("team")}
+                className="text-white justify-start focus:outline-none focus:ring-0"
+              >
+                Team
               </Button>
               <Button
                 variant="ghost"
