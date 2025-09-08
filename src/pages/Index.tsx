@@ -2,6 +2,7 @@ import HeroSection from "@/components/HeroSection";
 import PortfolioSection from "@/components/PortfolioSection";
 import ServicesSection from "@/components/ServicesSection";
 import PricingSection from "@/components/PricingSection";
+import TeamSection from "@/components/TeamSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -20,6 +21,7 @@ const Index = () => {
           <PortfolioSection />
           <ServicesSection />
           <PricingSection />
+          <TeamSection />
           <ContactSection />
         </MaxWidthWrapper>
         <Footer />
