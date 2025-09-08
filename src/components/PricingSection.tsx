@@ -77,7 +77,7 @@ const PricingSection = () => {
     }
   };
   return (
-    <section id="pricing" className="pt-20pb-0 sm:py-20 px-2">
+    <section id="pricing" className="pt-20 pb-20 sm:py-20 px-2">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <ScrollAnimation duration={500}>
