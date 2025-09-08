@@ -51,7 +51,7 @@ const HeroSection = () => {
           </ScrollAnimation> */}
 
           {/* Headline */}
-          <ScrollAnimation delay={0.4}>
+          <ScrollAnimation delay={0.1}>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
               Your website is an <span className="hero-text">investment</span>.
               Our sites <span className="hero-text"> pay</span> for themselves
@@ -60,7 +60,7 @@ const HeroSection = () => {
           </ScrollAnimation>
 
           {/* Supporting text */}
-          <ScrollAnimation delay={0.6}>
+          <ScrollAnimation delay={0.2}>
             <p className="text-md md:text-2xl text-muted-foreground max-w-2xl mx-auto">
               We create websites that don't just look great — they work 24/7 to
               bring you leads, calls, and customers. The digital market is huge,
@@ -69,7 +69,7 @@ const HeroSection = () => {
           </ScrollAnimation>
 
           {/* CTAs */}
-          <ScrollAnimation delay={0.8}>
+          <ScrollAnimation delay={0.4}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
               <Button
                 size="lg"
@@ -91,7 +91,7 @@ const HeroSection = () => {
           </ScrollAnimation>
 
           {/* Client logos placeholder */}
-          <ScrollAnimation delay={1}>
+          <ScrollAnimation delay={0.5}>
             <div className="mt-16 pt-8 border-t border-border">
               <p className="text-sm text-muted-foreground mb-6">
                 Our recent partners
