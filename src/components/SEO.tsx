@@ -18,7 +18,7 @@ const SEO = ({
   ogTitle,
   ogDescription,
   ogImage = "/vibe.png",
-  ogUrl = "https://www.vbedigital.com",
+  ogUrl = "https://www.vbedesign.com",
   children,
 }: SEOProps) => {
   const fullTitle = `${title}`;
