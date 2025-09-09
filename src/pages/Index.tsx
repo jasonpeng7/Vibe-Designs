@@ -13,7 +13,7 @@ const Index = () => {
   return (
     <>
       <SEO
-        title="ViBE Creative"
+        title="ViBE Creative Web Agency"
         description="Our creative web agency build high-performance websites for small businesses that drive growth and generate leads. Establish your online presence today."
       />
       <main className="min-h-screen bg-background text-foreground">
