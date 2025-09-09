@@ -10,6 +10,7 @@ const PortfolioSection = () => {
       category: "B2B Platform",
       image: "/peng-flooring.png",
       tags: ["Small Business", "Lead Generation", "B2B"],
+      url: "https://www.pengfloor.com",
     },
   ];
 
@@ -43,9 +44,16 @@ const PortfolioSection = () => {
                   >
                     {/* Project Image */}
                     <div
-                      className={`relative h-64 md:h-80 ${
+                      className={`relative h-64 md:h-80 cursor-pointer ${
                         index % 2 === 1 ? "md:order-2" : ""
                       }`}
+                      onClick={() =>
+                        window.open(
+                          project.url,
+                          "_blank",
+                          "noopener,noreferrer"
+                        )
+                      }
                     >
                       <img
                         src={project.image}
@@ -87,7 +95,7 @@ const PortfolioSection = () => {
                         className="w-fit border-accent text-accent hover:bg-accent hover:text-accent-foreground"
                         onClick={() =>
                           window.open(
-                            "https://www.pengfloor.com",
+                            project.url,
                             "_blank",
                             "noopener,noreferrer"
                           )
