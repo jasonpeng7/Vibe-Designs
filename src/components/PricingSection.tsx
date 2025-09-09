@@ -12,14 +12,14 @@ const PricingSection = () => {
         "For growing businesses that need advanced features and conversion optimization",
       features: [
         "Everything in Launch, plus...",
-        "Additional pages + tailored design",
+        "5 pages + tailored design",
         "External services integration(payments, bookings, etc.)",
         "Advanced SEO & analytics",
         "3 months of free support",
       ],
       designBuild: "$1,499",
       hostingDomain: "$25/month",
-      maintenance: "$75+/month",
+      maintenance: "$25+/month",
       popular: false,
     },
     {
@@ -28,7 +28,7 @@ const PricingSection = () => {
       description:
         "Perfect for small businesses ready to establish their online presence",
       features: [
-        "3–5 page website (homepage, about, services, contact, etc.)",
+        "3 page website (homepage, about, services, contact, etc.)",
         "Mobile-responsive development",
         "Basic SEO optimization",
         "Contact form integration",
@@ -37,7 +37,7 @@ const PricingSection = () => {
       ],
       designBuild: "$899",
       hostingDomain: "$25/month",
-      maintenance: "$50/month",
+      maintenance: "$15/month",
       popular: true,
     },
     {
