@@ -41,14 +41,14 @@ const HeroSection = () => {
               className="mt-2"
             >
               <defs>
-                <linearGradient id="goldGradient">
+                <linearGradient id="heroGradient">
                   <stop offset="0%" stopColor="hsl(var(--primary))" />
                   <stop offset="100%" stopColor="hsl(var(--accent))" />
                 </linearGradient>
               </defs>
               <path
                 d="M 5 5 C 50 10, 250 0, 295 5"
-                stroke="url(#goldGradient)"
+                stroke="url(#heroGradient)"
                 strokeWidth="2"
                 fill="none"
                 className="hero-underline"

@@ -19,6 +19,17 @@
   }
 }
 
+.hero-text {
+  background-image: linear-gradient(
+    to right,
+    hsl(var(--primary)),
+    hsl(var(--accent))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .hero-underline {
