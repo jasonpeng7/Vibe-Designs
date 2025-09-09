@@ -7,6 +7,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import MaxWidthWrapper from "@/components/ui/MaxWidthWrapper";
+import FrequentlyAsked from "@/components/FrequentlyAsked";
 
 const Index = () => {
   return (
@@ -23,6 +24,7 @@ const Index = () => {
           <PricingSection />
           <TeamSection />
           <ContactSection />
+          <FrequentlyAsked />
         </MaxWidthWrapper>
         <Footer />
       </main>
