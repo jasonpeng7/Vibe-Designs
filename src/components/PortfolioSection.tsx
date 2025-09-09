@@ -9,8 +9,15 @@ const PortfolioSection = () => {
       title: "Peng Flooring",
       category: "B2B Platform",
       image: "/peng-flooring.png",
-      tags: ["Small Business", "Lead Generation", "B2B"],
+      tags: ["Local Business", "Lead Generation", "B2B", "SEO"],
       url: "https://www.pengfloor.com",
+    },
+    {
+      title: "Atharva's Portfolio",
+      category: "Personal Portfolio",
+      image: "/atharva-portfolio.png",
+      tags: ["Portfolio", "Engineering"],
+      url: "https://atharvapk.com",
     },
   ];
 
