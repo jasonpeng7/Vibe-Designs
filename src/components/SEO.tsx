@@ -26,7 +26,7 @@ const SEO = ({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Vibe Creative",
+    name: "Vibe Design",
     url: ogUrl,
     logo: `${ogUrl}${ogImage}`,
     contactPoint: {
