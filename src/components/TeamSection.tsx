@@ -8,13 +8,11 @@ const teamMembers = [
   {
     name: "Jason Peng",
     role: "Founder & Lead Engineer",
-    bio: "For the love of your business",
     image: "/jason_crop.png",
   },
   {
     name: "Amanda Antonious",
     role: "Consultant & Lead Designer",
-    bio: "",
     image: "/amanda_crop.png",
   },
 ];
@@ -151,7 +149,6 @@ const TeamCard = ({
         <div className="info-layer">
           <h3 className="font-bold text-lg text-white">{member.name}</h3>
           <p className="text-sm text-primary italic">{member.role}</p>
-          <p className="text-xs text-muted-foreground mt-1">"{member.bio}"</p>
         </div>
       </div>
     </ScrollAnimation>
