@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import ScrollAnimation from "./ui/ScrollAnimation";
+import { Link } from "react-router-dom";
 
 const PortfolioSection = () => {
   const projects = [
@@ -11,6 +12,7 @@ const PortfolioSection = () => {
       image: "/peng-flooring.png",
       tags: ["Local Business", "Lead Generation", "B2B", "SEO"],
       url: "https://www.pengfloor.com",
+      slug: "peng-flooring",
     },
     {
       title: "Atharva's Portfolio",
@@ -18,6 +20,7 @@ const PortfolioSection = () => {
       image: "/atharva-portfolio.png",
       tags: ["Portfolio", "Engineering"],
       url: "https://atharvapk.com",
+      slug: "atharva-portfolio",
     },
   ];
 
@@ -97,20 +100,30 @@ const PortfolioSection = () => {
                         ))}
                       </div>
 
-                      <Button
-                        variant="outline"
-                        className="w-fit border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-                        onClick={() =>
-                          window.open(
-                            project.url,
-                            "_blank",
-                            "noopener,noreferrer"
-                          )
-                        }
-                      >
-                        View Website
-                        <ExternalLink className="ml-2 w-4 h-4" />
-                      </Button>
+                      <div className="flex flex-wrap items-center gap-4">
+                        <Button
+                          variant="outline"
+                          className="w-fit border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                          onClick={() =>
+                            window.open(
+                              project.url,
+                              "_blank",
+                              "noopener,noreferrer"
+                            )
+                          }
+                        >
+                          View Website
+                          <ExternalLink className="ml-2 w-4 h-4" />
+                        </Button>
+                        {project.slug && (
+                          <Link to={`/portfolio/${project.slug}`}>
+                            <Button variant="secondary" className="w-fit">
+                              View Case Study
+                              <ArrowRight className="ml-2 w-4 h-4" />
+                            </Button>
+                          </Link>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </CardContent>
