@@ -78,7 +78,7 @@ export const portfolioData = [
   {
     slug: "atharva-portfolio",
     client: "Atharva",
-    title: "A Developer's Digital Showcase",
+    title: "Engineer's Digital Showcase",
     details: {
       tier: "Custom - SPA",
       cost: "$200",
@@ -87,17 +87,12 @@ export const portfolioData = [
     carouselImages: [
       {
         title: "Landing Page",
-        caption: "A unique and engaging hero section.",
+        caption: "Professional and informative landing page.",
         layers: [
-          {
-            src: "/placeholder.svg",
-            alt: "Abstract background pattern",
-            parallax: 0.2,
-          },
           {
             src: "/atharva-portfolio.png",
             alt: "Screenshot of Atharva's portfolio hero section.",
-            parallax: 0.8,
+            parallax: 1.0,
           },
         ],
       },
@@ -106,23 +101,18 @@ export const portfolioData = [
         caption: "Detailed project cards with clear descriptions.",
         layers: [
           {
-            src: "/placeholder.svg",
-            alt: "Abstract background pattern",
-            parallax: 0.5,
-          },
-          {
             src: "/atharva-project.png",
             alt: "Screenshot of the project section.",
-            parallax: 0.9,
+            parallax: 1.0,
           },
         ],
       },
     ],
     content: {
       problem:
-        "Atharva, a talented software engineer, needed a professional online presence to showcase his projects and skills to potential employers and collaborators.",
+        "Atharva is an upcoming mechanical engineer and he needed a professional online presence to showcase his projects and skills to potential employers and collaborators.",
       solution:
-        "We built a clean, fast, and visually appealing personal portfolio website. The site highlights his key projects, technical skills, and provides an easy way for visitors to get in touch or view his resume.",
+        "We built super simple, fast, and visually appealing personal portfolio website. The site highlights his key projects, technical skills, and provides an easy way for visitors to get in touch or view his resume.",
       outcome:
         "The new portfolio has helped Atharva stand out in a competitive job market and has received positive feedback for its design and user experience.",
     },
