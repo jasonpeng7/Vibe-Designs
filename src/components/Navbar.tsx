@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import MaxWidthWrapper from "./ui/MaxWidthWrapper";
@@ -7,6 +8,9 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const location = useLocation();
+
+  const isCaseStudyPage = location.pathname.startsWith("/portfolio");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,7 +49,7 @@ const Navbar = () => {
       role="navigation"
       aria-label="Main"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-        isScrolled || isMobileMenuOpen
+        isScrolled || isMobileMenuOpen || isCaseStudyPage
           ? "bg-background/80 backdrop-blur-lg border-b border-border shadow-md h-16"
           : "bg-transparent h-20"
       }`}
@@ -73,7 +77,7 @@ const Navbar = () => {
               src="/vibe_lgo.png"
               alt="VBE Design"
               className={`h-10 w-auto transition-all duration-300 ${
-                isScrolled ? "scale-90" : ""
+                isScrolled || isCaseStudyPage ? "scale-90" : ""
               }`}
             />
           </a>
