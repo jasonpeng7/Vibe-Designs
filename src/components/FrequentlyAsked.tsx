@@ -48,8 +48,8 @@ const FrequentlyAsked = () => {
           Frequently Asked Questions
         </h2>
         <p className="text-xl text-muted-foreground">
-          Can't find the answer you're looking for? Reach out to our customer
-          support team.
+          Can't find the answer you're looking for? Fill out the form below and
+          ask your questions!
         </p>
       </div>
       <div className="max-w-3xl mx-auto">
