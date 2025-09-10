@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import MaxWidthWrapper from "./ui/MaxWidthWrapper";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,136 +24,129 @@ const Navbar = () => {
         behavior: "smooth",
         block: "start",
       });
+      window.history.pushState(null, "", `/#${sectionId}`);
+      setActiveSection(sectionId);
     }
-    // Close mobile menu after clicking
     setIsMobileMenuOpen(false);
   };
 
-  const handleNavClick = (sectionId: string) => {
-    // Update URL for SEO
-    window.history.pushState(null, "", `/#${sectionId}`);
-    scrollToSection(sectionId);
-  };
+  const navLinks = [
+    { id: "portfolio", title: "Work" },
+    { id: "services", title: "Services" },
+    { id: "pricing", title: "Pricing" },
+    { id: "team", title: "Team" },
+  ];
+
+  const leftLinks = navLinks.slice(0, 2);
+  const rightLinks = navLinks.slice(2);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      role="navigation"
+      aria-label="Main"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
         isScrolled || isMobileMenuOpen
-          ? "bg-background/95 backdrop-blur-md border-b border-border"
-          : "bg-transparent"
+          ? "bg-background/80 backdrop-blur-lg border-b border-border shadow-md h-16"
+          : "bg-transparent h-20"
       }`}
     >
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <a href="/">
-              <img
-                src="/vibe_lgo.png"
-                alt="VBE Design"
-                className="h-10 w-auto"
-              />
-            </a>
-          </div>
+      <MaxWidthWrapper className="flex items-center justify-between h-full">
+        {/* Left Navigation */}
+        <div className="hidden md:flex items-center gap-1 px-10">
+          {leftLinks.map((link) => (
+            <Button
+              key={link.id}
+              variant="ghost"
+              onClick={() => scrollToSection(link.id)}
+              className="text-white font-thin hover:bg-transparent hover:hero-text px-4 relative"
+              aria-current={activeSection === link.id ? "page" : undefined}
+            >
+              {link.title}
+            </Button>
+          ))}
+        </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Button
-              variant="ghost"
-              onClick={() => handleNavClick("services")}
-              className="text-white focus:outline-none focus:ring-0"
-            >
-              Services
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => handleNavClick("portfolio")}
-              className="text-white focus:outline-none focus:ring-0"
-            >
-              Portfolio
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => handleNavClick("pricing")}
-              className="text-white focus:outline-none focus:ring-0"
-            >
-              Pricing
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => handleNavClick("team")}
-              className="text-white focus:outline-none focus:ring-0"
-            >
-              Team
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => handleNavClick("contact")}
-              className="text-white focus:outline-none focus:ring-0"
-            >
-              Contact
-            </Button>
-          </div>
+        {/* Centered Logo */}
+        <div className="absolute left-1/2 -translate-x-1/2">
+          <a href="/" aria-label="ViBE Creative Home">
+            <img
+              src="/vibe_lgo.png"
+              alt="VBE Design"
+              className={`h-10 w-auto transition-all duration-300 ${
+                isScrolled ? "scale-90" : ""
+              }`}
+            />
+          </a>
+        </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+        {/* Right Navigation */}
+        <div className="hidden md:flex items-center gap-1 px-10">
+          {rightLinks.map((link) => (
             <Button
+              key={link.id}
               variant="ghost"
-              size="sm"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white focus:outline-none focus:ring-0"
+              onClick={() => scrollToSection(link.id)}
+              className="text-white font-thin hover:bg-transparent hover:hero-text px-4 relative"
+              aria-current={activeSection === link.id ? "page" : undefined}
             >
-              {isMobileMenuOpen ? (
-                <X className="h-8 w-8" />
-              ) : (
-                <Menu className="h-8 w-8" />
-              )}
+              {link.title}
+            </Button>
+          ))}
+          <Button
+            onClick={() => scrollToSection("contact")}
+            className="ml-4 btn-gradient font-thin text-black"
+          >
+            Start a Project
+          </Button>
+        </div>
+
+        {/* Mobile menu button */}
+        <div className="md:hidden px-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="hover:text-white hover:bg-transparent"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+          >
+            <span className="sr-only">Open main menu</span>
+            {isMobileMenuOpen ? (
+              <X className="h-10 w-10" />
+            ) : (
+              <Menu className="h-10 w-10" />
+            )}
+          </Button>
+        </div>
+      </MaxWidthWrapper>
+
+      {/* Mobile Navigation Menu */}
+      <div
+        id="mobile-menu"
+        className={`md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-lg transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? "translate-y-0" : "-translate-y-[120%] invisible"
+        }`}
+      >
+        <div className="flex flex-col space-y-2 p-6">
+          {navLinks.map((link) => (
+            <Button
+              key={link.id}
+              variant="ghost"
+              onClick={() => scrollToSection(link.id)}
+              className="text-white justify-start text-lg font-thin py-3 hover:bg-transparent active:bg-transparent"
+            >
+              {link.title}
+            </Button>
+          ))}
+          <div className="mt-2 border-t border-border/20 pt-4">
+            <Button
+              onClick={() => scrollToSection("contact")}
+              className="btn-gradient w-full py-3 text-lg"
+            >
+              Free Discovery Call
             </Button>
           </div>
         </div>
-
-        {/* Mobile Navigation Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-border">
-            <div className="flex flex-col space-y-2 pt-4">
-              <Button
-                variant="ghost"
-                onClick={() => handleNavClick("services")}
-                className="text-white justify-start focus:outline-none focus:ring-0"
-              >
-                Services
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => handleNavClick("portfolio")}
-                className="text-white justify-start focus:outline-none focus:ring-0"
-              >
-                Portfolio
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => handleNavClick("pricing")}
-                className="text-white justify-start focus:outline-none focus:ring-0"
-              >
-                Pricing
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => handleNavClick("team")}
-                className="text-white justify-start focus:outline-none focus:ring-0"
-              >
-                Team
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => handleNavClick("contact")}
-                className="text-white justify-start focus:outline-none focus:ring-0"
-              >
-                Contact
-              </Button>
-            </div>
-          </div>
-        )}
       </div>
     </nav>
   );

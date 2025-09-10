@@ -70,7 +70,7 @@ const HeroSection = () => {
               className="btn-gradient text-lg px-8 py-4 rounded-full"
               onClick={() => smoothScrollTo("contact")}
             >
-              Start a Project <ArrowRight className="ml-2 w-5 h-5" />
+              Build Your Website <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <Button
               variant="outline"
