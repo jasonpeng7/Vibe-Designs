@@ -94,7 +94,7 @@ const PricingSection = () => {
         </ScrollAnimation>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid lg:grid-cols-3 gap-8 mb-16">
           {plans.map((plan) => (
             <ScrollAnimation
               key={plan.name}
