@@ -101,24 +101,10 @@ const PortfolioSection = () => {
                       </div>
 
                       <div className="flex flex-wrap items-center gap-4">
-                        <Button
-                          variant="outline"
-                          className="w-fit border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-                          onClick={() =>
-                            window.open(
-                              project.url,
-                              "_blank",
-                              "noopener,noreferrer"
-                            )
-                          }
-                        >
-                          View Website
-                          <ExternalLink className="ml-2 w-4 h-4" />
-                        </Button>
                         {project.slug && (
                           <Link to={`/portfolio/${project.slug}`}>
-                            <Button variant="secondary" className="w-fit">
-                              View Case Study
+                            <Button className="w-fit btn-gradient">
+                              View Full Project
                               <ArrowRight className="ml-2 w-4 h-4" />
                             </Button>
                           </Link>
