@@ -65,7 +65,7 @@ export const portfolioData = [
             src: "/peng-floor-contact.png",
             mobileSrc: "/peng-floor-booking-mobile.jpg",
             alt: "Screenshot of the contact form on the Peng Flooring website.",
-            parallax: 1.01,
+            parallax: 1.0,
           },
         ],
       },
