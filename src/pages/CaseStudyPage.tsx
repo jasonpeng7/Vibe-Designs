@@ -25,7 +25,7 @@ const CaseStudyPage = () => {
     <div className="bg-background text-white">
       <ParallaxCarousel slides={project.carouselImages} />
       <div className="relative bg-background z-10">
-        <MaxWidthWrapper className="p-20">
+        <MaxWidthWrapper className="p-10">
           <ScrollAnimation>
             <Button
               variant="ghost"
@@ -61,8 +61,6 @@ const CaseStudyPage = () => {
                 </div>
               </ScrollAnimation>
             </div>
-
-            {/* Divider */}
 
             <div className="md:col-span-2 space-y-8">
               <ScrollAnimation delay={0.4}>
