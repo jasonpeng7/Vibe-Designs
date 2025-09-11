@@ -16,7 +16,6 @@ interface ConsultationData {
   company?: string;
   selectedPlan?: string;
   projectType?: string;
-  budgetRange?: string;
   projectDetails?: string;
   hp_trap?: string;
 }
@@ -28,7 +27,6 @@ interface Consultation {
   company: string;
   selectedPlan: string;
   projectType: string;
-  budgetRange: string;
   projectDetails: string;
   user_agent: string;
   ip: string;
@@ -92,7 +90,6 @@ export async function onRequest({
       company: safe(data.company),
       selectedPlan: safe(data.selectedPlan),
       projectType: safe(data.projectType),
-      budgetRange: safe(data.budgetRange),
       projectDetails: safe(data.projectDetails),
       user_agent: request.headers.get("User-Agent") || "",
       ip: request.headers.get("CF-Connecting-IP") || "",
@@ -138,7 +135,6 @@ export async function onRequest({
   Company: ${consultation.company}
   Selected Plan: ${consultation.selectedPlan}
   Project Type: ${consultation.projectType}
-  Budget Range: ${consultation.budgetRange}
   
   Project Details:
   ${consultation.projectDetails}
@@ -158,9 +154,6 @@ export async function onRequest({
         )}</p>
         <p><strong>Project Type:</strong> ${escapeHtml(
           consultation.projectType
-        )}</p>
-        <p><strong>Budget Range:</strong> ${escapeHtml(
-          consultation.budgetRange
         )}</p>
         <p><strong>Project Details:</strong><br>${escapeHtml(
           consultation.projectDetails
