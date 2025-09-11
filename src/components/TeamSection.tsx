@@ -8,11 +8,13 @@ const teamMembers = [
   {
     name: "Jason Peng",
     role: "Founder & Lead Engineer",
+    education: "CompSci @ UC Davis",
     image: "/jason_crop.png",
   },
   {
     name: "Amanda Antonious",
     role: "Consultant & Lead Designer",
+    education: "CogSci + DataSci @ UC Berkeley",
     image: "/amanda_crop.png",
   },
 ];
@@ -146,6 +148,7 @@ const TeamCard = ({
         </div>
         <div className="info-layer">
           <h3 className="font-bold text-lg text-white">{member.name}</h3>
+          <h4 className="text-sm text-white/70">{member.education}</h4>
           <p className="text-sm hero-text italic">{member.role}</p>
         </div>
       </div>
@@ -166,9 +169,10 @@ const TeamSection = () => {
         </ScrollAnimation>
         <ScrollAnimation delay={0.2}>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mt-4 mb-16">
-            The passionate duo behind the magic. With a blend of creativity and
-            2+ years of industry experience, your project is in the best hands.
-            Our promise is simple: We bring your{" "}
+            Two college students with a dream fueled by passion. With a blend of
+            creativity and <span className="hero-text">5+</span> years of
+            combined industry experience, your project is in the best hands. Our
+            promise is simple: We bring your{" "}
             <span className="hero-text">Vision</span> to life, build your{" "}
             <span className="hero-text">Brand</span>, and{" "}
             <span className="hero-text">Elevate</span> your business
