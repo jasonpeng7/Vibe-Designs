@@ -242,8 +242,6 @@ function isAllowedOrigin(origin: string, env: Env): boolean {
 
   const allowed = [
     env.ALLOWED_ORIGIN,
-    "https://www.vibecreative.io",
-    "https://vibecreative.io",
     "http://localhost:5173",
     "http://localhost:8788", // For Wrangler
   ].filter(Boolean);
