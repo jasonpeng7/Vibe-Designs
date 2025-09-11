@@ -39,19 +39,35 @@ export async function onRequest({
   request: Request;
   env: Env;
 }) {
-  // Handle OPTIONS requests for CORS
-  if (request.method === "OPTIONS") {
-    return corsResponse(env, new Response(null, { status: 204 }));
-  }
-
-  // Only handle POST requests
-  if (request.method !== "POST") {
-    return corsResponse(
-      env,
-      json({ success: false, error: "Method not allowed" }, 405)
-    );
-  }
   try {
+    // --- SAFE DEBUGGING LOGS ---
+    const apiKeyExists = !!env.MAILGUN_API_KEY;
+    const apiKeyLength = env.MAILGUN_API_KEY?.length || 0;
+    console.log("--- Production Env Check ---");
+    console.log("MAILGUN_DOMAIN:", env.MAILGUN_DOMAIN || "Not Set");
+    console.log("MAILGUN_SENDER_EMAIL:", env.MAILGUN_SENDER_EMAIL || "Not Set");
+    console.log(
+      "MAILGUN_RECIPIENT_EMAIL:",
+      env.MAILGUN_RECIPIENT_EMAIL || "Not Set"
+    );
+    console.log("MAILGUN_API_KEY is set:", apiKeyExists);
+    console.log("MAILGUN_API_KEY length:", apiKeyLength);
+    console.log("--- End Production Env Check ---");
+    // --- END DEBUGGING LOGS ---
+
+    // Handle OPTIONS requests for CORS
+    if (request.method === "OPTIONS") {
+      return corsResponse(env, new Response(null, { status: 204 }));
+    }
+
+    // Only handle POST requests
+    if (request.method !== "POST") {
+      return corsResponse(
+        env,
+        json({ success: false, error: "Method not allowed" }, 405)
+      );
+    }
+
     // --- CORS & basic checks ---
     const origin = request.headers.get("Origin") || "";
     if (!isAllowedOrigin(origin, env)) {
