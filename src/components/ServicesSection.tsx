@@ -50,9 +50,9 @@ const ServicesSection = () => {
     },
     {
       icon: Zap,
-      title: "Brand Identity",
+      title: "Marketing & Branding",
       description: "Memorable brands that stick in minds AND wallets.",
-      features: ["Logo Design", "Website Visuals"],
+      features: ["Logo Design", "Ongoing Marketing", "Google Ads"],
     },
   ];
 

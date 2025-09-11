@@ -5,6 +5,7 @@ import ImageGridReveal from "./ui/ImageGridReveal";
 type Slide = {
   layers: {
     src: string;
+    mobileSrc?: string;
     alt: string;
     parallax: number; // e.g., 0.2 for background, 1.0 for foreground
   }[];
@@ -25,7 +26,7 @@ const ParallaxCarousel = ({ slides }: ParallaxCarouselProps) => {
   const [hasInitialAnimationPlayed, setHasInitialAnimationPlayed] =
     useState(false);
 
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 640px)" });
   const prefersReducedMotion = useMediaQuery({
     query: "(prefers-reduced-motion: reduce)",
   });
@@ -153,22 +154,29 @@ const ParallaxCarousel = ({ slides }: ParallaxCarouselProps) => {
     // Fallback for reduced motion
     return (
       <div className="flex overflow-x-auto snap-x snap-mandatory">
-        {slides.map((slide, i) => (
-          <div
-            key={i}
-            className="w-full flex-shrink-0 h-screen snap-start relative"
-          >
-            <img
-              src={slide.layers[slide.layers.length - 1].src}
-              alt={slide.layers[slide.layers.length - 1].alt}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute bottom-10 left-10 text-white bg-black/50 p-4 rounded-lg">
-              <h3 className="text-2xl font-bold">{slide.title}</h3>
-              <p>{slide.caption}</p>
+        {slides.map((slide, i) => {
+          const lastLayer = slide.layers[slide.layers.length - 1];
+          const imageSrc =
+            isMobile && lastLayer.mobileSrc
+              ? lastLayer.mobileSrc
+              : lastLayer.src;
+          return (
+            <div
+              key={i}
+              className="w-full flex-shrink-0 h-screen snap-start relative"
+            >
+              <img
+                src={imageSrc}
+                alt={lastLayer.alt}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-10 left-10 text-white bg-black/50 p-4 rounded-lg">
+                <h3 className="text-2xl font-bold">{slide.title}</h3>
+                <p>{slide.caption}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
   }
@@ -208,49 +216,62 @@ const ParallaxCarousel = ({ slides }: ParallaxCarouselProps) => {
           className="flex h-full"
           style={{ width: `${slides.length * 100}vw`, willChange: "transform" }}
         >
-          {slides.map((slide, i) => (
-            <div key={i} className="h-screen w-screen relative">
-              {!hasInitialAnimationPlayed && i === 0 && (
-                <ImageGridReveal
-                  src={slide.layers[slide.layers.length - 1].src}
-                  rows={8}
-                  cols={12}
-                  onComplete={() => setHasInitialAnimationPlayed(true)}
-                />
-              )}
-              <div
-                className={`absolute inset-0 ${
-                  hasInitialAnimationPlayed || i > 0
-                    ? "opacity-100"
-                    : "opacity-0"
-                }`}
-              >
-                {slide.layers.map((layer, j) => (
-                  <img
-                    key={j}
-                    ref={(el) => {
-                      if (!layerRefs.current[i]) layerRefs.current[i] = [];
-                      if (el) layerRefs.current[i][j] = el;
-                    }}
-                    src={layer.src}
-                    alt={layer.alt}
-                    className="absolute w-full h-full object-cover"
-                    style={{ willChange: "transform" }}
+          {slides.map((slide, i) => {
+            const lastLayer = slide.layers[slide.layers.length - 1];
+            const imageGridSrc =
+              isMobile && lastLayer.mobileSrc
+                ? lastLayer.mobileSrc
+                : lastLayer.src;
+            return (
+              <div key={i} className="h-screen w-screen relative">
+                {!hasInitialAnimationPlayed && i === 0 && (
+                  <ImageGridReveal
+                    src={imageGridSrc}
+                    rows={8}
+                    cols={12}
+                    onComplete={() => setHasInitialAnimationPlayed(true)}
                   />
-                ))}
+                )}
+                <div
+                  className={`absolute inset-0 ${
+                    hasInitialAnimationPlayed || i > 0
+                      ? "opacity-100"
+                      : "opacity-0"
+                  }`}
+                >
+                  {slide.layers.map((layer, j) => {
+                    const imageSrc =
+                      isMobile && layer.mobileSrc ? layer.mobileSrc : layer.src;
+                    return (
+                      <img
+                        key={j}
+                        ref={(el) => {
+                          if (!layerRefs.current[i]) layerRefs.current[i] = [];
+                          if (el) layerRefs.current[i][j] = el;
+                        }}
+                        src={imageSrc}
+                        alt={layer.alt}
+                        className="absolute w-full h-full object-cover"
+                        style={{ willChange: "transform" }}
+                      />
+                    );
+                  })}
+                </div>
+                <div
+                  className={`absolute bottom-20 left-1/2 -translate-x-1/2 text-center text-white bg-black/50 p-4 rounded-xl backdrop-blur-sm transition-all duration-500 ease-in-out ${
+                    (hasInitialAnimationPlayed || i > 0) && activeSlide === i
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-4 pointer-events-none"
+                  }`}
+                >
+                  <h3 className="text-2xl md:text-3xl font-bold hero-text">
+                    {slide.title}
+                  </h3>
+                  <p className="text-md md:text-lg">{slide.caption}</p>
+                </div>
               </div>
-              <div
-                className={`absolute bottom-20 left-1/2 -translate-x-1/2 text-center text-white bg-black/50 p-4 rounded-xl backdrop-blur-sm ${
-                  hasInitialAnimationPlayed || i > 0
-                    ? "opacity-100"
-                    : "opacity-0"
-                }`}
-              >
-                <h3 className="text-3xl font-bold hero-text">{slide.title}</h3>
-                <p className="text-lg">{slide.caption}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
