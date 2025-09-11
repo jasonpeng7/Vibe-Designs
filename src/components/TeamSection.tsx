@@ -17,13 +17,15 @@ const teamMembers = [
   },
 ];
 
-const useAnimatedCounter = (target: number, duration = 2000) => {
+const useAnimatedCounter = (
+  target: number,
+  inView: boolean,
+  duration = 2000
+) => {
   const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView({ triggerOnce: true, threshold: 0.1 });
 
   useEffect(() => {
-    if (isInView.inView) {
+    if (inView) {
       let start = 0;
       const end = target;
       const increment = end / (duration / 16); // ~60fps
@@ -39,23 +41,24 @@ const useAnimatedCounter = (target: number, duration = 2000) => {
 
       return () => clearInterval(timer);
     }
-  }, [isInView.inView, target, duration]);
+  }, [inView, target, duration]);
 
-  return { ref, count };
+  return count;
 };
 
 const ExperienceRibbon = () => {
-  const { ref: yearsRef, count: yearsCount } = useAnimatedCounter(2);
-  const { ref: projectsRef, count: projectsCount } = useAnimatedCounter(30);
-  const { ref: clientsRef, count: clientsCount } = useAnimatedCounter(15);
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const yearsCount = useAnimatedCounter(4, inView);
+  const projectsCount = useAnimatedCounter(7, inView);
+  const clientsCount = useAnimatedCounter(10, inView);
 
   return (
     <ScrollAnimation delay={0.5}>
-      <div className="mt-20 border-b border-white/10 pt-12">
-        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div ref={ref} className="mt-20 border-b border-white/10 pt-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="text-white">
             <p className="text-4xl font-bold">
-              <span ref={yearsRef}>{yearsCount}</span>+
+              <span>{yearsCount}</span>+
             </p>
             <p className="text-sm text-muted-foreground mt-2">
               Years of Experience
@@ -63,25 +66,25 @@ const ExperienceRibbon = () => {
           </div>
           <div className="text-white">
             <p className="text-4xl font-bold">
-              <span ref={projectsRef}>{projectsCount}</span>+
+              <span>{projectsCount}</span>+
             </p>
             <p className="text-sm text-muted-foreground mt-2">
-              Projects Delivered
+              Websites Delivered
             </p>
           </div>
-          <div className="text-white">
+          <div className="text-white pb-4">
             <p className="text-4xl font-bold">
-              <span ref={clientsRef}>{clientsCount}</span>+
+              <span>{clientsCount}</span>+
             </p>
             <p className="text-sm text-muted-foreground mt-2">Happy Clients</p>
           </div>
         </div>
-        <div className="mt-16">
+        {/* <div className="mt-16">
           <p className="text-center text-sm text-muted-foreground mb-6">
             Trusted by industry leaders
           </p>
           <div className="flex justify-center items-center gap-8 opacity-60">
-            {["Peng Flooring", "Antonious Cosmetics", "VBE Digital"].map(
+            {["Peng Flooring", "Antonious Cosmetics", ""].map(
               (logo) => (
                 <div key={logo} className="px-4 py-2 bg-white/5 rounded-lg">
                   <span className="font-semibold text-xs text-white/70">
@@ -104,13 +107,12 @@ const TeamCard = ({
   member: (typeof teamMembers)[0];
   index: number;
 }) => {
-  const [pressedSeal, setPressedSeal] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
-
-  const handleSealPress = () => {
-    setPressedSeal(true);
-    setTimeout(() => setPressedSeal(false), 400); // Animation duration
-  };
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+    delay: 200 + index * 150,
+  });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -131,27 +133,23 @@ const TeamCard = ({
   };
 
   return (
-    <ScrollAnimation delay={0.2 + index * 0.15} className="flex justify-center">
+    <div ref={ref} className="flex justify-center">
       <div
         ref={cardRef}
-        className="team-card-container"
+        className={`team-card-container ${inView ? "in-view" : ""}`}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        onClick={handleSealPress}
-        role="button"
-        tabIndex={0}
-        aria-label={`Press seal to reveal ${member.name}'s credentials`}
       >
         <div className="sticker-wrapper">
           <img src={member.image} alt={member.name} />
-          <HeritageSeal isPressed={pressedSeal} />
+          <HeritageSeal />
         </div>
         <div className="info-layer">
           <h3 className="font-bold text-lg text-white">{member.name}</h3>
-          <p className="text-sm text-primary italic">{member.role}</p>
+          <p className="text-sm hero-text italic">{member.role}</p>
         </div>
       </div>
-    </ScrollAnimation>
+    </div>
   );
 };
 

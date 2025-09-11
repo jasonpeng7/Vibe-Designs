@@ -72,14 +72,6 @@
   }
 }
 
-/* Hover Grow/Glow */
-.team-card-container:hover .heritage-seal .seal-body {
-  transform-origin: center;
-  transition: transform 0.3s ease-out;
-  transform: scale(1.06);
-  filter: drop-shadow(0 0 10px hsl(45, 100%, 70%, 0.7));
-}
-
 /* Click Press Animation */
 .heritage-seal.pressed .seal-body {
   animation: press-in 0.4s ease-out;
@@ -126,7 +118,6 @@
   left: 50%;
   width: 120%;
   padding: 1rem;
-  padding-top: 2rem; /* Space for the seal overlap */
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 0.75rem;
@@ -134,13 +125,13 @@
   z-index: 5;
 
   opacity: 0;
-  transform: translateY(1rem) translateX(-50%);
+  transform: translateY(1rem) translateX(-50%) translateZ(0);
   transition: opacity 0.24s ease-out, transform 0.24s ease-out;
 }
 
 .team-card-container:hover .info-layer {
   opacity: 1;
-  transform: translateY(0) translateX(-50%);
+  transform: translateY(0) translateX(-50%) translateZ(40px);
 }
 
 /* Reduced Motion */

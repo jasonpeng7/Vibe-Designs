@@ -1,8 +1,8 @@
-const HeritageSeal = ({ isPressed }: { isPressed: boolean }) => {
+const HeritageSeal = () => {
   return (
     <svg
       viewBox="0 0 100 100"
-      className={`heritage-seal ${isPressed ? "pressed" : ""}`}
+      className="heritage-seal"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
@@ -47,7 +47,7 @@ const HeritageSeal = ({ isPressed }: { isPressed: boolean }) => {
           textAnchor="middle"
           fontWeight="bold"
         >
-          EST.
+          Since
         </text>
         <text
           x="50"
@@ -58,7 +58,7 @@ const HeritageSeal = ({ isPressed }: { isPressed: boolean }) => {
           textAnchor="middle"
           fontWeight="bold"
         >
-          2022
+          2024
         </text>
         <text
           x="50"
@@ -69,7 +69,7 @@ const HeritageSeal = ({ isPressed }: { isPressed: boolean }) => {
           textAnchor="middle"
           letterSpacing="0.1em"
         >
-          QUALITY & CRAFT
+          QUALITY & DESIGN
         </text>
       </g>
       <circle
