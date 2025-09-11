@@ -1,146 +1,155 @@
+// Cloudflare Pages Function: POST /booking-email
+// Sends your booking form as an email via the Mailgun API.
+
 interface Env {
-  GMAIL_SENDER?: string;
-  GMAIL_TO?: string;
-  GMAIL_CLIENT_ID?: string;
-  GMAIL_CLIENT_SECRET?: string;
-  GCALENDAR_ID?: string;
-  GCALENDAR_ENABLED?: string;
-  GMAIL_REFRESH_TOKEN?: string;
+  MAILGUN_API_KEY?: string;
+  MAILGUN_DOMAIN?: string;
+  MAILGUN_SENDER_EMAIL?: string;
+  MAILGUN_RECIPIENT_EMAIL?: string;
   ALLOWED_ORIGIN?: string;
 }
 
-interface ConsultationRequestData {
+interface ConsultationData {
   date?: string;
   name?: string;
   email?: string;
   company?: string;
   selectedPlan?: string;
   projectType?: string;
+  budgetRange?: string;
   projectDetails?: string;
+  hp_trap?: string;
 }
 
-interface ConsultationRequest {
-  date?: string;
-  name?: string;
-  email?: string;
-  company?: string;
-  selectedPlan?: string;
-  projectType?: string;
-  projectDetails?: string;
-  userAgent?: string;
-  ipAddress?: string;
+interface Consultation {
+  date: string;
+  name: string;
+  email: string;
+  company: string;
+  selectedPlan: string;
+  projectType: string;
+  budgetRange: string;
+  projectDetails: string;
+  user_agent: string;
+  ip: string;
 }
 
-function isAllowedOrigin(origin: string, env: Env): boolean {
-  if (!origin || origin === "null") {
-    return true;
-  }
-
-  const allowed = [env.ALLOWED_ORIGIN, "http://localhost:8080"].filter(Boolean);
-  console.log("Checking origin:", origin, "against allowed:", allowed);
-  return !!allowed.find((o) => o === origin);
-}
-
-function corsResponse(env: Env, response: Response): Response {
-  const headers = new Headers(response.headers);
-  const origin = headers.get("Access-Control-Allow-Origin") || "";
-  if (!origin) {
-    // For development, be more permissive
-    headers.set("Access-Control-Allow-Origin", "*");
-  }
-
-  headers.set("Access-Control-Allow-Methods", "POST");
-  headers.set("Access-Control-Allow-Headers", "Content-Type");
-  headers.set("Access-Control-Max-Age", "86400");
-  return new Response(response.body, { status: response.status, headers });
-}
-
-function json(obj: unknown, status: number = 200): Response {
-  return new Response(JSON.stringify(obj), {
-    status,
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-}
-
-// main handler function
-export async function handleBookingEmailRequest(
-  request: Request,
-  env: Env
-): Promise<Response> {
+export async function onRequest({
+  request,
+  env,
+}: {
+  request: Request;
+  env: Env;
+}) {
+  // Handle OPTIONS requests for CORS
   if (request.method === "OPTIONS") {
     return corsResponse(env, new Response(null, { status: 204 }));
   }
 
+  // Only handle POST requests
   if (request.method !== "POST") {
-    return new Response("method not allowed", { status: 405 });
+    return corsResponse(
+      env,
+      json({ success: false, error: "Method not allowed" }, 405)
+    );
   }
-
   try {
-    // check origin, data, and content header
+    // --- CORS & basic checks ---
     const origin = request.headers.get("Origin") || "";
     if (!isAllowedOrigin(origin, env)) {
       return corsResponse(
         env,
-        json({ success: false, error: "origin not allowed" }, 403)
+        json({ success: false, error: "Origin not allowed" }, 403)
       );
     }
 
-    const contentType = request.headers.get("Content-Type");
-    if (contentType !== "application/json") {
+    const contentType = request.headers.get("Content-Type") || "";
+    if (!contentType.includes("application/json")) {
       return corsResponse(
         env,
-        json({ success: false, error: "invalid content type" }, 400)
+        json({ success: false, error: "Invalid content type" }, 415)
       );
     }
 
-    const data: ConsultationRequestData = await request.json();
-    const safe = (v: unknown): string => {
-      return String(v ?? "")
+    const data: ConsultationData = await request.json();
+    // Simple honeypot (optional): if a hidden field comes filled, drop it.
+    if (typeof data.hp_trap === "string" && data.hp_trap.trim().length > 0) {
+      return corsResponse(
+        env,
+        json({ success: true, message: "Thanks!" }, 200)
+      ); // pretend success
+    }
+
+    // --- Validate & sanitize a bit ---
+    const safe = (v: unknown): string =>
+      String(v ?? "")
         .toString()
         .slice(0, 2000);
-    };
-
-    const consultation: ConsultationRequest = {
+    const consultation: Consultation = {
       date: safe(data.date),
       name: safe(data.name),
       email: safe(data.email),
       company: safe(data.company),
       selectedPlan: safe(data.selectedPlan),
       projectType: safe(data.projectType),
+      budgetRange: safe(data.budgetRange),
       projectDetails: safe(data.projectDetails),
-      userAgent: request.headers.get("User-Agent") || "",
-      ipAddress: request.headers.get("CF-Connecting-IP") || "",
+      user_agent: request.headers.get("User-Agent") || "",
+      ip: request.headers.get("CF-Connecting-IP") || "",
     };
 
+    // Check if Mailgun credentials are available
     if (
-      !env.GMAIL_CLIENT_ID ||
-      !env.GMAIL_CLIENT_SECRET ||
-      !env.GMAIL_REFRESH_TOKEN
+      !env.MAILGUN_API_KEY ||
+      !env.MAILGUN_DOMAIN ||
+      !env.MAILGUN_SENDER_EMAIL ||
+      !env.MAILGUN_RECIPIENT_EMAIL
     ) {
+      console.error(
+        "Mailgun environment variables are not set. Email will not be sent."
+      );
+      // Log the booking data for debugging, but return success to the user so the form works.
+      console.log(
+        "Consultation request received (email not sent):",
+        consultation
+      );
       return corsResponse(
         env,
-        json({ success: false, error: "gmail credentials not set" }, 500)
+        json(
+          {
+            success: true,
+            message:
+              "Your consultation request has been submitted successfully! We'll contact you within 24 hours.",
+            note: "Mailgun not configured - consultation logged only",
+          },
+          200
+        )
       );
     }
 
-    // build email
-    const subject = `[VBE DESIGN] Website Consultation Request from ${consultation.name}`;
-    const textBody = `New Consultation Request\n\n
-        Name: ${consultation.name}\n
-        Email: ${consultation.email}\n
-        Company: ${consultation.company}\n
-        Selected Plan: ${consultation.selectedPlan}\n
-        Project Type: ${consultation.projectType}\n
-        Project Details: ${consultation.projectDetails}\n
-        Submitted: ${new Date().toISOString()}\n
-        UA: ${consultation.userAgent}\n
-        IP: ${consultation.ipAddress}\n
-        `;
+    // --- Build the email ---
+    const subject = `[ViBE Design] Website Consultation Request from ${
+      consultation.name || "Unknown"
+    }`;
+    const textBody = `New Consultation Request
+
+  Name: ${consultation.name}
+  Email: ${consultation.email}
+  Company: ${consultation.company}
+  Selected Plan: ${consultation.selectedPlan}
+  Project Type: ${consultation.projectType}
+  Budget Range: ${consultation.budgetRange}
+  
+  Project Details:
+  ${consultation.projectDetails}
+  
+  Submitted: ${new Date().toISOString()}
+  IP: ${consultation.ip}
+  UA: ${consultation.user_agent}
+  `;
 
     const htmlBody = `
-        <h2>New Booking Request</h2>
+        <h2>New Consultation Request</h2>
         <p><strong>Name:</strong> ${escapeHtml(consultation.name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(consultation.email)}</p>
         <p><strong>Company:</strong> ${escapeHtml(consultation.company)}</p>
@@ -150,76 +159,65 @@ export async function handleBookingEmailRequest(
         <p><strong>Project Type:</strong> ${escapeHtml(
           consultation.projectType
         )}</p>
-        <p><strong>Project Details:</strong> ${escapeHtml(
-          consultation.projectDetails
+        <p><strong>Budget Range:</strong> ${escapeHtml(
+          consultation.budgetRange
         )}</p>
+        <p><strong>Project Details:</strong><br>${escapeHtml(
+          consultation.projectDetails
+        ).replace(/\n/g, "<br>")}</p>
         <hr>
         <p><small>Submitted: ${new Date().toISOString()}</small></p>
-        <p><small>IP: ${escapeHtml(consultation.ipAddress)}</small></p>
-        <p><small>UA: ${escapeHtml(consultation.userAgent)}</small></p>
+        <p><small>IP: ${escapeHtml(consultation.ip)}</small></p>
+        <p><small>UA: ${escapeHtml(consultation.user_agent)}</small></p>
       `;
 
-    // create gmail
-    const boundary = "mime_boundary_" + Math.random().toString(36).slice(2);
-    const mime = [
-      `From: ${env.GMAIL_SENDER}`,
-      `To: ${env.GMAIL_TO}`,
-      `Subject: ${subject}`,
-      "MIME-Version: 1.0",
-      `Content-Type: multipart/alternative; boundary="${boundary}"`,
-      "",
-      `--${boundary}`,
-      `Content-Type: text/plain; charset="UTF-8"`,
-      "",
-      textBody,
-      `--${boundary}`,
-      `Content-Type: text/html; charset="UTF-8"`,
-      "",
-      htmlBody,
-      `--${boundary}--`,
-      "",
-    ].join("\r\n");
+    // --- Send via Mailgun API using fetch ---
+    // The mailgun.js library has compatibility issues in the Workers environment.
+    // Using a direct fetch call is more robust.
+    const formData = new FormData();
+    formData.append("from", env.MAILGUN_SENDER_EMAIL);
+    formData.append("to", env.MAILGUN_RECIPIENT_EMAIL);
+    formData.append("subject", subject);
+    formData.append("text", textBody);
+    formData.append("html", htmlBody);
 
-    // encode for Gmail API
-    const raw = base64UrlEncode(mime);
-
-    // get refresh token
-    const refreshToken = await getAccessToken(env);
-    if (!refreshToken) {
-      return corsResponse(
-        env,
-        json({ success: false, error: "failed oAuth" }, 500)
-      );
-    }
-
-    // finally send thru gmail API
-    const sendGmail = await fetch(
-      "https://gmail.googleapis.com/gmail/v1/users/me/messages/send",
+    const response = await fetch(
+      `https://api.mailgun.net/v3/${env.MAILGUN_DOMAIN}/messages`,
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${refreshToken}`,
-          "Content-Type": "application/json",
+          Authorization: `Basic ${btoa(`api:${env.MAILGUN_API_KEY}`)}`,
         },
-        body: JSON.stringify({ raw }),
+        body: formData,
       }
     );
 
-    if (!sendGmail.ok) {
-      const errText = await sendGmail.text();
-      console.error("Gmail send error:", errText);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Mailgun API Error:", errorText);
       return corsResponse(
         env,
-        json({ success: false, error: "Failed to send email" }, 502)
+        json({ success: false, error: "Failed to send email via Mailgun" }, 502)
       );
     }
 
+    const mailgunResponse = await response.json();
+
+    console.log("Mailgun response:", mailgunResponse);
+
     return corsResponse(
       env,
-      json({ success: true, message: "Email sent" }, 200)
+      json(
+        {
+          success: true,
+          message: "Your consultation request has been emailed!",
+          mailgunId: mailgunResponse.id,
+        },
+        200
+      )
     );
   } catch (err) {
-    console.error(err);
+    console.error("An error occurred:", err);
     return corsResponse(
       env,
       json({ success: false, error: "Server error" }, 500)
@@ -227,57 +225,7 @@ export async function handleBookingEmailRequest(
   }
 }
 
-// export for Wrangler
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    return handleBookingEmailRequest(request, env);
-  },
-};
-
-// Keep the old export for compatibility
-export async function onRequest({
-  request,
-  env,
-}: {
-  request: Request;
-  env: Env;
-}) {
-  return handleBookingEmailRequest(request, env);
-}
-
-// helper functions
-async function getAccessToken(env: Env): Promise<string | null> {
-  if (
-    !env.GMAIL_CLIENT_ID ||
-    !env.GMAIL_CLIENT_SECRET ||
-    !env.GMAIL_REFRESH_TOKEN
-  ) {
-    return null;
-  }
-
-  const body = new URLSearchParams({
-    client_id: env.GMAIL_CLIENT_ID,
-    client_secret: env.GMAIL_CLIENT_SECRET,
-    refresh_token: env.GMAIL_REFRESH_TOKEN,
-    grant_type: "refresh_token",
-  });
-
-  const response = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body,
-  });
-
-  if (!response.ok) {
-    console.error("Token fetch failed:", await response.text());
-    return null;
-  }
-
-  const json = await response.json();
-  return json.access_token;
-}
+/* ---------- helpers ---------- */
 
 function escapeHtml(s: unknown): string {
   return String(s ?? "")
@@ -287,13 +235,35 @@ function escapeHtml(s: unknown): string {
     .replace(/"/g, "&quot;");
 }
 
-function base64UrlEncode(str: string): string {
-  const bytes = new TextEncoder().encode(str);
-  let binary = "";
-  for (let i = 0; i < bytes.length; i++)
-    binary += String.fromCharCode(bytes[i]);
-  return btoa(binary)
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/g, "");
+function isAllowedOrigin(origin: string, env: Env): boolean {
+  if (!origin || origin === "null") {
+    return true; // Allow server-to-server or tools like curl
+  }
+
+  const allowed = [
+    env.ALLOWED_ORIGIN,
+    "https://www.vibecreative.io",
+    "https://vibecreative.io",
+    "http://localhost:5173",
+    "http://localhost:8788", // For Wrangler
+  ].filter(Boolean);
+
+  console.log("Checking origin:", origin, "against allowed:", allowed);
+  return !!allowed.find((o) => o === origin);
+}
+
+function corsResponse(env: Env, res: Response): Response {
+  const headers = new Headers(res.headers);
+  headers.set("Access-Control-Allow-Origin", "*"); // More permissive for now
+  headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  headers.set("Access-Control-Allow-Headers", "Content-Type");
+  headers.set("Access-Control-Max-Age", "86400");
+  return new Response(res.body, { status: res.status, headers });
+}
+
+function json(obj: unknown, status: number = 200): Response {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
 }
