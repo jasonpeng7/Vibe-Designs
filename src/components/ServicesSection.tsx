@@ -112,7 +112,7 @@ const ServicesSection = () => {
   return (
     <section
       id="services"
-      className="py-24 px-2 bg-gradient-to-b from-background to-secondary/20"
+      className="py-24 px-2 bg-gradient-to-b from-black to-blue-600/20 "
     >
       <div className="container mx-auto max-w-6xl">
         {/* Header */}

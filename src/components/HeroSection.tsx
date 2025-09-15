@@ -9,7 +9,7 @@ const heroWords = ["Vision", "Branding", "Elevate"];
 const HeroSection = () => {
   const { ref: viewRef, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.3, // Start animation when 30% of the section is visible
+    threshold: 0.3, // Start animation when 10% of the section is visible
   });
 
   const smoothScrollTo = (id: string) => {
@@ -25,13 +25,16 @@ const HeroSection = () => {
   return (
     <section
       ref={viewRef}
-      className="hero-container relative min-h-screen flex items-center overflow-hidden pt-20 md:pt-0"
+      className="hero-container relative min-h-screen flex items-center overflow-hidden pt-20 md:pt-0 max-w-6xl mx-auto"
     >
-      <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center">
+      <div className="container mx-auto flex flex-col-reverse md:grid md:grid-cols-2 gap-8 items-center">
         {/* Left Panel: Content */}
         <div className="text-center md:text-left py-12">
-          {/* <ScrollAnimation> */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white">
+          <h1
+            className={`text-4xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight text-white fade-in-on-scroll ${
+              inView ? "start-animation" : ""
+            }`}
+          >
             Websites built for <span className="hero-text">growth</span>,
             <br />
             not just <span className="hero-text">presence</span>.
@@ -55,16 +58,22 @@ const HeroSection = () => {
               />
             </svg>
           </h1>
-          {/* </ScrollAnimation> */}
-          {/* <ScrollAnimation delay={0.2}> */}
-          <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-lg">
+          <p
+            className={`mt-6 text-sm sm:text-md md:text-xl text-muted-foreground max-w-lg fade-in-on-scroll ${
+              inView ? "start-animation" : ""
+            }`}
+            style={{ animationDelay: "0.3s" }}
+          >
             We create websites that don't just look great — they work 24/7 to
             bring you leads, calls, and customers. The digital market is huge,
             let&apos;s make it yours <span className="hero-text">today</span>.
           </p>
-          {/* </ScrollAnimation> */}
-          {/* <ScrollAnimation delay={0.4}> */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-8">
+          <div
+            className={`flex flex-col sm:flex-row gap-4 mt-8 fade-in-on-scroll ${
+              inView ? "start-animation" : ""
+            }`}
+            style={{ animationDelay: "0.5s" }}
+          >
             <Button
               size="lg"
               className="btn-gradient text-lg px-8 py-4 rounded-full"
@@ -84,7 +93,7 @@ const HeroSection = () => {
         </div>
 
         {/* Right Panel: Particle Animation */}
-        <div className="relative w-full h-[350px] sm:h-[400px] md:h-[600px]">
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[600px]">
           <ParticleLogo words={heroWords} startAnimation={inView} />
         </div>
       </div>
