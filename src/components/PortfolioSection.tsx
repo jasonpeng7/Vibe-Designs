@@ -5,20 +5,21 @@ import ProjectCard from "./ui/ProjectCard";
 const projects = [
   {
     title: "Peng Flooring",
-    category: "B2B Platform",
-    image: "/peng-flooring.png",
-    tags: ["Local Business", "Lead Generation", "B2B", "SEO"],
-    url: "https://www.pengfloor.com",
     slug: "peng-flooring",
+    client_logo: "/path/to/peng-logo.svg", // Placeholder
+    impact: "Elevated a local business with a 200% increase in online leads.",
+    hero_image: "/peng-flooring.png",
+    services: ["Web Design", "SEO", "Lead Generation"],
     year: "2023",
   },
   {
     title: "Atharva's Portfolio",
-    category: "Personal Portfolio",
-    image: "/atharva-portfolio.png",
-    tags: ["Portfolio", "Engineering"],
-    url: "https://atharvapk.com",
     slug: "atharva-portfolio",
+    client_logo: "/path/to/atharva-logo.svg", // Placeholder
+    impact:
+      "Designed a high-performance personal site for a software engineer.",
+    hero_image: "/atharva-portfolio.png",
+    services: ["Web Development", "Performance"],
     year: "2024",
   },
 ];
@@ -27,22 +28,25 @@ const PortfolioSection = () => {
   return (
     <section
       id="portfolio"
-      className="py-24 bg-background"
+      className="py-24 bg-border"
       aria-labelledby="projects-heading"
     >
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="flex items-start justify-between gap-6 mb-16">
           <div>
             <h2
               id="projects-heading"
-              className="text-3xl md:text-5xl font-bold leading-tight text-foreground"
+              className="text-4xl md:text-5xl font-bold leading-tight text-foreground"
             >
-              Some selected <br /> <span className="hero-text">projects</span>
+              Curated <span className="hero-text">Creations</span>
             </h2>
+            <p className="text-lg text-muted-foreground mt-2">
+              A showcase of our passion for design and development.
+            </p>
           </div>
-          <div className="flex-shrink-0">
-            {projects.length >= 3 && (
+          <div className="flex-shrink-0 mt-2">
+            {projects.length > 6 && ( // Example: show if more than 6 projects
               <Link to="/portfolio">
                 <Button
                   variant="outline"
@@ -57,9 +61,18 @@ const PortfolioSection = () => {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-6 gap-4">
           {projects.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} index={i} />
+            <div
+              key={p.slug}
+              className={
+                i === 0
+                  ? "col-span-6 md:col-span-4"
+                  : "col-span-6 md:col-span-2"
+              }
+            >
+              <ProjectCard project={p} index={i} />
+            </div>
           ))}
         </div>
       </div>
