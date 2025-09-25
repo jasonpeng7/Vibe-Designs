@@ -51,13 +51,13 @@ const Navbar = () => {
     <header
       role="navigation"
       aria-label="Main"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+      className={`fixed top-4 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
         isScrolled || isMobileMenuOpen || isCaseStudyPage
           ? "bg-transparent"
           : "bg-transparent"
       }`}
     >
-      <MaxWidthWrapper className="h-24 flex items-center justify-between">
+      <MaxWidthWrapper className="h-20 flex items-center justify-between">
         {/* --- Desktop Header --- */}
         <div className="hidden md:flex w-full items-center justify-between px-10">
           {/* Logo */}
@@ -66,24 +66,24 @@ const Navbar = () => {
               <img
                 src="/vibe_lgo.png"
                 alt="VBE Design Logo"
-                className="h-8 w-auto"
+                className="h-7 w-auto"
               />
             </a>
           </div>
 
           {/* Desktop Nav Island */}
-          <nav className="rounded-full  bg-background/50 shadow-lg backdrop-blur-lg">
-            <div className="flex items-center gap-x-2 px-2 py-2">
+          <nav className="rounded-full bg-white/20 backdrop-blur-lg border border-black/70">
+            <div className="flex items-center gap-x-2 px-2 py-1">
               {navLinks.map((link) => (
                 <Button
                   key={link.id}
                   variant="ghost"
                   onClick={() => scrollToSection(link.id)}
                   className={cn(
-                    "rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ease-in-out hover:text-primary",
+                    "poppins-regular rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ease-in-out hover:bg-transparent hover:scale-110",
                     activeSection === link.id
-                      ? "bg-primary/10 text-primary"
-                      : "text-white/70"
+                      ? "bg-primary/10 hero-text"
+                      : "text-black/70"
                   )}
                 >
                   {link.title}
@@ -96,9 +96,9 @@ const Navbar = () => {
           <div className="flex-1 flex justify-end">
             <Button
               onClick={() => scrollToSection("contact")}
-              className="bg-background/50 shadow-lg backdrop-blur-lg rounded-xl border border-white"
+              className="p-2 bg-transparent rounded-none  backdrop-blur-sm bg-white/20"
             >
-              <p className="hero-text font-regular  ">Start a Project</p>
+              <p className="text-xs text-black poppins-regular px-2">Start a Project</p>
             </Button>
           </div>
         </div>
@@ -107,62 +107,88 @@ const Navbar = () => {
         <div className="md:hidden w-full p-2">
           <div className="relative">
             {/* Mobile Nav Island */}
-            <nav className="mx-[20px] flex items-center justify-between rounded-full  bg-background/70 p-2 shadow-lg backdrop-blur-md">
-              <a href="/" aria-label="ViBE Creative Home">
+            <nav className="mx-[20px] flex items-center justify-between rounded-full border border-black/70 bg-white/20 p-2 backdrop-blur-md h-12">
+              <a href="/" aria-label="ViBE Creative Home" className="flex items-center">
                 <img
                   src="/vibe_lgo.png"
                   alt="VBE Design Logo"
-                  className="h-7 w-auto"
+                  className="h-6 w-auto"
                 />
               </a>
               <Button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                variant="ghost"
                 size="icon"
-                className="bg-transparent"
+                className="bg-transparent text-black hover:bg-transparent hover:text-black/30 flex items-center justify-center h-10 w-10 p-0"
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-menu"
               >
                 <span className="sr-only">Open main menu</span>
-                {isMobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
+                <div className="relative w-6 h-6 flex items-center justify-center">
+                  <Menu 
+                    className={cn(
+                      "absolute inset-0 m-auto h-5 w-5 transition-all duration-300 ease-out",
+                      isMobileMenuOpen ? "opacity-0 rotate-180 scale-0" : "opacity-100 rotate-0 scale-100"
+                    )} 
+                  />
+                  <X 
+                    className={cn(
+                      "absolute inset-0 m-auto h-5 w-5 transition-all duration-300 ease-out",
+                      isMobileMenuOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-180 scale-0"
+                    )} 
+                  />
+                </div>
               </Button>
             </nav>
 
-            {/* Mobile Dropdown Menu */}
+            {/* Mobile Dropdown Menu - Opens Downward */}
             <div
               id="mobile-menu"
               className={cn(
-                "absolute top-full left-0 right-0 mt-2 transition-all duration-300 ease-in-out",
+                "absolute top-full left-0 right-0 mt-2 backdrop-blur-sm transition-opacity duration-500 ease-out will-change-transform will-change-opacity",
                 isMobileMenuOpen
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-4 pointer-events-none"
               )}
             >
-              <div className="mx-auto max-w-[95%] rounded-2xl border border-white/30 bg-background/95 p-4 shadow-lg backdrop-blur-lg">
-                <div className="flex flex-col items-center space-y-2">
-                  {navLinks.map((link) => (
+              <div className="mx-[20px] rounded-3xl border border-black/70 bg-white/20 p-6 shadow-lg backdrop-blur-md ">
+                <div className="flex flex-col items-center space-y-4">
+                  {navLinks.map((link, index) => (
                     <Button
                       key={link.id}
                       variant="ghost"
                       onClick={() => scrollToSection(link.id)}
                       className={cn(
-                        "w-full justify-center gap-x-2 rounded-lg py-3 text-center text-lg font-medium transition-colors hover:bg-primary/10 hover:text-primary",
+                        "w-full justify-center gap-x-2 rounded-lg py-3 text-center text-lg font-medium",
                         activeSection === link.id
-                          ? "bg-primary/10 text-primary"
-                          : "text-white/80"
+                          ? "hero-text"
+                          : "text-black",
+                        isMobileMenuOpen 
+                          ? "translate-y-0 opacity-100" 
+                          : "translate-y-4 opacity-0"
                       )}
+                      style={{
+                        transitionDelay: isMobileMenuOpen ? `${index * 100 + 200}ms` : `${(navLinks.length - index) * 50}ms`
+                      }}
                     >
                       {link.title}
                     </Button>
                   ))}
-                  <div className="w-full pt-4 border-t border-border/20 mt-2">
+                  
+                  {/* CTA Button */}
+                  <div 
+                    className={cn(
+                      "w-full pt-4 border-t border-black/20 mt-2 transition-all duration-300",
+                      isMobileMenuOpen 
+                        ? "translate-y-0 opacity-100" 
+                        : "translate-y-4 opacity-0"
+                    )}
+                    style={{
+                      transitionDelay: isMobileMenuOpen ? `${navLinks.length * 100 + 300}ms` : "0ms"
+                    }}
+                  >
                     <Button
                       onClick={() => scrollToSection("contact")}
-                      className="btn-gradient w-full text-lg"
+                      className="btn-gradient w-full text-lg py-3 hover:scale-105 transition-transform duration-200"
                     >
                       Start a Project
                     </Button>
