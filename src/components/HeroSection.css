@@ -1,24 +1,194 @@
-/* HeroSection.css */
+/* HeroSection.css - Animated SVG Waves */
 
-.hero-container {
-  /* Muted navy -> warm slate gradient + paper grain texture */
-  background-color: black;
+:root {
+  /* tune these */
+  --hero-height: 100vh;
+  --wave-height: 50vh; /* visual height of the waves block */
+  --bg-top: #071029;
+  --bg-bottom: #08203a;
+
+  --wave-1: rgba(124, 58, 237, 0.85); /* foreground */
+  --wave-2: rgba(99, 102, 241, 0.7);  /* middle */
+  --wave-3: rgba(14, 165, 233, 0.45); /* background */
+
+  --flow-duration-1: 9s;
+  --flow-duration-2: 14s;
+  --flow-duration-3: 22s;
+
+  --rise-duration: 900ms;
+  --easing: cubic-bezier(.22,.9,.3,1);
+}
+
+/* HERO layout */
+.hero {
+  position: relative;
+  min-height: var(--hero-height);
+  display: grid;
+  place-items: start center; /* top on small screens */
+  text-align: center;
   overflow: hidden;
+  background: white;
+  color: white;
+  padding: 6vh 2rem;
 }
 
-/* Underline write-in animation */
-.hero-underline {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: draw-in 1.2s cubic-bezier(0.2, 0.9, 0.2, 1) 0.5s forwards;
-}
-
-@keyframes draw-in {
-  to {
-    stroke-dashoffset: 0;
+@media (min-width: 768px) {
+  .hero {
+    place-items: center; /* recenter on md+ */
   }
 }
 
+/* content slides slightly up on load */
+.hero__content {
+  z-index: 40;
+  max-width: 1100px;
+  transform: translateY(18px);
+  opacity: 0;
+  animation: contentSlide var(--rise-duration) var(--easing) forwards;
+  animation-delay: 160ms;
+}
+
+/* Hero Title */
+.hero__title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Hero Buttons */
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .hero-buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+/* waves block is absolutely positioned at bottom and centered */
+.waves {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(15%);
+  bottom: 0;
+  width: 100%;    /* narrower to stay within container bounds */
+  height: var(--wave-height);
+  z-index: 10;
+  pointer-events: none;
+  will-change: transform; /* hint for performance */
+}
+
+/* each SVG uses full width of the waves container */
+.wave {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  height: 100%;
+  display: block;
+  transform-origin: center bottom;
+  will-change: transform, opacity, filter;
+}
+
+/* color + visual style for paths */
+.wave path {
+  fill: var(--wave-1);
+  transform-origin: center bottom;
+  transition: fill .25s;
+  shape-rendering: geometricPrecision;
+}
+
+/* Show desktop paths by default, hide mobile paths */
+.wave-path-mobile {
+  display: none;
+}
+
+.wave-path-desktop {
+  display: block;
+}
+
+/* layer-specific styles (parallax & blur) */
+.wave--1 path { fill: var(--wave-1); opacity: 0.95; filter: blur(.4px); }
+.wave--2 path { fill: var(--wave-2); opacity: 0.78; filter: blur(1.6px); transform: translateY(6px); }
+.wave--3 path { fill: var(--wave-3); opacity: 0.6; filter: blur(6px) saturate(120%); transform: translateY(12px); }
+
+/* slide-in animations with staggered timing */
+.wave--1 { 
+  animation: slideInFromLeft var(--rise-duration) var(--easing) forwards, flow1 var(--flow-duration-1) linear infinite, bob1 6s ease-in-out infinite; 
+  animation-delay: 200ms, 1.2s, 1.2s;
+  transform: translateX(-100%);
+}
+.wave--2 { 
+  animation: slideInFromRight var(--rise-duration) var(--easing) forwards, flow2 var(--flow-duration-2) linear infinite, bob2 8s ease-in-out infinite; 
+  animation-delay: 400ms, 1.4s, 1.4s;
+  transform: translateX(100%);
+}
+.wave--3 { 
+  animation: slideInFromLeft var(--rise-duration) var(--easing) forwards, flow3 var(--flow-duration-3) linear infinite, bob3 10s ease-in-out infinite; 
+  animation-delay: 600ms, 1.6s, 1.6s;
+  transform: translateX(-100%);
+}
+
+/* keyframes for horizontal flow (subtle movement within bounds) */
+@keyframes flow1 {
+  0%   { transform: translate3d(0,0,0); }
+  50%  { transform: translate3d(-5%, 0, 0); }
+  100% { transform: translate3d(0,0,0); }
+}
+@keyframes flow2 {
+  0%   { transform: translate3d(0,0,0) scaleX(1); }
+  50%  { transform: translate3d(-8%, 0, 0) scaleX(1.01); }
+  100% { transform: translate3d(0,0,0) scaleX(1); }
+}
+@keyframes flow3 {
+  0%   { transform: translate3d(0,0,0) scaleX(1); }
+  50%  { transform: translate3d(6%, 0, 0) scaleX(1.5); }
+  100% { transform: translate3d(0,0,0) scaleX(1); }
+}
+
+/* lightweight vertical bobbing for organic motion */
+@keyframes bob1 { 0% { translate: 0 0 } 50% { translate: 0 -6px } 100% { translate: 0 0 } }
+@keyframes bob2 { 0% { translate: 0 0 } 50% { translate: 0 -10px } 100% { translate: 0 0 } }
+@keyframes bob3 { 0% { translate: 0 0 } 50% { translate: 0 -18px } 100% { translate: 0 0 } }
+
+/* slide-in animations for waves */
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes contentSlide {
+  from { transform: translateY(18px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* ultra-thin countdown bar */
+@keyframes bar-countdown {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* smooth text transition for qualities */
+@keyframes quality-fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.quality-fade {
+  animation: quality-fade 220ms ease-out forwards;
+}
+
+/* Hero Text Gradient */
 .hero-text {
   background-image: linear-gradient(
     to right,
@@ -28,31 +198,116 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  text-shadow: none;
 }
 
-/* Reduced Motion */
+/* Scroll-linked fill for a single word */
+.hero-fill {
+  --fill: 0%;
+  position: relative;
+  color: white; /* default gray text */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25), 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.hero-fill::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    to right,
+    hsl(var(--primary)),
+    hsl(var(--accent))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* reveal gradient left->right using a mask */
+  -webkit-mask-image: linear-gradient(90deg, #000 0 calc(var(--fill)), transparent calc(var(--fill)));
+  mask-image: linear-gradient(90deg, #000 0 calc(var(--fill)), transparent calc(var(--fill)));
+  transition: -webkit-mask-image 120ms linear, mask-image 120ms linear;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Button Styling */
+.hero-buttons .btn-gradient {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  border: none;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.hero-buttons .btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-buttons button[variant="outline"] {
+  border: 2px solid white;
+  color: white;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.hero-buttons button[variant="outline"]:hover {
+  background: white;
+  color: black;
+  transform: translateY(-2px);
+}
+
+/* accessibility: prefer-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .hero-underline {
-    animation: none;
-    stroke-dashoffset: 0;
+  .waves, .wave, .hero__content { animation: none !important; transition: none !important; }
+}
+
+/* responsive tweaks */
+@media (max-width: 1024px) and (min-width: 769px) {
+  :root { --wave-height: 45vh; }
+  .hero { padding: 4vh 1rem; }
+}
+
+@media (max-width: 900px) and (min-width: 769px) {
+  :root { --wave-height: 80vh; }
+  .hero { padding: 4vh 1rem; }
+}
+
+@media (max-width: 768px) {
+  :root { --wave-height: 50vh; }
+  .hero {
+    padding: 2vh 1rem;
+  }
+  
+  .hero__content {
+    max-width: 100%;
+  }
+  
+  /* Show mobile wave paths with steeper curves */
+  .wave-path-mobile {
+    display: block;
+  }
+  
+  .wave-path-desktop {
+    display: none;
+  }
+  
+  /* Steeper wave curves for mobile - using transform to make waves more dramatic */
+  .wave--1 path {
+    transform: scaleY(1.5) translateY(-20px);
+  }
+  
+  .wave--2 path {
+    transform: scaleY(1.4) translateY(-1px);
+  }
+  
+  .wave--3 path {
+    transform: scaleY(1.0) translateY(-10px);
   }
 }
 
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@media (max-width: 480px) {
+  .hero {
+    padding: 1vh 0.5rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in-on-scroll {
-  opacity: 0;
-}
-
-.fade-in-on-scroll.start-animation {
-  animation: fade-in-up 0.6s ease-out forwards;
 }
