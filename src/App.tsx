@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "./components/ui/ScrollToTop";
+import CustomCursor from "./components/ui/CustomCursor";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -47,6 +48,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <ScrollToTop />
+        <CustomCursor />
         <AppContent />
       </BrowserRouter>
     </TooltipProvider>
