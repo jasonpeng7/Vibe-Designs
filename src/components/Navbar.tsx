@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hideOnPortfolio, setHideOnPortfolio] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,10 +18,29 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
+
+      const portfolioSection = document.getElementById("portfolio");
+      if (!portfolioSection) {
+        setHideOnPortfolio(false);
+        return;
+      }
+
+      const rect = portfolioSection.getBoundingClientRect();
+      const topOfViewport = 0; // viewport top
+      // Hide when the viewport top is within the portfolio section bounds
+      const shouldHide = rect.top <= topOfViewport && rect.bottom > topOfViewport;
+      setHideOnPortfolio(shouldHide);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    // Run once on mount to set initial state
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll as any);
+      window.removeEventListener("resize", handleScroll as any);
+    };
   }, []);
 
   useEffect(() => {
@@ -65,7 +85,7 @@ const Navbar = () => {
         isScrolled || isMobileMenuOpen || isCaseStudyPage
           ? "bg-transparent"
           : "bg-transparent"
-      }`}
+      } ${hideOnPortfolio ? "opacity-0 pointer-events-none" : "opacity-100"}`}
     >
       <MaxWidthWrapper className="h-20 flex items-center justify-between">
         {/* --- Desktop Header --- */}
