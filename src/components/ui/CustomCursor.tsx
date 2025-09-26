@@ -2,8 +2,25 @@ import React from "react";
 
 const CustomCursor: React.FC = () => {
   const bannerRef = React.useRef<HTMLDivElement | null>(null);
+  const [shouldShow, setShouldShow] = React.useState(false);
 
   React.useEffect(() => {
+    const checkDeviceType = () => {
+      const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      // Only show on non-touch, non-mobile devices
+      // This is the most reliable way to detect desktop
+      setShouldShow(!isTouch && !isMobile);
+    };
+
+    // Check initially
+    checkDeviceType();
+  }, []);
+
+  React.useEffect(() => {
+    if (!shouldShow) return;
+
     const banner = bannerRef.current;
     if (!banner) return;
 
@@ -16,11 +33,10 @@ const CustomCursor: React.FC = () => {
 
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
-  }, []);
+  }, [shouldShow]);
 
-  // Hide on touch devices / small screens
-  const isTouch = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
-  if (isTouch) return null;
+  // Don't render if should not show
+  if (!shouldShow) return null;
 
   return (
     <div
