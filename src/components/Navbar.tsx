@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import MaxWidthWrapper from "./ui/MaxWidthWrapper";
@@ -10,6 +10,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isCaseStudyPage = location.pathname.startsWith("/portfolio");
 
@@ -36,6 +37,15 @@ const Navbar = () => {
       });
       window.history.pushState(null, "", `/#${sectionId}`);
       setActiveSection(sectionId);
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleNavClick = (linkId: string) => {
+    if (linkId === "pricing") {
+      navigate("/pricing");
+    } else {
+      scrollToSection(linkId);
     }
     setIsMobileMenuOpen(false);
   };
@@ -78,7 +88,7 @@ const Navbar = () => {
                 <Button
                   key={link.id}
                   variant="ghost"
-                  onClick={() => scrollToSection(link.id)}
+                  onClick={() => handleNavClick(link.id)}
                   className={cn(
                     "poppins-regular rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ease-in-out hover:bg-transparent hover:scale-110",
                     activeSection === link.id
@@ -156,7 +166,7 @@ const Navbar = () => {
                     <Button
                       key={link.id}
                       variant="ghost"
-                      onClick={() => scrollToSection(link.id)}
+                      onClick={() => handleNavClick(link.id)}
                       className={cn(
                         "w-full justify-center gap-x-2 rounded-lg py-3 text-center text-lg font-medium",
                         activeSection === link.id
