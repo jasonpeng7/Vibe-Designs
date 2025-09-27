@@ -13,6 +13,7 @@
   text-align: center;
   color: white;
   overflow: hidden;
+  max-width: 100vw;
 }
 
 /* Liquid fill animation for individual letters */
@@ -69,8 +70,21 @@
 @media (max-width: 480px) {
   .vibe-design-text {
     font-size: clamp(0.6rem, 2.5vw, 2rem);
-    transform: scaleY(2.5) scaleX(1.2);
+    transform: scaleY(27) scaleX(6.5);
     letter-spacing: 0;
     max-height: 120px;
+    max-width: 100vw;
   }
 }
+
+/* Prevent horizontal scrolling */
+footer {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensure page doesn't scroll horizontally */
+body {
+  overflow-x: hidden;
+}
+

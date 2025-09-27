@@ -4,7 +4,9 @@ import "./Footer.css";
 
 const Footer = () => {
   const footerRef = useRef<HTMLDivElement>(null);
+  const mobileFooterRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
+  const [isMobileInView, setIsMobileInView] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -16,11 +18,27 @@ const Footer = () => {
       { threshold: 0.3 } // Trigger when 30% of footer is visible
     );
 
+    const mobileObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsMobileInView(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
     if (footerRef.current) {
       observer.observe(footerRef.current);
     }
 
-    return () => observer.disconnect();
+    if (mobileFooterRef.current) {
+      mobileObserver.observe(mobileFooterRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      mobileObserver.disconnect();
+    };
   }, []);
 
   return (
@@ -77,8 +95,23 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Mobile: Keep original layout */}
-        <div className="md:hidden">
+        {/* Mobile: Same as desktop */}
+        <div className="md:hidden w-full" ref={mobileFooterRef}>
+          <div className="text-center mb-8 flex items-center justify-center w-full min-h-[200px]">
+            {/* VIBE DESIGN responsive text that fills width with minimal spacing */}
+            <div className="vibe-design-text poppins-bold font-black leading-none w-full px-4">
+              {['V', 'I', 'B', 'E', ' ', 'D', 'E', 'S', 'I', 'G', 'N'].map((letter, index) => (
+                <span 
+                  key={index}
+                  className={`vibe-letter ${isMobileInView ? 'animate-fill' : ''}`}
+                  style={{ transitionDelay: `${index * 0.1}s` }}
+                >
+                  {letter}
+                </span>
+              ))}
+            </div>
+          </div>
+          
           <div className="flex flex-col justify-between items-center gap-8">
             {/* Brand Identity */}
             <div className="text-center">
