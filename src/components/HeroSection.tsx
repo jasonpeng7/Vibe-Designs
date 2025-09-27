@@ -66,17 +66,19 @@ const HeroSection = () => {
 
   return (
     <section className="hero relative min-h-screen overflow-hidden ">
-      {/* Bottom-left qualities */}
-      <div className="absolute bottom-4 right-4 z-20">
-        <BrandQualities qualities={["Speed", "Growth", "Branding"]} durationMs={2000} />
+      {/* Bottom-Right qualities */}
+      <div className="absolute bottom-4 right-4 z-20 poppins-regular text-xs">
+        <BrandQualities qualities={["Proven Results", "Measurable Growth", "Premium Branding"]} durationMs={2000} />
       </div>
 
       <div className="mx-auto flex flex-col items-center text-center px-4 mt-44 xs:mt-52 md:mt-0">
-        <h1 className="poppins-regular text-black text-3xl xs:text-4xl md:text-5xl lg:text-6xl max-w-[500px]">
-          AI-Driven Design for Growth.
+        <h1 className="poppins-regular text-black text-3xl xs:text-4xl md:text-5xl lg:text-6xl max-w-[500px] tagline-container">
+          <span className="tagline-slide-up">AI-Driven Design for Growth.</span>
         </h1>
-        <p className="poppins-regular text-black text-sm xs:text-md md:text-lg max-w-[600px] mt-3">
-        We build smart, AI powered websites complete with chatbots, auditing, and growth-driven solutions. <span ref={fillRef} className="hero-fill" data-text="Designed">Designed</span> to attract more customers and accelerate your business.
+        <p className="poppins-regular text-black text-sm xs:text-md md:text-lg max-w-[600px] mt-3 tagline-container">
+          <span className="description-slide-down">
+            We build smart, AI powered websites complete with chatbots, auditing, and growth-driven solutions. <span ref={fillRef} className="hero-fill" data-text="Designed">Designed</span> to attract more customers and accelerate your business.
+          </span>
         </p>
         <div className="hero-buttons justify-center items-center mt-6">
           <Button
