@@ -5,14 +5,16 @@ import "./PricingSection.css";
 import PricingMobileCarousel from "./PricingMobileCarousel";
 
 const PricingSection = () => {
-  const [billingMode, setBillingMode] = useState<'monthly' | 'yearly'>('monthly');
+  const [billingMode, setBillingMode] = useState<'monthly' | 'yearly' | 'onetime'>('onetime');
 
   const plans = [
     {
-      id: "free",
-      name: "Free",
-      priceMonthly: 0,
-      priceYearly: 0,
+      id: "starter",
+      name: "Starter",
+      // 15 maintenance
+      priceMonthly: 35 as number | string,
+      priceYearly: 336 as number | string,
+      priceOnetime: 199 as number | string,
       isFeatured: false,
       ctaLabel: "Get Started",
       ctaHref: "#contact",
@@ -20,8 +22,10 @@ const PricingSection = () => {
     {
       id: "premium",
       name: "Premium",
-      priceMonthly: 45,
-      priceYearly: 432, // 20% off
+      // 50 maintenance
+      priceMonthly: 99 as number | string,
+      priceYearly: 999 as number | string, // 16% off
+      priceOnetime: 1499 as number | string, // One-time payment
       isFeatured: true,
       ctaLabel: "Get Started",
       ctaHref: "#contact",
@@ -30,8 +34,9 @@ const PricingSection = () => {
     {
       id: "enterprise",
       name: "Enterprise",
-      priceMonthly: 99,
-      priceYearly: 950, // 20% off
+      priceMonthly: "Contact" as number | string,
+      priceYearly: "Contact" as number | string, // 16% off
+      priceOnetime: "$3500+" as number | string, // One-time payment
       isFeatured: false,
       ctaLabel: "Get Started",
       ctaHref: "#contact",
@@ -40,27 +45,27 @@ const PricingSection = () => {
   ];
 
   const features = [
-    { id: "pages", label: "Website Pages", availability: { free: true, premium: true, enterprise: true } },
-    { id: "basic-seo", label: "Basic SEO", availability: { free: true, premium: true, enterprise: true } },
-    { id: "domain", label: "Domain + Hosting", availability: { free: true, premium: true, enterprise: true } },
-    { id: "advanced-seo", label: "Advanced SEO", availability: { free: false, premium: true, enterprise: true } },
-    { id: "contact", label: "Contact Form", availability: { free: false, premium: true, enterprise: true } },
-    { id: "booking", label: "Booking Integration", availability: { free: false, premium: true, enterprise: true } },
-    { id: "auth", label: "Authentication", availability: { free: false, premium: true, enterprise: true } },
-    { id: "chatbot", label: "Live Chatbot", availability: { free: false, premium: true, enterprise: true } },
-    { id: "auditing", label: "Website Auditing", availability: { free: false, premium: true, enterprise: true } },
-    { id: "ecommerce", label: "Ecommerce Integration", availability: { free: false, premium: false, enterprise: true } },
-    { id: "payment", label: "Payment Gateway", availability: { free: false, premium: false, enterprise: true } },
-    { id: "branding", label: "CustomBranding", availability: { free: false, premium: false, enterprise: true } },
-    { id: "CDN", label: "CDN Setup", availability: { free: false, premium: false, enterprise: true } },
-    { id: "support", label: "Free Support", availability: { free: false, premium: false, enterprise: true } },
+    { id: "pages", label: "Website Pages", availability: { starter: true, premium: true, enterprise: true } },
+    { id: "basic-seo", label: "Basic SEO", availability: { starter: true, premium: true, enterprise: true } },
+    { id: "domain", label: "Domain + Hosting", availability: { starter: true, premium: true, enterprise: true } },
+    { id: "advanced-seo", label: "Advanced SEO", availability: { starter: false, premium: true, enterprise: true } },
+    { id: "contact", label: "Contact Form", availability: { starter: false, premium: true, enterprise: true } },
+    { id: "booking", label: "Booking Integration", availability: { starter: false, premium: true, enterprise: true } },
+    { id: "auth", label: "Authentication", availability: { starter: false, premium: true, enterprise: true } },
+    { id: "chatbot", label: "Live Chatbot", availability: { starter: false, premium: true, enterprise: true } },
+    { id: "auditing", label: "Website Auditing", availability: { starter: false, premium: true, enterprise: true } },
+    { id: "ecommerce", label: "Ecommerce Integration", availability: { starter: false, premium: false, enterprise: true } },
+    { id: "payment", label: "Payment Gateway", availability: { starter: false, premium: false, enterprise: true } },
+    { id: "branding", label: "Custom Branding", availability: { starter: false, premium: false, enterprise: true } },
+    { id: "CDN", label: "CDN Setup", availability: { starter: false, premium: false, enterprise: true } },
+    { id: "support", label: "Free Support", availability: { starter: false, premium: false, enterprise: true } },
   ];
 
   // Load billing mode from localStorage on mount
   useEffect(() => {
-    const savedBillingMode = localStorage.getItem('billingMode') as 'monthly' | 'yearly' | null;
+    const savedBillingMode = localStorage.getItem('billingMode') as 'monthly' | 'yearly' | 'onetime' | null;
     const urlParams = new URLSearchParams(window.location.search);
-    const urlBillingMode = urlParams.get('billing') as 'monthly' | 'yearly' | null;
+    const urlBillingMode = urlParams.get('billing') as 'monthly' | 'yearly' | 'onetime' | null;
     
     if (urlBillingMode) {
       setBillingMode(urlBillingMode);
@@ -71,7 +76,7 @@ const PricingSection = () => {
   }, []);
 
   // Update URL and localStorage when billing mode changes
-  const handleBillingModeChange = (mode: 'monthly' | 'yearly') => {
+  const handleBillingModeChange = (mode: 'monthly' | 'yearly' | 'onetime') => {
     setBillingMode(mode);
     localStorage.setItem('billingMode', mode);
     
@@ -83,7 +88,7 @@ const PricingSection = () => {
     // Announce change for screen readers
     const announcement = document.getElementById('billing-announcement');
     if (announcement) {
-      announcement.textContent = `Prices updated to ${mode} billing. ${mode === 'yearly' ? 'Save 20%.' : ''}`;
+      announcement.textContent = `Prices updated to ${mode} billing. ${mode === 'yearly' ? 'Save 16%.' : ''}`;
     }
   };
 
@@ -93,11 +98,49 @@ const PricingSection = () => {
   };
 
   const getMonthlyPrice = (plan: typeof plans[0]) => {
-    return billingMode === 'yearly' ? Math.round(plan.priceYearly / 12) : plan.priceMonthly;
+    if (billingMode === 'onetime') return plan.priceOnetime;
+    if (billingMode === 'yearly') {
+      return typeof plan.priceYearly === 'string' ? plan.priceYearly : plan.priceYearly;
+    }
+    return plan.priceMonthly;
+  };
+
+  const getMonthlyEquivalent = (plan: typeof plans[0]) => {
+    if (billingMode === 'yearly') {
+      return typeof plan.priceYearly === 'string' ? plan.priceYearly : Math.round(plan.priceYearly / 12);
+    }
+    return plan.priceMonthly;
   };
 
   const getYearlyPrice = (plan: typeof plans[0]) => {
     return plan.priceYearly;
+  };
+
+  const getOnetimePrice = (plan: typeof plans[0]) => {
+    return plan.priceOnetime;
+  };
+
+  // Maintenance costs for each plan
+  const getMaintenanceCost = (planId: string) => {
+    const maintenanceCosts = {
+      starter: 15,
+      premium: 50,
+      enterprise: 150
+    };
+    return maintenanceCosts[planId as keyof typeof maintenanceCosts] || 0;
+  };
+
+  // Calculate savings for yearly vs one-time payment
+  const getYearlySavings = (plan: typeof plans[0]) => {
+    if (typeof plan.priceYearly === 'string' || typeof plan.priceOnetime === 'string') {
+      return null; // Can't calculate savings for custom pricing
+    }
+    
+    const maintenanceCost = getMaintenanceCost(plan.id);
+    const oneTimeWithMaintenance = plan.priceOnetime + (maintenanceCost * 12);
+    const savings = oneTimeWithMaintenance - plan.priceYearly; // Fixed: one-time cost - yearly cost = savings
+    
+    return savings > 0 ? savings : 0;
   };
 
   const handlePlanSelect = (planName: string) => {
@@ -117,7 +160,36 @@ const PricingSection = () => {
     }
   };
 
-  const renderAvailabilityIcon = (availability: boolean | string) => {
+  const renderAvailabilityIcon = (availability: boolean | string, featureId: string, planId: string) => {
+    // Special handling for Website Pages
+    if (featureId === "pages") {
+      const pageCounts = {
+        starter: "3",
+        premium: "8", 
+        enterprise: "Unlimited"
+      };
+      return (
+        <span className=" poppins-medium text-sm  text-gray-900" aria-hidden="true">
+          {pageCounts[planId as keyof typeof pageCounts] || "5"}
+        </span>
+      );
+    }
+    
+    // Special handling for Free Support
+    if (featureId === "support") {
+      const supportLevels = {
+        starter: "1 month",
+        premium: "3 months",
+        enterprise: "Ongoing Support"
+      };
+      return (
+        <span className="poppins-medium text-xs  text-gray-900 text-center" aria-hidden="true">
+          {supportLevels[planId as keyof typeof supportLevels]}
+        </span>
+      );
+    }
+    
+    // Default check mark behavior for other features
     if (availability === true) {
       return <Check className="w-4 h-4 text-emerald-500" aria-hidden="true" />;
     } else {
@@ -135,63 +207,85 @@ const PricingSection = () => {
       }}
       aria-labelledby="pricing-heading"
     >
-      <div className="max-w-7xl mx-auto relative z-10 px-2 lg:px-10">
+      <div className="max-w-7xl mx-auto relative z-10 px-2 lg:px-10 w-full overflow-hidden">
         {/* Hero Section */}
         <ScrollAnimation duration={500}>
-          <header className="text-center mb-16 ">
+          <header className="text-center mb-16 poppins-regular">
             <div className="inline-block px-4 py-2 bg-indigo-500/10 text-indigo-600 rounded-xl text-xs font-semibold uppercase tracking-wider mb-6">
               AI Ready Solutions
             </div>
-            <h1 id="pricing-heading" className="text-4xl text-black md:text-5xl lg:text-6xl font-bold  leading-tight mb-6">
+            <h1 id="pricing-heading" className="text-4xl text-black md:text-5xl lg:text-6xl poppins-bold  leading-tight mb-6">
               Our plans scale<br />
               <span className="text-gray-900/90 font-normal">with your business</span>
             </h1>
-            <p className="max-w-2xl mx-auto text-base leading-relaxed text-gray-600">
+            <p className="max-w-2xl mx-auto text-base hero-text">
               Choose the perfect plan that grows with your needs and budget.
             </p>
           </header>
         </ScrollAnimation>
 
         {/* Pricing Panel */}
-        <div className="bg-white rounded-t-3xl px-2 lg:px-5 shadow-2xl relative z-10">
+        <div className="bg-white rounded-t-3xl px-2 lg:px-5 shadow-xl relative z-10">
           {/* Billing Toggle and Plan Cards Row */}
           <div className="flex flex-col lg:flex-row mb-12">
             {/* Billing Toggle Section - Left Side */}
-            <div className="w-52 flex-shrink-0 flex items-end mb-5">
-              <div className="max-w-52">
-                <label className="block text-sm font-semibold uppercase tracking-wider text-gray-700 mb-3">
+            <div className="w-full md:w-48 lg:w-56 flex-shrink-0 flex items-end mb-5 md:mb-5">
+              <div className="w-full md:max-w-48 lg:max-w-52 mx-auto md:mx-0">
+                <label className="text-center block text-sm poppins-medium uppercase  p-2 md:p-0 text-gray-700 mb-3">
                   Pick Your Plan
                 </label>
-                <div className="flex bg-white rounded-xl p-1 shadow-sm border border-gray-200" role="radiogroup" aria-label="Billing frequency">
+                <div className="space-y-2" role="radiogroup" aria-label="Billing frequency">
+                  
+                  {/* Monthly and Yearly - side by side */}
+                  <div className="flex flex-col bg-white rounded-xl p-1  mb-2 space-y-2">
+                  {/* One-time payment - full width */}
                   <button
-                    className={`relative px-4 py-2 border-none bg-transparent rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 min-h-10 flex items-center gap-2 ${
-                      billingMode === 'monthly' 
-                        ? 'bg-gray-900 text-black ' 
-                        : 'text-black/30'
+                    className={`poppins-medium w-full px-4 py-3 bg-transparent rounded-lg text-sm cursor-pointer transition-all duration-200 flex items-center justify-center gap-2 ${
+                      billingMode === 'onetime' 
+                        ? 'bg-gray-200 text-black' 
+                        : ' text-black/30 shadow-md'
                     }`}
-                    onClick={() => handleBillingModeChange('monthly')}
+                    onClick={() => handleBillingModeChange('onetime')}
                     role="radio"
-                    aria-checked={billingMode === 'monthly'}
-                    aria-label="Monthly billing"
+                    aria-checked={billingMode === 'onetime'}
+                    aria-label="One-time payment"
                   >
-                    Monthly Billing
+                    One-Time Payment
                   </button>
-                  <button
-                    className={`relative px-4 py-2 border-none bg-transparent rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 min-h-10 flex items-center gap-2 ${
-                      billingMode === 'yearly' 
-                        ? 'bg-gray-900 text-black ' 
-                        : 'text-black/30'
-                    }`}
-                    onClick={() => handleBillingModeChange('yearly')}
-                    role="radio"
-                    aria-checked={billingMode === 'yearly'}
-                    aria-label="Yearly billing with 20% savings"
-                  >
-                    Yearly Billing
-                    <span className="bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wider">
-                      Save 20%
-                    </span>
-                  </button>
+
+                  <div className="flex flex-row mb-2 space-x-2">
+                    <button
+                      className={`poppins-medium px-4 py-2  bg-transparent rounded-lg text-xs cursor-pointer transition-all duration-200 min-h-10 flex items-center gap-2 ${
+                        billingMode === 'monthly' 
+                        ? 'bg-gray-200 text-black' 
+                        : ' text-black/30 shadow-md'
+                      }`}
+                      onClick={() => handleBillingModeChange('monthly')}
+                      role="radio"
+                      aria-checked={billingMode === 'monthly'}
+                      aria-label="Monthly billing"
+                    >
+                      Monthly Billing
+                    </button>
+                    <button
+                      className={`poppins-medium relative px-4 py-2  bg-transparent rounded-lg text-xs cursor-pointer transition-all duration-200 min-h-10 flex items-center gap-2 ${
+                        billingMode === 'yearly' 
+                        ? 'bg-gray-200 text-black' 
+                        : ' text-black/30 shadow-md'
+                      }`}
+                      onClick={() => handleBillingModeChange('yearly')}
+                      role="radio"
+                      aria-checked={billingMode === 'yearly'}
+                      aria-label="Yearly billing with 20% savings"
+                    >
+                      Yearly Billing
+                      <span className="popping-medium bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded text-xs font-semibold uppercase">
+                        Save 16%
+                      </span>
+                    </button>
+                    </div>
+
+                  </div>
                 </div>
               </div>
             </div>
@@ -205,47 +299,65 @@ const PricingSection = () => {
                 delay={plan.isFeatured ? 0 : 0.1}
               >
                 <article 
-                  className={`relative rounded-2xl py-6 text-center transition-all duration-200 flex flex-col ${
+                  className={`poppins-regular relative rounded-2xl py-6 text-center transition-all duration-200 flex flex-col ${
                     plan.isFeatured 
-                      ? 'text-white min-h-[300px] -mt-8 z-20 ' 
+                      ? 'text-white min-h-[300px] -mt-8 z-20 bg-gradient-to-br from-purple-600/90 via-blue-500/80 to-cyan-400/70 pt-14' 
                       : 'bg-white min-h-[300px]'
                   }`}
-                  style={plan.isFeatured ? { backgroundColor: 'rgba(99, 102, 241, 0.7)' } : {}}
                   aria-describedby={`${plan.id}-description`}
                 >
-                  <h2 className={`text-sm xs:text-md md:text-xl font-semibold uppercase tracking-wider mb-6 ${
+                  <h2 className={`text-sm xs:text-md md:text-xl font-medium uppercase mb-6 ${
                     plan.isFeatured ? 'text-white' : 'text-gray-600'
                   }`}>
                     {plan.name} Plan
                   </h2>
                   
-                  <div className={`mb-8 ${plan.isFeatured ? 'min-h-[80px] md:min-h-[110px]' : 'min-h-[80px]'} `}>
+                  <div className={`mb-8 min-h-[90px] px-4`}>
                     <div className="flex items-baseline justify-center">
                       <span className={`text-5xl poppins-medium ${
                         plan.isFeatured ? 'text-white' : 'text-gray-900'
                       }`}>
-                        ${getMonthlyPrice(plan)}
-                        {billingMode === 'yearly' && <span className="text-lg">/mo</span>}
+                        {typeof getMonthlyPrice(plan) === 'string' ? getMonthlyPrice(plan) : `$${getMonthlyPrice(plan)}`}
+                        {billingMode === 'yearly' && typeof getMonthlyPrice(plan) === 'number' && <span className="text-lg">/year</span>}
                       </span>
                     </div>
-                    <div className={`text-sm ${
-                      plan.isFeatured ? 'text-white/80' : 'text-gray-600'
-                    }`}>
-                      {billingMode === 'yearly' ? 'billed yearly' : 'Per Month'}
-                    </div>
-                    {billingMode === 'yearly' && plan.priceYearly > 0 && (
-                      <div className={`text-xs font-medium mt-1 ${
-                        plan.isFeatured ? 'text-white/70' : 'text-gray-500'
+                      <div className={`text-xs ${
+                        plan.isFeatured ? 'text-white' : 'text-gray-600'
                       }`}>
-                        ${getYearlyPrice(plan)}/year
+                        {billingMode === 'yearly' ? 
+                          (plan.id === 'enterprise' ? 'Contact our team to determine project scope' : `${typeof getMonthlyEquivalent(plan) === 'string' ? getMonthlyEquivalent(plan) : `$${getMonthlyEquivalent(plan)}`}/month`) : 
+                          billingMode === 'onetime' ? 'One-time payment' : 
+                          (plan.id === 'enterprise' ? 'Contact our team to determine project scope' : 'Per Month')}
                       </div>
-                    )}
+                      {billingMode === 'onetime' && (
+                        <div className={`text-xs mt-1 ${
+                          plan.isFeatured ? 'text-white/80' : 'text-gray-500'
+                        }`}>
+                          {plan.id === 'starter' ? 'maintenance $15/month' : 
+                           plan.id === 'premium' ? 'maintenance $50/month' : 
+                           ''}
+                        </div>
+                      )}
+                      {billingMode === 'monthly' && plan.id !== 'enterprise' && (
+                        <div className={`text-xs mt-1 ${
+                          plan.isFeatured ? 'text-white/80' : 'text-gray-500'
+                        }`}>
+                          <span className={`text-green-500 ${plan.id === 'premium' ? 'text-yellow-200' : 'text-green-500'}`}>Flexibility</span>, cancel anytime after 1 year
+                        </div>
+                      )}
+                      {billingMode === 'yearly' && getYearlySavings(plan) && getYearlySavings(plan)! > 0 && (
+                        <div className={`text-xs mt-1 ${
+                          plan.isFeatured ? 'text-white/80' : 'text-gray-500'
+                        }`}>
+                          Save ${getYearlySavings(plan)} vs one-time payment
+                        </div>
+                      )}
                   </div>
                   
                   <button
-                    className={`min-w-[200px] md:min-w-[200px] lg:min-w-[150px] py-3 px-6 rounded-full font-semibold cursor-pointer transition-all duration-200 mx-auto  ${
+                    className={`poppins-medium min-w-[200px] md:min-w-[200px] lg:min-w-[150px] py-3 px-6 rounded-full font-semibold cursor-pointer transition-all duration-200 mx-auto  ${
                       plan.isFeatured
-                        ? 'bg-white text-gray-900 hover:bg-gray-100'
+                        ? ' bg-white text-black hover:bg-black hover:text-white'
                         : 'border-2 border-gray-900 bg-transparent text-gray-900 hover:bg-gray-900 hover:text-white'
                     }`}
                     onClick={() => handlePlanSelect(plan.name)}
@@ -266,20 +378,23 @@ const PricingSection = () => {
               setActiveIndex={setActiveMobileIndex}
               getMonthlyPrice={getMonthlyPrice as any}
               getYearlyPrice={getYearlyPrice as any}
+              getOnetimePrice={getOnetimePrice as any}
+              getMonthlyEquivalent={getMonthlyEquivalent as any}
+              getYearlySavings={getYearlySavings as any}
               onSelectPlan={handlePlanSelect}
             />
           </div>
 
           {/* Feature Comparison Table: desktop shows all; mobile shows only active plan */}
-          <div className="overflow-x-auto rounded-t-xl ">
+          <div className="rounded-t-xl overflow-hidden">
             <div className="bg-white">
               {features.map((feature, index) => (
                 <div key={feature.id} className={`flex items-center transition-colors rounded-xl ${
                   index % 2 === 0 ? 'bg-white' : 'bg-black/5 '
                 }`}>
                   {/* Feature Name Column */}
-                  <div className="w-52 flex-shrink-0 p-4  ">
-                    <span className="text-sm font-medium text-gray-900">
+                  <div className="w-40 md:w-56 flex-shrink-0 p-4 poppins-medium ">
+                    <span className="text-sm text-gray-900">
                       {feature.label}
                     </span>
                   </div>
@@ -293,7 +408,7 @@ const PricingSection = () => {
                         aria-label={`${feature.label} ${feature.availability[plan.id as keyof typeof feature.availability] === true ? 'available' : feature.availability[plan.id as keyof typeof feature.availability] === false ? 'not available' : 'partially available'} in ${plan.name} plan`}
                       >
                         <div className="w-6 h-6 flex justify-center items-center">
-                          {renderAvailabilityIcon(feature.availability[plan.id as keyof typeof feature.availability])}
+                          {renderAvailabilityIcon(feature.availability[plan.id as keyof typeof feature.availability], feature.id, plan.id)}
                         </div>
                       </div>
                     ))}
@@ -303,7 +418,9 @@ const PricingSection = () => {
                   <div className="md:hidden flex-1 flex justify-center items-center p-4">
                     <div className="w-6 h-6 flex justify-center items-center">
                       {renderAvailabilityIcon(
-                        feature.availability[plans[activeMobileIndex].id as keyof typeof feature.availability]
+                        feature.availability[plans[activeMobileIndex].id as keyof typeof feature.availability],
+                        feature.id,
+                        plans[activeMobileIndex].id
                       )}
                     </div>
                   </div>
