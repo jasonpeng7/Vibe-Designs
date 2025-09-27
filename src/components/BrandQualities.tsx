@@ -45,12 +45,23 @@ const BrandQualities: React.FC<BrandQualitiesProps> = ({ qualities, durationMs =
       </div>
       {/* Active quality text below */}
       <div className="mt-2 text-left min-h-[1rem]">
-        <span
+        <div
           key={`${activeIndex}-${cycleKey}`}
-          className="quality-fade text-[11px] xs:text-[12px] tracking-wide uppercase text-black/80 inline-block"
+          className="text-[11px] xs:text-[12px] tracking-wide uppercase text-black/80"
         >
-          {qualities[activeIndex] ?? ""}
-        </span>
+          {(qualities[activeIndex] ?? "").split(" ").map((word, wordIndex) => (
+            <span key={wordIndex} className="quality-word-container">
+              <span 
+                className="quality-word-slide-up"
+                style={{
+                  animationDelay: `${(wordIndex + 1) * 0.15}s`
+                }}
+              >
+                {word}
+              </span>
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
