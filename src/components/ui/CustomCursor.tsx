@@ -1,22 +1,25 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 const CustomCursor: React.FC = () => {
   const bannerRef = React.useRef<HTMLDivElement | null>(null);
   const [shouldShow, setShouldShow] = React.useState(false);
+  const location = useLocation();
 
   React.useEffect(() => {
     const checkDeviceType = () => {
       const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isPricingPage = location.pathname === '/pricing';
       
-      // Only show on non-touch, non-mobile devices
+      // Only show on non-touch, non-mobile devices AND not on pricing page
       // This is the most reliable way to detect desktop
-      setShouldShow(!isTouch && !isMobile);
+      setShouldShow(!isTouch && !isMobile && !isPricingPage);
     };
 
-    // Check initially
+    // Check when location changes
     checkDeviceType();
-  }, []);
+  }, [location]);
 
   React.useEffect(() => {
     if (!shouldShow) return;
