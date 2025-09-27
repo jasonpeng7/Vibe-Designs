@@ -3,18 +3,22 @@ import { useEffect, useState } from "react";
 type Plan = {
   id: string;
   name: string;
-  priceMonthly: number;
-  priceYearly: number;
+  priceMonthly: number | string;
+  priceYearly: number | string;
+  priceOnetime: number | string;
   isFeatured?: boolean;
 };
 
 type Props = {
   plans: Plan[];
-  billingMode: "monthly" | "yearly";
+  billingMode: "monthly" | "yearly" | "onetime";
   activeIndex: number;
   setActiveIndex: (idx: number) => void;
-  getMonthlyPrice: (plan: Plan) => number;
-  getYearlyPrice: (plan: Plan) => number;
+  getMonthlyPrice: (plan: Plan) => number | string;
+  getYearlyPrice: (plan: Plan) => number | string;
+  getOnetimePrice: (plan: Plan) => number | string;
+  getMonthlyEquivalent: (plan: Plan) => number | string;
+  getYearlySavings: (plan: Plan) => number | null;
   onSelectPlan: (planName: string) => void;
 };
 
@@ -25,6 +29,9 @@ const PricingMobileCarousel = ({
   setActiveIndex,
   getMonthlyPrice,
   getYearlyPrice,
+  getOnetimePrice,
+  getMonthlyEquivalent,
+  getYearlySavings,
   onSelectPlan,
 }: Props) => {
   const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia
@@ -92,20 +99,39 @@ const PricingMobileCarousel = ({
                 <span className={`text-5xl poppins-medium ${
                   plan.isFeatured ? 'text-white' : 'text-gray-900'
                 }`}>
-                  ${getMonthlyPrice(plan)}
-                  {billingMode === 'yearly' && <span className="text-lg">/mo</span>}
+                  {typeof getMonthlyPrice(plan) === 'string' ? getMonthlyPrice(plan) : `$${getMonthlyPrice(plan)}`}
+                  {billingMode === 'yearly' && typeof getMonthlyPrice(plan) === 'number' && <span className="text-lg">/year</span>}
                 </span>
               </div>
               <div className={`text-sm ${
                 plan.isFeatured ? 'text-white/80' : 'text-gray-600'
               }`}>
-                {billingMode === 'yearly' ? 'billed yearly' : 'Per Month'}
+                {billingMode === 'yearly' ? 
+                  (plan.id === 'enterprise' ? 'Consultation required to determine scope' : `${typeof getMonthlyEquivalent(plan) === 'string' ? getMonthlyEquivalent(plan) : `$${getMonthlyEquivalent(plan)}`}/month`) : 
+                  billingMode === 'onetime' ? 'One-time payment' : 
+                  (plan.id === 'enterprise' ? 'Consultation required to determine scope' : 'Per Month')}
               </div>
-              {billingMode === 'yearly' && plan.priceYearly > 0 && (
-                <div className={`text-xs font-medium mt-1 ${
-                  plan.isFeatured ? 'text-white/70' : 'text-gray-500'
+              {billingMode === 'onetime' && (
+                <div className={`text-xs mt-1 ${
+                  plan.isFeatured ? 'text-white/80' : 'text-gray-500'
                 }`}>
-                  ${getYearlyPrice(plan)}/year
+                  {plan.id === 'starter' ? 'maintenance $15/month' : 
+                   plan.id === 'premium' ? 'maintenance $50/month' : 
+                   'maintenance not included'}
+                </div>
+              )}
+              {billingMode === 'monthly' && plan.id !== 'enterprise' && (
+                <div className={`text-xs mt-1 ${
+                  plan.isFeatured ? 'text-white/80' : 'text-gray-500'
+                }`}>
+                  flexibility, cancel anytime after 1 year
+                </div>
+              )}
+              {billingMode === 'yearly' && getYearlySavings(plan) && getYearlySavings(plan)! > 0 && (
+                <div className={`text-xs mt-1 ${
+                  plan.isFeatured ? 'text-white/80' : 'text-gray-500'
+                }`}>
+                  Save ${getYearlySavings(plan)} vs one-time payment
                 </div>
               )}
             </div>
