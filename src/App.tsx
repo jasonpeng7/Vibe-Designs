@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import CustomCursor from "./components/ui/CustomCursor";
+import PricingCursor from "./components/ui/PricingCursor";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -51,6 +52,7 @@ const App = () => (
         <Sonner />
         <ScrollToTop />
         <CustomCursor />
+        <PricingCursor />
         <AppContent />
       </BrowserRouter>
     </TooltipProvider>
