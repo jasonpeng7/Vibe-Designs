@@ -1,0 +1,76 @@
+/* Footer.css - VIBE DESIGN Footer Styles */
+
+/* Responsive VIBE DESIGN Footer Text */
+.vibe-design-text {
+  font-size: clamp(1rem, 4vw, 6rem);
+  letter-spacing: -0.02em;
+  transform: scaleY(5) scaleX(4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+}
+
+/* Liquid fill animation for individual letters */
+.vibe-letter {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(to bottom, black 0%, black 50%, rgba(128, 128, 128, 0.03) 50%, rgba(128, 128, 128, 0.03) 100%);
+  background-size: 100% 200%;
+  background-position: 0% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Animation trigger when footer is in view */
+.vibe-letter.animate-fill {
+  background-position: 0% 0%;
+}
+
+/* Staggered animation delays for each letter */
+.vibe-letter:nth-child(1) { animation-delay: 0s; }
+.vibe-letter:nth-child(2) { animation-delay: 0.1s; }
+.vibe-letter:nth-child(3) { animation-delay: 0.2s; }
+.vibe-letter:nth-child(4) { animation-delay: 0.3s; }
+.vibe-letter:nth-child(5) { animation-delay: 0.4s; }
+.vibe-letter:nth-child(6) { animation-delay: 0.5s; }
+.vibe-letter:nth-child(7) { animation-delay: 0.6s; }
+.vibe-letter:nth-child(8) { animation-delay: 0.7s; }
+.vibe-letter:nth-child(9) { animation-delay: 0.8s; }
+.vibe-letter:nth-child(10) { animation-delay: 0.9s; }
+
+/* Ensure letters are evenly distributed */
+.vibe-design-text::before {
+  content: '';
+  flex: 1;
+}
+
+.vibe-design-text::after {
+  content: '';
+  flex: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .vibe-design-text {
+    font-size: clamp(0.8rem, 3vw, 3rem);
+    transform: scaleY(3) scaleX(1.5);
+    letter-spacing: -0.01em;
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vibe-design-text {
+    font-size: clamp(0.6rem, 2.5vw, 2rem);
+    transform: scaleY(2.5) scaleX(1.2);
+    letter-spacing: 0;
+    max-height: 120px;
+  }
+}
