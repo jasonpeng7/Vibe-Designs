@@ -1,0 +1,110 @@
+/* WavesBuffer.css - Animated SVG Waves Buffer */
+
+:root {
+  /* Wave colors matching hero section */
+  --wave-1: rgba(124, 58, 237, 0.85); /* foreground */
+  --wave-2: rgba(99, 102, 241, 0.7);  /* middle */
+  --wave-3: rgba(14, 165, 233, 0.45); /* background */
+
+  --flow-duration-1: 9s;
+  --flow-duration-2: 14s;
+  --flow-duration-3: 22s;
+
+  --rise-duration: 900ms;
+  --easing: cubic-bezier(.22,.9,.3,1);
+}
+
+/* waves buffer container */
+.waves-buffer {
+  position: relative;
+  width: 100%;
+  height: 50vh; /* Infinite height to prevent bottom cutoff */
+  overflow: visible; /* Allow waves to extend beyond container */
+  z-index: 10;
+  pointer-events: none;
+  will-change: transform;
+  background: white; /* Match page background */
+}
+
+/* each SVG uses full width of the waves container */
+.wave {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200%;
+  height: 100%;
+  max-height: 500px; /* Increased height to prevent cutoff */
+  display: block;
+  transform-origin: center top;
+  will-change: transform, opacity, filter;
+}
+
+/* color + visual style for paths */
+.wave path {
+  fill: var(--wave-1);
+  transform-origin: center top;
+  transition: fill .25s;
+  shape-rendering: geometricPrecision;
+}
+
+/* layer-specific styles (parallax & blur) */
+.wave--1 path { fill: var(--wave-1); opacity: 0.95; filter: blur(.4px); }
+.wave--2 path { fill: var(--wave-2); opacity: 0.78; filter: blur(1.6px); transform: translateY(6px); }
+.wave--3 path { fill: var(--wave-3); opacity: 0.6; filter: blur(6px) saturate(120%); transform: translateY(12px); }
+
+/* slide-in animations with staggered timing */
+.wave--1 { 
+  animation: slideInFromLeft var(--rise-duration) var(--easing) forwards, flow1 var(--flow-duration-1) linear infinite, bob1 6s ease-in-out infinite; 
+  animation-delay: 200ms, 1.2s, 1.2s;
+  transform: translateX(-100%);
+}
+.wave--2 { 
+  animation: slideInFromRight var(--rise-duration) var(--easing) forwards, flow2 var(--flow-duration-2) linear infinite, bob2 8s ease-in-out infinite; 
+  animation-delay: 400ms, 1.4s, 1.4s;
+  transform: translateX(100%);
+}
+.wave--3 { 
+  animation: slideInFromLeft var(--rise-duration) var(--easing) forwards, flow3 var(--flow-duration-3) linear infinite, bob3 10s ease-in-out infinite; 
+  animation-delay: 600ms, 1.6s, 1.6s;
+  transform: translateX(-100%);
+}
+
+/* keyframes for horizontal flow (subtle movement within bounds) */
+@keyframes flow1 {
+  0%   { transform: translate3d(0,0,0); }
+  50%  { transform: translate3d(-5%, 0, 0); }
+  100% { transform: translate3d(0,0,0); }
+}
+@keyframes flow2 {
+  0%   { transform: translate3d(0,0,0) scaleX(1); }
+  50%  { transform: translate3d(-8%, 0, 0) scaleX(1.01); }
+  100% { transform: translate3d(0,0,0) scaleX(1); }
+}
+@keyframes flow3 {
+  0%   { transform: translate3d(0,0,0) scaleX(1); }
+  50%  { transform: translate3d(6%, 0, 0) scaleX(1.5); }
+  100% { transform: translate3d(0,0,0) scaleX(1); }
+}
+
+/* lightweight vertical bobbing for organic motion */
+@keyframes bob1 { 0% { translate: 0 0 } 50% { translate: 0 -6px } 100% { translate: 0 0 } }
+@keyframes bob2 { 0% { translate: 0 0 } 50% { translate: 0 -10px } 100% { translate: 0 0 } }
+@keyframes bob3 { 0% { translate: 0 0 } 50% { translate: 0 -18px } 100% { translate: 0 0 } }
+
+/* slide-in animations for waves */
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* Accessibility - respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .waves-buffer, .wave, .wave--1, .wave--2, .wave--3 { 
+    animation: none !important; 
+    transition: none !important; 
+  }
+}
