@@ -83,18 +83,45 @@ const HeroSection = () => {
         <div className="hero-buttons justify-center items-center mt-6">
           <Button
             size="lg"
-            className="rounded-none bg-transparent border border-purple-500 text-lg px-4 py-2 xs:px-8 xs:py-4"
+            className="btn-trace rounded-none text-lg px-4 py-2 xs:px-8 xs:py-4"
             onClick={() => smoothScrollTo("contact")}
           >
-            <p className="text-xs md:text-md text-black poppins-regular ">Start a Project</p> <ArrowRight className="text-black ml-2 w-5 h-5" />
+            <div className="btn-border">
+              <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="borderGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#8b5cf6" />
+                    <stop offset="100%" stopColor="#06b6d4" />
+                  </linearGradient>
+                </defs>
+                <path d="M2,2 L198,2 L198,48 L2,48 L2,1" />
+              </svg>
+            </div>
+            <div className="btn-content flex items-center">
+              <p className="text-xs md:text-md text-black poppins-regular">Start a Project</p> 
+              <ArrowRight className="text-black ml-2 w-5 h-5" />
+            </div>
           </Button>
           <Button
-            variant="outline"
             size="lg"
-            className="rounded-none bg-transparent border border-blue-500 text-lg px-4 py-2 xs:px-8 xs:py-4"
+            className="btn-trace rounded-none text-lg px-4 py-2 xs:px-8 xs:py-4"
             onClick={() => smoothScrollTo("portfolio")}
           >
-            <p className="text-xs  md:text-md text-black poppins-regular ">Our Work</p> <ArrowRight className="text-black ml-2 w-5 h-5" />
+            <div className="btn-border">
+              <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="borderGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#8b5cf6" />
+                    <stop offset="100%" stopColor="#06b6d4" />
+                  </linearGradient>
+                </defs>
+                <path d="M2,2 L198,2 L198,48 L2,48 L2,1" />
+              </svg>
+            </div>
+            <div className="btn-content flex items-center">
+              <p className="text-xs md:text-md text-black poppins-regular">Our Work</p> 
+              <ArrowRight className="text-black ml-2 w-5 h-5" />
+            </div>
           </Button>
         </div>
       </div>
