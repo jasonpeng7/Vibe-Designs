@@ -61,20 +61,10 @@ const Footer = () => {
         </div>
       </div>
       
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-6xl mt-[50px]">
         {/* Desktop: Contact & Legal */}
         <div className="hidden md:block">
-          <div className="flex justify-between items-center">
-            <div>
-              <a
-                href="mailto:vbewebdesign@gmail.com"
-                className="inline-flex items-center text-accent hover:underline"
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                vbewebdesign@gmail.com
-              </a>
-            </div>
-
+          <div className="flex justify-center items-center">
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span>
                 © {new Date().getFullYear()} ViBE Design. All rights reserved.
@@ -113,32 +103,11 @@ const Footer = () => {
           </div>
           
           <div className="flex flex-col justify-between items-center gap-8">
-            {/* Brand Identity */}
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <img src="/vibe.png" alt="ViBE Design" className="w-22 h-10" />
-                <span className="text-2xl font-bold">ViBE Design</span>
-              </div>
-              <p className="text-muted-foreground text-sm">
-                Establish your online presence today.
-              </p>
-            </div>
-
             {/* Contact & Legal */}
-            <div className="text-center space-y-4">
-              {/* Contact */}
-              <div>
-                <a
-                  href="mailto:vbewebdesign@gmail.com"
-                  className="inline-flex items-center text-accent hover:underline"
-                >
-                  <Mail className="w-4 h-4 mr-2" />
-                  vbewebdesign@gmail.com
-                </a>
-              </div>
+            <div className="text-center space-y-4 ">
 
               {/* Legal */}
-              <div className="flex flex-col items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex flex-col items-center justify-center gap-2 text-sm text-muted-foreground">
                 <span>
                   © {new Date().getFullYear()} ViBE Design. All rights reserved.
                 </span>
