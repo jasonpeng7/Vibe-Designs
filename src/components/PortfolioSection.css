@@ -1,0 +1,31 @@
+/* PortfolioSection.css - Slot Machine and Letter Tracing Animations */
+
+@keyframes slide-down {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.1s ease-out;
+}
+
+@keyframes trace-letter {
+  0% { 
+    background: linear-gradient(90deg, transparent 0%, white 0%, white 0%, transparent 0%);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    -webkit-text-fill-color: transparent;
+  }
+  100% { 
+    background: transparent;
+    -webkit-text-fill-color: white;
+  }
+}
+
+.animate-trace {
+  animation: trace-letter 0.1s ease-out forwards;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: white;
+}

@@ -2,26 +2,49 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ProjectCard from "./ui/ProjectCard";
 import { useEffect, useRef, useState } from "react";
+import "./PortfolioSection.css";
 
-// Add CSS for slot machine animation
-const slotMachineCSS = `
-  @keyframes slide-down {
-    0% { transform: translateY(-100%); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
-  
-  .animate-slide-down {
-    animation: slide-down 0.1s ease-out;
-  }
-`;
+// Word Tracing Component
+const WordTracingText = ({ children, className = "", delay = 0 }: { children: string; className?: string; delay?: number }) => {
+  const [visibleWords, setVisibleWords] = useState<number[]>([]);
+  const words = String(children).split(' ');
 
-// Inject CSS
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.textContent = slotMachineCSS;
-  document.head.appendChild(style);
-}
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      words.forEach((_, index) => {
+        setTimeout(() => {
+          setVisibleWords(prev => [...prev, index]);
+        }, index * 100 + delay);
+      });
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [children, delay]);
+
+  return (
+    <div className={className} style={{ 
+      wordWrap: 'break-word', 
+      overflowWrap: 'break-word',
+      hyphens: 'auto',
+      maxWidth: '100%',
+      whiteSpace: 'normal'
+    }}>
+      {words.map((word, index) => (
+        <span
+          key={index}
+          className="inline-block mr-1"
+          style={{ 
+            animationDelay: `${index * 100}ms`,
+            opacity: visibleWords.includes(index) ? 1 : 0,
+            animation: visibleWords.includes(index) ? 'trace-letter 0.1s ease-out forwards' : 'none'
+          }}
+        >
+          {word}
+        </span>
+      ))}
+    </div>
+  );
+};
 
 // Slot Machine Button Component
 const SlotMachineButton = ({ children, className, ...props }: any) => {
@@ -204,17 +227,64 @@ const PortfolioSection = () => {
         </div>
       </div>
 
-      <video 
-        ref={videoRef}
-        loop 
-        muted 
-        playsInline 
-        className="mx-auto block w-full max-w-[1500px] px-5 md:px-20 max-h-[750px]"
-        preload="metadata"
-      >
-        <source src="/aplus4home-demo.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      {/* Video and Blog Section */}
+      <div className="w-full max-w-[1500px] mx-auto px-5 md:px-20">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+          {/* Video */}
+          <div className="flex-1 lg:flex-[2]">
+            <video 
+              ref={videoRef}
+              loop 
+              muted 
+              playsInline 
+              className="w-full"
+              preload="metadata"
+            >
+              <source src="/aplus4home-demo-site.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          {/* Blog Content - Desktop: Right of video, Mobile: Below video */}
+          <div className="flex-1 lg:flex-[1] min-w-0">
+            <div className="space-y-6">
+              <div>
+                <WordTracingText 
+                  className="text-white text-2xl font-light leading-tight"
+                  delay={500}
+                >
+                  APlus4Home
+                </WordTracingText>
+                <WordTracingText 
+                  className="text-white text-2xl uppercase poppins-extralight leading-tight block mt-1"
+                  delay={800}
+                >
+                  Transformation
+                </WordTracingText>
+              </div>
+              
+              <div className="space-y-4">
+                <WordTracingText 
+                  className="text-white text-sm leading-relaxed poppins-extralight uppercase"
+                  delay={1200}
+                >
+                  A local home improvement company needed a digital presence to drive more leads. We created a tailored digital experience that matched their quality craftsmanship.
+                </WordTracingText>
+                
+              </div>
+
+              <div className="pt-4">
+                <WordTracingText 
+                  className="text-white text-xs uppercase tracking-wider font-light"
+                  delay={3000}
+                >
+                  Web Design • SEO • Lead Generation
+                </WordTracingText>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* <div className="container mx-auto max-w-7xl"> */}
         {/* <div className="flex items-start justify-between gap-6 mb-16">
