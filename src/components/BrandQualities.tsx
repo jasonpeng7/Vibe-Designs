@@ -8,17 +8,33 @@ type BrandQualitiesProps = {
 const BrandQualities: React.FC<BrandQualitiesProps> = ({ qualities, durationMs = 2000 }) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [cycleKey, setCycleKey] = React.useState(0);
+  const [isVisible, setIsVisible] = React.useState(false);
 
   React.useEffect(() => {
     if (!qualities || qualities.length === 0) return;
+    
+    // Initial delay before showing the component
+    const initialDelay = setTimeout(() => {
+      setIsVisible(true);
+    }, 2000);
+
+    // Start cycling after the initial delay
     const id = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % Math.min(3, qualities.length));
       setCycleKey((k) => k + 1); // restart animation on active bar
     }, durationMs);
-    return () => clearInterval(id);
+    
+    return () => {
+      clearTimeout(initialDelay);
+      clearInterval(id);
+    };
   }, [qualities, durationMs]);
 
   const bars = new Array(3).fill(0);
+
+  if (!isVisible) {
+    return <div className="w-full max-w-[280px] h-8"></div>; // Placeholder to maintain layout
+  }
 
   return (
     <div className="w-full max-w-[280px]">
