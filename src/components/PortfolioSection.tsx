@@ -250,13 +250,7 @@ const PortfolioSection = () => {
             <div className="space-y-6">
               <div>
                 <WordTracingText 
-                  className="text-white text-2xl font-light leading-tight"
-                  delay={500}
-                >
-                  APlus4Home
-                </WordTracingText>
-                <WordTracingText 
-                  className="text-white text-2xl uppercase poppins-extralight leading-tight block mt-1"
+                  className="text-white text-2xl uppercase poppins-light leading-tight block mt-1"
                   delay={800}
                 >
                   Transformation
@@ -265,7 +259,7 @@ const PortfolioSection = () => {
               
               <div className="space-y-4">
                 <WordTracingText 
-                  className="text-white text-sm leading-relaxed poppins-extralight uppercase"
+                  className="text-white text-sm leading-relaxed poppins-light uppercase"
                   delay={1200}
                 >
                   A local home improvement company needed a digital presence to drive more leads. We created a tailored digital experience that matched their quality craftsmanship.
@@ -275,7 +269,7 @@ const PortfolioSection = () => {
 
               <div className="pt-4">
                 <WordTracingText 
-                  className="text-white text-xs uppercase tracking-wider font-light"
+                  className="text-white text-xs uppercase tracking-wider poppins-light"
                   delay={3000}
                 >
                   Web Design • SEO • Lead Generation
