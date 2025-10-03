@@ -19,6 +19,12 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
 
+      // Only hide on portfolio section if we're on the home page
+      if (location.pathname !== "/") {
+        setHideOnPortfolio(false);
+        return;
+      }
+
       const portfolioSection = document.getElementById("portfolio");
       if (!portfolioSection) {
         setHideOnPortfolio(false);
@@ -41,11 +47,22 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll as any);
       window.removeEventListener("resize", handleScroll as any);
     };
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     // Close mobile menu on route change
     setIsMobileMenuOpen(false);
+    
+    // Set active section based on current route
+    if (location.pathname === "/pricing") {
+      setActiveSection("pricing");
+    } else if (location.pathname === "/") {
+      // Extract section from hash if present
+      const hash = location.hash.replace("#", "");
+      setActiveSection(hash || "");
+    } else {
+      setActiveSection("");
+    }
   }, [location]);
 
   const scrollToSection = (sectionId: string) => {
@@ -64,8 +81,20 @@ const Navbar = () => {
   const handleNavClick = (linkId: string) => {
     if (linkId === "pricing") {
       navigate("/pricing");
+    } else if (linkId === "contact") {
+      // If we're on pricing page, navigate to home with contact section
+      if (location.pathname === "/pricing") {
+        navigate("/#contact");
+      } else {
+        scrollToSection(linkId);
+      }
     } else {
-      scrollToSection(linkId);
+      // For other sections, navigate to home page with section
+      if (location.pathname !== "/") {
+        navigate(`/#${linkId}`);
+      } else {
+        scrollToSection(linkId);
+      }
     }
     setIsMobileMenuOpen(false);
   };
@@ -92,13 +121,17 @@ const Navbar = () => {
         <div className="hidden md:flex w-full items-center justify-between px-10">
           {/* Logo */}
           <div className="flex-1 flex justify-start">
-            <a href="/" aria-label="ViBE Creative Home">
+            <button 
+              onClick={() => navigate("/")} 
+              aria-label="ViBE Creative Home"
+              className="bg-transparent border-none p-0 cursor-pointer"
+            >
               <img
                 src="/vibe_lgo.png"
                 alt="VBE Design Logo"
                 className="h-7 w-auto"
               />
-            </a>
+            </button>
           </div>
 
           {/* Desktop Nav Island */}
@@ -125,7 +158,7 @@ const Navbar = () => {
           {/* Desktop CTA */}
           <div className="flex-1 flex justify-end">
             <Button
-              onClick={() => scrollToSection("contact")}
+              onClick={() => handleNavClick("contact")}
               className="p-2 bg-transparent rounded-none  backdrop-blur-sm bg-white/20"
             >
               <p className="text-xs text-black poppins-regular px-2">Start a Project</p>
@@ -138,13 +171,17 @@ const Navbar = () => {
           <div className="relative">
             {/* Mobile Nav Island */}
             <nav className="mx-[20px] flex items-center justify-between rounded-full border border-black/70 bg-white/20 p-2 backdrop-blur-md h-12">
-              <a href="/" aria-label="ViBE Creative Home" className="flex items-center">
+              <button 
+                onClick={() => navigate("/")} 
+                aria-label="ViBE Creative Home" 
+                className="flex items-center bg-transparent border-none p-0 cursor-pointer"
+              >
                 <img
                   src="/vibe_lgo.png"
                   alt="VBE Design Logo"
                   className="h-6 w-auto"
                 />
-              </a>
+              </button>
               <Button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 size="icon"
@@ -217,7 +254,7 @@ const Navbar = () => {
                     }}
                   >
                     <Button
-                      onClick={() => scrollToSection("contact")}
+                      onClick={() => handleNavClick("contact")}
                       className="btn-gradient w-full text-lg py-3 hover:scale-105 transition-transform duration-200"
                     >
                       Start a Project
