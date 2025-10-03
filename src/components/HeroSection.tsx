@@ -10,6 +10,12 @@ const HeroSection = () => {
   const currentRef = React.useRef<number>(0); // 0..1 smoothed
   const targetRef = React.useRef<number>(0); // 0..1 target
   const rafRef = React.useRef<number | null>(null);
+  const [waveKey, setWaveKey] = React.useState(0);
+
+  // Force waves to remount on every component mount
+  React.useEffect(() => {
+    setWaveKey(prev => prev + 1);
+  }, []);
 
   React.useEffect(() => {
     const el = fillRef.current;
@@ -71,63 +77,67 @@ const HeroSection = () => {
         <BrandQualities qualities={["Proven Results", "Measurable Growth", "Premium Branding"]} durationMs={2000} />
       </div>
 
-      <div className="mx-auto flex flex-col items-center text-center px-4 mt-44 xs:mt-52 md:mt-0">
-        <h1 className="poppins-regular text-black text-3xl xs:text-4xl md:text-5xl lg:text-6xl max-w-[500px] tagline-container">
-          <span className="tagline-slide-up">AI-Driven Design for Growth.</span>
+      <div className="mx-auto flex flex-col items-center text-center px-4 mt-44 xs:mt-52 md:mt-0 md:pt-8">
+        <h1 className="poppins-regular text-black text-3xl xs:text-4xl md:text-5xl lg:text-6xl max-w-[500px]">
+          <span className="tagline-slide-up md:mt-[50px]">AI-Driven Design for Growth.</span>
         </h1>
-        <p className="poppins-regular text-black text-sm xs:text-md md:text-lg max-w-[600px] mt-3 tagline-container">
-          <span className="description-slide-down">
-            We build smart, AI powered websites complete with chatbots, auditing, and growth-driven solutions. <span ref={fillRef} className="hero-fill" data-text="Designed">Designed</span> to attract more customers and accelerate your business.
-          </span>
-        </p>
-        <div className="hero-buttons justify-center items-center mt-6">
-          <Button
-            size="lg"
-            className="btn-trace rounded-none text-lg px-4 py-2 xs:px-8 xs:py-4"
-            onClick={() => smoothScrollTo("contact")}
-          >
-            <div className="btn-border">
-              <svg viewBox="0 0 200 50" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="borderGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#8b5cf6" />
-                    <stop offset="100%" stopColor="#06b6d4" />
-                  </linearGradient>
-                </defs>
-                <path d="M2,2 L198,2 L198,48 L2,48 L2,1" />
-              </svg>
-            </div>
-            <div className="btn-content flex items-center">
-              <p className="text-xs md:text-md text-black poppins-regular">Start a Project</p> 
-              <ArrowRight className="text-black ml-2 w-5 h-5" />
-            </div>
-          </Button>
-          <Button
-            size="lg"
-            className="btn-trace rounded-none text-lg px-4 py-2 xs:px-8 xs:py-4"
-            onClick={() => smoothScrollTo("portfolio")}
-          >
-            <div className="btn-border">
-              <svg viewBox="0 0 200 50" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="borderGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#8b5cf6" />
-                    <stop offset="100%" stopColor="#06b6d4" />
-                  </linearGradient>
-                </defs>
-                <path d="M2,2 L198,2 L198,48 L2,48 L2,1" />
-              </svg>
-            </div>
-            <div className="btn-content flex items-center">
-              <p className="text-xs md:text-md text-black poppins-regular">Our Work</p> 
-              <ArrowRight className="text-black ml-2 w-5 h-5" />
-            </div>
-          </Button>
+        <div className="tagline-container">
+          <div className="mt-3">
+            <img 
+              src="/vbe-fav.png" 
+              alt="ViBE Design Agency" 
+              className="description-slide-down w-auto h-auto max-w-full float-animation"
+            />
+          </div>
+          <div className="flex flex-col hero-buttons">
+            <Button
+              size="lg"
+              className="btn-trace rounded-none text-lg px-4 py-2 xs:px-8 xs:py-4 float-btn-1"
+              onClick={() => smoothScrollTo("contact")}
+            >
+              <div className="btn-border">
+                <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="borderGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#8b5cf6" />
+                      <stop offset="100%" stopColor="#06b6d4" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M20,2 L180,2 Q198,2 198,20 L198,30 Q198,48 180,48 L20,48 Q2,48 2,30 L2,20 Q2,2 20,2 Z" />
+                </svg>
+              </div>
+              <div className="btn-content flex items-center">
+                <p className="text-xs md:text-md text-black poppins-regular">Start a Project</p> 
+                <ArrowRight className="text-black ml-2 w-5 h-5" />
+              </div>
+            </Button>
+            <Button
+              size="lg"
+              className="btn-trace rounded-none text-lg px-4 py-2 xs:px-8 xs:py-4 float-btn-2"
+              onClick={() => smoothScrollTo("portfolio")}
+            >
+              <div className="btn-border">
+                <svg viewBox="0 0 201 50" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="borderGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#8b5cf6" />
+                      <stop offset="100%" stopColor="#06b6d4" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M20,2 L180,2 Q198,2 198,20 L198,30 Q198,48 180,48 L20,48 Q2,48 2,30 L2,20 Q2,2 20,2 Z" />
+                </svg>
+              </div>
+              <div className="btn-content flex items-center">
+                <p className="text-xs md:text-md text-black poppins-regular">Our Work</p> 
+                <ArrowRight className="text-black ml-2 w-5 h-5" />
+              </div>
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Waves container (pure CSS animation) */}
-      <div className="waves" aria-hidden="true">
+      <div key={waveKey} className="waves" aria-hidden="true">
         {/* wave 1: foreground (fastest, smallest) */}
         <svg className="wave wave--1" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice">
           <path d="M0 160 C220 100 420 220 720 200 C1020 180 1220 80 1440 120 L1440 320 L0 320 Z" />
