@@ -2,11 +2,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Palette, Code, Rocket, Search, Smartphone, Zap } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import ScrollAnimation from "./ui/ScrollAnimation";
+import React from "react";
+import "./ServicesSection.css";
 
 const ServicesSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
+  
+  // Scroll-linked fill animation refs (same as hero section)
+  const fillRef = useRef<HTMLSpanElement | null>(null);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const initialYRef = useRef<number>(0);
+  const currentRef = useRef<number>(0);
+  const targetRef = useRef<number>(0);
+  const rafRef = useRef<number | null>(null);
+  const [isInView, setIsInView] = useState(false);
 
   const services = [
     {
@@ -55,6 +66,87 @@ const ServicesSection = () => {
       features: ["Logo Design", "Ongoing Marketing", "Google Ads"],
     },
   ];
+
+  // Intersection Observer to detect when section is in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            // Reset initial position each time section comes into view
+            initialYRef.current = window.scrollY;
+          } else {
+            // Reset animation when section goes out of view
+            const el = fillRef.current;
+            if (el) el.style.setProperty("--fill", `0%`);
+            currentRef.current = 0;
+            targetRef.current = 0;
+          }
+        });
+      },
+      {
+        threshold: 0.3, // Start animation when 30% of section is visible
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  // Scroll-linked fill animation (only when in view)
+  React.useEffect(() => {
+    if (!isInView) return;
+
+    const el = fillRef.current;
+    if (el) el.style.setProperty("--fill", `0%`); // start gray
+    let threshold = Math.max(100, Math.min(window.innerHeight * 0.4, 200));
+
+    const tick = () => {
+      const el2 = fillRef.current;
+      if (!el2) return;
+      const current = currentRef.current;
+      const target = targetRef.current;
+      const next = current + (target - current) * 0.2;
+      currentRef.current = next;
+      el2.style.setProperty("--fill", `${Math.round(next * 100)}%`);
+      if (Math.abs(target - next) > 0.001) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        rafRef.current = null;
+      }
+    };
+
+    const onScroll = () => {
+      if (!isInView) return;
+      const delta = window.scrollY - initialYRef.current;
+      const progress = Math.min(Math.max(delta / threshold, 0), 1);
+      targetRef.current = progress;
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(tick);
+    };
+
+    const onResize = () => {
+      threshold = Math.max(100, Math.min(window.innerHeight * 0.4, 200));
+      onScroll();
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [isInView]);
+
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -111,15 +203,24 @@ const ServicesSection = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="services"
-      className="py-24 px-2 bg-gradient-to-b from-black to-blue-600/20 "
+      className="relative py-24 px-2 bg-white overflow-hidden"
     >
-      <div className="container mx-auto max-w-6xl">
+      {/* Floating Decorative Elements */}
+      <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
+        <div className="absolute w-32 h-20 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full shadow-lg animate-float opacity-20" style={{top: '15%', right: '8%'}}></div>
+        <div className="absolute w-28 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full shadow-lg animate-float opacity-20" style={{top: '8%', left: '5%', animationDelay: '2s'}}></div>
+        <div className="absolute w-24 h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full shadow-lg animate-float opacity-20" style={{top: '70%', right: '15%', animationDelay: '4s'}}></div>
+        <div className="absolute w-20 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full shadow-lg animate-float opacity-20" style={{top: '60%', left: '10%', animationDelay: '1s'}}></div>
+      </div>
+      
+      <div className="container mx-auto max-w-6xl relative z-10">
         {/* Header */}
         <ScrollAnimation>
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">
-              Services We <span className="hero-text">Provide For You</span>
+            <h2 className="poppins-regular text-3xl md:text-5xl font-bold mb-4 text-black">
+              Services We <span ref={fillRef} className="services-fill" data-text="Provide For You">Provide For You</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               These are the key aspects that drive more customers to your
