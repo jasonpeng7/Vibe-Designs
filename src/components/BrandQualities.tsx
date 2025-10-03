@@ -16,7 +16,7 @@ const BrandQualities: React.FC<BrandQualitiesProps> = ({ qualities, durationMs =
     // Initial delay before showing the component
     const initialDelay = setTimeout(() => {
       setIsVisible(true);
-    }, 2000);
+    }, 2700);
 
     // Start cycling after the initial delay
     const id = setInterval(() => {
