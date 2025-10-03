@@ -7,7 +7,7 @@
 @layer base {
   :root {
     /* Dark theme base */
-    --background: 240 10% 3.9%;
+    --background: white;
     --foreground: 0 0% 98%;
 
     /* Card system */
