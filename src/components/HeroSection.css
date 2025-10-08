@@ -137,6 +137,53 @@
   }
 }
 
+
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .tagline-container {
+    max-width: 50%;
+    transform-origin: bottom left;
+    transform: perspective(1200px) rotateY(-40deg) rotateX(10deg);
+    margin-top: 50px;
+    z-index: 40;
+  }
+
+  /* Keep buttons vertical and spaced on mobile */
+  .tagline-container .hero-buttons {
+    margin-top: 8px;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .tagline-container {
+    margin-top: 150px;
+  }
+}
+
+@media (max-width: 414px) {
+  .tagline-container {
+    margin-top: 150px;
+  }
+  .tagline-slide-up {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 375px) {
+  .tagline-container {
+    margin-top: 50px;
+  }
+}
+
+
 /* waves block is absolutely positioned at bottom and centered */
 .waves {
   position: absolute;
@@ -502,6 +549,10 @@
   :root { --wave-height: 50vh; }
   .hero {
     padding: 2vh 1rem;
+  }
+  /* Use cover for phone background on mobile */
+  .hero::before {
+    background: url('/phone2.png') center/cover no-repeat;
   }
   
   .hero__content {

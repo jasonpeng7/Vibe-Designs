@@ -79,7 +79,7 @@ const HeroSection = () => {
 
       <div className="mx-auto flex flex-col items-center text-center px-4 mt-44 xs:mt-52 md:mt-0 md:pt-8">
         <h1 className="poppins-regular text-black text-3xl xs:text-4xl md:text-5xl lg:text-6xl max-w-[500px]">
-          <span className="tagline-slide-up md:mt-[50px]">AI-Driven Design for Growth.</span>
+          <span className="tagline-slide-up mt-[-50px] md:mt-[50px]">AI-Driven Design for Growth.</span>
         </h1>
         <div className="tagline-container">
           <div className="mt-3">
@@ -92,7 +92,7 @@ const HeroSection = () => {
           <div className="flex flex-col hero-buttons">
             <Button
               size="lg"
-              className="btn-trace rounded-none text-lg px-4 py-2 xs:px-8 xs:py-4 float-btn-1"
+              className="btn-trace rounded-none text-xs md:text-lg px-4 py-2 xs:px-8 xs:py-4 float-btn-1"
               onClick={() => smoothScrollTo("contact")}
             >
               <div className="btn-border">
@@ -113,7 +113,7 @@ const HeroSection = () => {
             </Button>
             <Button
               size="lg"
-              className="btn-trace rounded-none text-lg px-4 py-2 xs:px-8 xs:py-4 float-btn-2"
+              className="btn-trace rounded-none text-xs md:text-lg px-4 py-2 xs:px-8 xs:py-4 float-btn-2"
               onClick={() => smoothScrollTo("portfolio")}
             >
               <div className="btn-border">
