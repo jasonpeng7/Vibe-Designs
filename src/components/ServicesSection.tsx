@@ -185,16 +185,8 @@ const ServicesSection = () => {
     //     autoplay: false,
     //     path: '/services-motion.json',
     //   });
-    // } else 
-    if (!isDesktop && mobileAnimContainerRef.current) {
-      mobileAnimationRef.current = lottieLib.loadAnimation({
-        container: mobileAnimContainerRef.current,
-        renderer: 'svg',
-        loop: true,
-        autoplay: false,
-        path: '/services-chatbot-mobile.json',
-      });
-    }
+    // } else
+    // On mobile we now use a GIF instead of Lottie to improve performance
 
     const onResize = () => {
       const nowDesktop = window.matchMedia('(min-width: 768px)').matches;
@@ -207,17 +199,9 @@ const ServicesSection = () => {
       //     autoplay: false,
       //     path: '/services-motion.json',
       //   });
-      // } else
-       if (!nowDesktop && !mobileAnimationRef.current && mobileAnimContainerRef.current) {
-        if (desktopAnimationRef.current) { desktopAnimationRef.current.destroy(); desktopAnimationRef.current = null; }
-        mobileAnimationRef.current = lottieLib.loadAnimation({
-          container: mobileAnimContainerRef.current,
-          renderer: 'svg',
-          loop: false,
-          autoplay: false,
-          path: '/services-chatbot-mobile.json',
-        });
-      }
+      // } else if (!nowDesktop && !mobileAnimationRef.current && mobileAnimContainerRef.current) {
+      //   // No-op: mobile uses GIF now
+      // }
     };
     window.addEventListener('resize', onResize);
 
@@ -322,7 +306,7 @@ const ServicesSection = () => {
                 <div ref={desktopAnimContainerRef} />
               </div>
               <div className="block md:hidden">
-                <div ref={mobileAnimContainerRef} />
+                <img src="/services-chatbot-mobile.gif" alt="Chatbot services animation" className="object-contain" />
               </div>
             </div>
           </div>
