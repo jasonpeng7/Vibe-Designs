@@ -2,8 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Palette, Code, Rocket, Search, Smartphone, Zap } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import ScrollAnimation from "./ui/ScrollAnimation";
-import React from "react";
 import "./ServicesSection.css";
+import React, { Suspense } from "react";
 
 const ServicesSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -18,6 +18,11 @@ const ServicesSection = () => {
   const targetRef = useRef<number>(0);
   const rafRef = useRef<number | null>(null);
   const [isInView, setIsInView] = useState(false);
+  const desktopAnimContainerRef = useRef<HTMLDivElement | null>(null);
+  const mobileAnimContainerRef = useRef<HTMLDivElement | null>(null);
+  const [lottieLib, setLottieLib] = useState<any | null>(null);
+  const desktopAnimationRef = useRef<any | null>(null);
+  const mobileAnimationRef = useRef<any | null>(null);
 
   const services = [
     {
@@ -36,7 +41,7 @@ const ServicesSection = () => {
     },
     {
       icon: Search,
-      title: "SEO",
+      title: "Rapid Development",
       description:
         "We help you rank higher on Google by directing more organic traffic to your website.",
       features: ["Search Engine Optimization", "Google Search"],
@@ -147,6 +152,99 @@ const ServicesSection = () => {
     };
   }, [isInView]);
 
+  // Lazy-load lottie-web
+  useEffect(() => {
+    let mounted = true;
+    import('lottie-web').then((mod) => {
+      if (mounted) setLottieLib(mod.default ?? mod);
+    });
+    return () => { mounted = false };
+  }, []);
+
+  // Initialize lottie only for current breakpoint
+  useEffect(() => {
+    if (!lottieLib) return;
+
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
+    // Destroy any existing animations first
+    if (desktopAnimationRef.current) {
+      desktopAnimationRef.current.destroy();
+      desktopAnimationRef.current = null;
+    }
+    if (mobileAnimationRef.current) {
+      mobileAnimationRef.current.destroy();
+      mobileAnimationRef.current = null;
+    }
+
+    // if (isDesktop && desktopAnimContainerRef.current) {
+    //   desktopAnimationRef.current = lottieLib.loadAnimation({
+    //     container: desktopAnimContainerRef.current,
+    //     renderer: 'svg',
+    //     loop: false,
+    //     autoplay: false,
+    //     path: '/services-motion.json',
+    //   });
+    // } else 
+    if (!isDesktop && mobileAnimContainerRef.current) {
+      mobileAnimationRef.current = lottieLib.loadAnimation({
+        container: mobileAnimContainerRef.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: false,
+        path: '/services-chatbot-mobile.json',
+      });
+    }
+
+    const onResize = () => {
+      const nowDesktop = window.matchMedia('(min-width: 768px)').matches;
+      // if (nowDesktop && !desktopAnimationRef.current && desktopAnimContainerRef.current) {
+      //   if (mobileAnimationRef.current) { mobileAnimationRef.current.destroy(); mobileAnimationRef.current = null; }
+      //   desktopAnimationRef.current = lottieLib.loadAnimation({
+      //     container: desktopAnimContainerRef.current,
+      //     renderer: 'svg',
+      //     loop: false,
+      //     autoplay: false,
+      //     path: '/services-motion.json',
+      //   });
+      // } else
+       if (!nowDesktop && !mobileAnimationRef.current && mobileAnimContainerRef.current) {
+        if (desktopAnimationRef.current) { desktopAnimationRef.current.destroy(); desktopAnimationRef.current = null; }
+        mobileAnimationRef.current = lottieLib.loadAnimation({
+          container: mobileAnimContainerRef.current,
+          renderer: 'svg',
+          loop: false,
+          autoplay: false,
+          path: '/services-chatbot-mobile.json',
+        });
+      }
+    };
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+      if (desktopAnimationRef.current) {
+        desktopAnimationRef.current.destroy();
+        desktopAnimationRef.current = null;
+      }
+      if (mobileAnimationRef.current) {
+        mobileAnimationRef.current.destroy();
+        mobileAnimationRef.current = null;
+      }
+    };
+  }, [lottieLib]);
+
+  // Play/stop only when in view
+  useEffect(() => {
+    const active = desktopAnimationRef.current || mobileAnimationRef.current;
+    if (!active) return;
+    if (isInView) {
+      active.play();
+    } else {
+      active.stop();
+    }
+  }, [isInView]);
+
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -205,7 +303,7 @@ const ServicesSection = () => {
     <section
       ref={sectionRef}
       id="services"
-      className="relative py-24 px-2 bg-white overflow-hidden"
+      className="relative px-2 bg-black overflow-hidden"
     >
       {/* Floating Decorative Elements */}
       <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
@@ -215,17 +313,18 @@ const ServicesSection = () => {
         <div className="absolute w-20 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full shadow-lg animate-float opacity-20" style={{top: '60%', left: '10%', animationDelay: '1s'}}></div>
       </div>
       
-      <div className="container mx-auto max-w-6xl relative z-10">
+      <div className=" relative z-10">
         {/* Header */}
         <ScrollAnimation>
           <div className="text-center mb-16">
-            <h2 className="poppins-regular text-3xl md:text-5xl font-bold mb-4 text-black">
-              Services We <span ref={fillRef} className="services-fill" data-text="Provide For You">Provide For You</span>
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              These are the key aspects that drive more customers to your
-              business.
-            </p>
+            <div className="mt-8 flex justify-center">
+              <div className="hidden md:block">
+                <div ref={desktopAnimContainerRef} />
+              </div>
+              <div className="block md:hidden">
+                <div ref={mobileAnimContainerRef} />
+              </div>
+            </div>
           </div>
         </ScrollAnimation>
 
