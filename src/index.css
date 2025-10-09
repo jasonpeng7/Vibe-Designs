@@ -90,7 +90,7 @@
   }
 
   .card-glow {
-    background: var(--gradient-card);
+    background: white;
     backdrop-filter: blur(20px);
     border: 1px solid hsl(var(--border));
     box-shadow: var(--shadow-elegant);
