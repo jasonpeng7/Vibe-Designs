@@ -148,23 +148,23 @@ const ContactSection = () => {
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+          <h2 className="poppins-semibold text-3xl md:text-5xl text-black  mb-4">
             Ready to <span className="hero-text">Transform</span> Your Business?
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            <span className="font-bold ">Free</span> consultations. Let's
+          <p className="text-sm text-black max-w-2xl mx-auto poppins-regular">
+            <span className="poppins-semibold">Free</span> consultations. Let's
             discuss your project and create something amazing together.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Contact Form */}
-          <Card className="lg:col-span-2 card-glow">
+          <Card className="lg:col-span-2 card-glow bg-white poppins-light">
             <CardHeader>
-              <CardTitle className="text-2xl">
+              <CardTitle className="text-2xl text-black">
                 Get Your Free Project Consultation
               </CardTitle>
-              <p className="text-muted-foreground">
+              <p className="text-black">
                 Tell us about your <span className="hero-text">vision</span> and
                 we&apos;ll get back to you as soon as possible.
               </p>
@@ -173,24 +173,24 @@ const ContactSection = () => {
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">
+                    <label className="text-sm font-medium mb-2 block text-black">
                       First Name *
                     </label>
                     <Input
                       name="firstName"
                       placeholder="Your first name"
-                      className="bg-secondary border-border"
+                      className="bg-transparent border-black text-black"
                       required
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">
+                    <label className="text-sm font-medium mb-2 block text-black">
                       Last Name *
                     </label>
                     <Input
                       name="lastName"
                       placeholder="Your last name"
-                      className="bg-secondary border-border"
+                      className="bg-transparent border-black text-black"
                       required
                     />
                   </div>
@@ -198,51 +198,51 @@ const ContactSection = () => {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">
+                    <label className="text-sm font-medium mb-2 block text-black">
                       Email *
                     </label>
                     <Input
                       name="email"
                       type="email"
                       placeholder="your@email.com"
-                      className="bg-secondary border-border"
+                      className="bg-transparent border-black text-black"
                       required
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">
+                    <label className="text-sm font-medium mb-2 block text-black">
                       Company
                     </label>
                     <Input
                       name="company"
                       placeholder="Your company name"
-                      className="bg-secondary border-border"
+                      className="bg-transparent border-black text-black"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium mb-2 block">
+                  <label className="text-sm font-medium mb-2 block text-black">
                     Selected Plan
                   </label>
                   <Input
                     value={selectedPlan}
                     placeholder="Choose a plan from pricing section"
-                    className="bg-secondary border-border"
+                    className="bg-transparent border-black text-black text-sm"
                     readOnly
                   />
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">
+                    <label className="text-sm font-medium mb-2 block text-black">
                       Project Type
                     </label>
                     <Select name="projectType">
-                      <SelectTrigger className="bg-secondary border-border">
+                      <SelectTrigger className="bg-transparent border-black text-black">
                         <SelectValue placeholder="What do you need?" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-white border-black text-black">
                         <SelectItem value="new-website">New Website</SelectItem>
                         <SelectItem value="redesign">
                           Website Redesign
@@ -261,13 +261,13 @@ const ContactSection = () => {
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium mb-2 block">
+                  <label className="text-sm font-medium mb-2 block text-black">
                     Additional Details *
                   </label>
-                  <Textarea
+                  <Textarea 
                     name="projectDetails"
                     placeholder="Tell us more about your project goals, timeline, or any specific requirements you weren't able to mention above..."
-                    className="bg-secondary border-border min-h-[120px]"
+                    className="bg-transparent border-black text-black min-h-[120px]"
                     required
                   />
                 </div>
@@ -288,7 +288,11 @@ const ContactSection = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-gradient w-full text-lg py-6"
+                  className="bg-transparent border-2 border-transparent bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-border text-black w-full text-lg py-6 relative overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(white, white) padding-box, linear-gradient(to right, #3b82f6, #9333ea) border-box',
+                    border: '2px solid transparent'
+                  }}
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                   <ArrowRight className="ml-2 w-5 h-5" />
