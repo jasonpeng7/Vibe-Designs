@@ -18,8 +18,10 @@ const ServicesSection = () => {
   const targetRef = useRef<number>(0);
   const rafRef = useRef<number | null>(null);
   const [isInView, setIsInView] = useState(false);
+  const [isTextVisible, setIsTextVisible] = useState(false);
   const desktopAnimContainerRef = useRef<HTMLDivElement | null>(null);
   const mobileAnimContainerRef = useRef<HTMLDivElement | null>(null);
+  const textRef = useRef<HTMLHeadingElement | null>(null);
   const [lottieLib, setLottieLib] = useState<any | null>(null);
   const desktopAnimationRef = useRef<any | null>(null);
   const mobileAnimationRef = useRef<any | null>(null);
@@ -102,6 +104,36 @@ const ServicesSection = () => {
     return () => {
       if (sectionRef.current) {
         observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  // Text animation intersection observer
+  useEffect(() => {
+    const textObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              setIsTextVisible(true);
+            }, 500); // Delay for dramatic effect
+          } else {
+            setIsTextVisible(false);
+          }
+        });
+      },
+      {
+        threshold: 0.5, // Trigger when 50% of text element is visible
+      }
+    );
+
+    if (textRef.current) {
+      textObserver.observe(textRef.current);
+    }
+
+    return () => {
+      if (textRef.current) {
+        textObserver.unobserve(textRef.current);
       }
     };
   }, []);
@@ -287,33 +319,56 @@ const ServicesSection = () => {
     <section
       ref={sectionRef}
       id="services"
-      className="relative px-2 bg-black overflow-hidden"
+      className="relative bg-black overflow-hidden mt-[-1px] w-full"
     >
       {/* Floating Decorative Elements */}
-      <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
+      {/* <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
         <div className="absolute w-32 h-20 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full shadow-lg animate-float opacity-20" style={{top: '15%', right: '8%'}}></div>
         <div className="absolute w-28 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full shadow-lg animate-float opacity-20" style={{top: '8%', left: '5%', animationDelay: '2s'}}></div>
         <div className="absolute w-24 h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full shadow-lg animate-float opacity-20" style={{top: '70%', right: '15%', animationDelay: '4s'}}></div>
         <div className="absolute w-20 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full shadow-lg animate-float opacity-20" style={{top: '60%', left: '10%', animationDelay: '1s'}}></div>
-      </div>
+      </div> */}
       
-      <div className=" relative z-10">
+      <div className="relative z-10">
         {/* Header */}
         <ScrollAnimation>
           <div className="text-center mb-16">
-            <div className="mt-8 flex justify-center">
+            <div className="flex justify-center">
               <div className="hidden md:block">
                 <div ref={desktopAnimContainerRef} />
               </div>
-              <div className="block md:hidden">
-                <img src="/services-chatbot-mobile.gif" alt="Chatbot services animation" className="object-contain" />
+              <div className="block md:hidden relative">
+                <video 
+                  loop 
+                  muted 
+                  playsInline 
+                  autoPlay
+                  className="w-full object-contain"
+                  preload="metadata"
+                >
+                  <source src="/services-chatbot-mobile.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                {/* Text overlay on top of video */}
+                <h3 
+                  ref={textRef}
+                  className={`absolute top-4 left-1/2  transform -translate-x-1/2 text-white poppins-regular text-[35px] text-center bg-black/50 py-1 transition-all duration-1000 ease-out ${
+                    isTextVisible 
+                      ? 'opacity-100 translate-y-0 scale-100' 
+                      : 'opacity-0 translate-y-4 scale-95'
+                  }`}
+                >
+                  FUEL YOUR BUSINESS WITH AI
+                </h3>
+                {/* Black overlay to hide watermark */}
+                <div className="absolute bottom-0 left-0 w-full h-16 bg-black"></div>
               </div>
             </div>
           </div>
         </ScrollAnimation>
 
         {/* Desktop Grid */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -348,7 +403,7 @@ const ServicesSection = () => {
         </div>
 
         {/* Mobile Carousel */}
-        <div className="md:hidden">
+        {/* <div className="md:hidden px-2">
           <ScrollAnimation>
             <div className="relative overflow-hidden">
               <div
@@ -402,7 +457,6 @@ const ServicesSection = () => {
             </div>
           </ScrollAnimation>
 
-          {/* Navigation Dots */}
           <ScrollAnimation delay={0.1}>
             <div className="flex justify-center mt-6 space-x-2">
               {services.map((_, index) => (
@@ -419,7 +473,6 @@ const ServicesSection = () => {
             </div>
           </ScrollAnimation>
 
-          {/* Navigation Arrows */}
           <ScrollAnimation delay={0.2}>
             <div className="flex justify-between items-center mt-4">
               <button
@@ -475,7 +528,7 @@ const ServicesSection = () => {
               </button>
             </div>
           </ScrollAnimation>
-        </div>
+        </div> */}
       </div>
     </section>
   );
