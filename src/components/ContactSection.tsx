@@ -303,14 +303,14 @@ const ContactSection = () => {
 
           {/* Contact Info */}
           <div className="space-y-6">
-            <Card className="card-glow">
+            <Card className="card-glow bg-white poppins-light">
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mr-4">
-                    <Mail className="w-6 h-6 text-white" />
+                  <div className="w-12 h-12 bg-white border border-black rounded-lg flex items-center justify-center mr-4">
+                    <Mail className="w-6 h-6 text-black" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Email Us</h3>
+                    <h3 className="font-semibold text-black">Email Us</h3>
                     <p className="text-muted-foreground text-sm">
                       We&apos;ll respond within 2 business days.
                     </p>
@@ -318,7 +318,7 @@ const ContactSection = () => {
                 </div>
                 <a
                   href="mailto:vbewebdesign@gmail.com"
-                  className="text-accent font-medium"
+                  className="text-black font-medium underline"
                 >
                   vbewebdesign@gmail.com
                 </a>
