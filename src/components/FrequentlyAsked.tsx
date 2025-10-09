@@ -42,12 +42,12 @@ const FrequentlyAsked = () => {
   };
 
   return (
-    <section className="px-10 pb-20">
+    <section className="px-10 pb-20 poppins-light text-black">
       <div className="text-center mb-12">
-        <h2 className="hero-text text-3xl md:text-5xl font-bold mb-4">
+        <h2 className="hero-text text-4xl md:text-5xl font-bold mb-4">
           Frequently Asked Questions
         </h2>
-        <p className="text-xl text-muted-foreground">
+        <p className="text-md text-black">
           Can't find the answer you're looking for? Fill out the form below and
           ask your questions!
         </p>
