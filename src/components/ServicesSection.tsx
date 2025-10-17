@@ -2,6 +2,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Palette, Code, Rocket, Search, Smartphone, Zap } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import ScrollAnimation from "./ui/ScrollAnimation";
+import MobileServicesAccordion from "./ui/MobileServicesAccordion";
+import DesktopServicesAccordion from "./ui/DesktopServicesAccordion";
+import MobileCoverParallax from "./ui/MobileCoverParallax";
+import ServicesHeaderParallax from "./ui/ServicesHeaderParallax";
+// Local images for the mobile accordion
+import accordionSell from "/accordion-sell.png";
+import accordionRapid from "/accordion-rapid-development.png";
+import accordionSEO from "/accordion-seo.png";
+import accordionMobile from "/accordion-mobile-design.png";
+import accordionBrand from "/accordion-branding.png";
+import accordionPerformance from "/accordion-performance-optimization.png";
 import "./ServicesSection.css";
 import React, { Suspense } from "react";
 
@@ -72,6 +83,46 @@ const ServicesSection = () => {
       description: "Memorable brands that stick in minds AND wallets.",
       features: ["Logo Design", "Ongoing Marketing", "Google Ads"],
     },
+  ];
+
+  // Accordion services data
+  const accordionServices = [
+    {
+      id: "sell",
+      title: "Websites That Sell",
+      description: "Optimized designs following best UI/UX practices that turn visitors into customers.",
+      img: accordionSell
+    },
+    {
+      id: "rapid",
+      title: "Rapid Development",
+      description: "Get your website live in days, not months. Built to grow with your business.",
+      img: accordionRapid
+    },
+    {
+      id: "seo",
+      title: "SEO Optimization",
+      description: "We help you rank higher on Google by directing more organic traffic to your website.",
+      img: accordionSEO
+    },
+    {
+      id: "mobile",
+      title: "Mobile Design",
+      description: "We carefully design your website to be responsive and work perfectly on all devices.",
+      img: accordionMobile
+    },
+    {
+      id: "performance",
+      title: "Performance Optimization",
+      description: "Fast websites that load almost instantly. Speed equals revenue.",
+      img: accordionPerformance
+    },
+    {
+      id: "brand",
+      title: "Marketing & Branding",
+      description: "Memorable brands that stick in minds AND wallets.",
+      img: accordionBrand
+    }
   ];
 
   // Intersection Observer to detect when section is in view
@@ -319,7 +370,7 @@ const ServicesSection = () => {
     <section
       ref={sectionRef}
       id="services"
-      className="relative bg-black overflow-hidden mt-[-1px] w-full"
+      className="relative bg-white overflow-hidden mt-[-1px] w-full"
     >
       {/* Floating Decorative Elements */}
       {/* <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
@@ -332,18 +383,71 @@ const ServicesSection = () => {
       <div className="relative z-10">
         {/* Header */}
         <ScrollAnimation>
-          <div className="text-center mb-16">
+          <div className="text-center">
             <div className="flex justify-center">
-              <div className="hidden md:block">
-                <div ref={desktopAnimContainerRef} />
-              </div>
-              <div className="block md:hidden relative">
+              <div className="hidden xl:block relative w-full">
                 <video 
                   loop 
                   muted 
                   playsInline 
                   autoPlay
-                  className="w-full object-contain"
+                  className="w-full h-auto object-cover w-full"
+                  preload="metadata"
+                >
+                  <source src="/services-chatbot-desktop.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                {/* Text overlay on top of video */}
+                <h3 
+                  ref={textRef}
+                  className={`text-[#f0f0f0] absolute top-4 left-1/2  transform -translate-x-1/2  poppins-regular text-[35px] text-center py-1 transition-all duration-1000 ease-out ${
+                    isTextVisible 
+                      ? 'opacity-100 translate-y-0 scale-100' 
+                      : 'opacity-0 translate-y-4 scale-95'
+                  }`}
+                >
+                  FUEL YOUR BUSINESS WITH AI
+                </h3>
+                {/* TeamSection-style overlay to hide watermark */}
+                <div 
+                  className="absolute bg-white bottom-0 left-0 w-full h-20 mb-[-1px]"
+                ></div>
+              </div>
+              <div className="hidden md:block xl:hidden w-full">
+                <video 
+                  loop 
+                  muted 
+                  playsInline 
+                  autoPlay
+                  className="w-full object-cover "
+                  preload="metadata"
+                >
+                  <source src="/services-chatbot-tablet.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                {/* Text overlay on top of video */}
+                <h3 
+                  ref={textRef}
+                  className={`text-[#f0f0f0] absolute top-4 left-1/2  transform -translate-x-1/2  poppins-regular text-[35px] text-center py-1 transition-all duration-1000 ease-out ${
+                    isTextVisible 
+                      ? 'opacity-100 translate-y-0 scale-100' 
+                      : 'opacity-0 translate-y-4 scale-95'
+                  }`}
+                >
+                  FUEL YOUR BUSINESS WITH AI
+                </h3>
+                {/* TeamSection-style overlay to hide watermark */}
+                <div 
+                  className="absolute bg-white bottom-0 left-0 w-full h-20 mb-[-1px]"
+                ></div>
+              </div>
+              <div className="block md:hidden relative w-full">
+                <video 
+                  loop 
+                  muted 
+                  playsInline 
+                  autoPlay
+                  className="w-full h-auto object-cover"
                   preload="metadata"
                 >
                   <source src="/services-chatbot-mobile.mp4" type="video/mp4" />
@@ -352,7 +456,7 @@ const ServicesSection = () => {
                 {/* Text overlay on top of video */}
                 <h3 
                   ref={textRef}
-                  className={`absolute top-4 left-1/2  transform -translate-x-1/2 text-white poppins-regular text-[35px] text-center bg-black/50 py-1 transition-all duration-1000 ease-out ${
+                  className={`text-[#f0f0f0] absolute top-4 left-1/2  transform -translate-x-1/2  poppins-regular text-[35px] text-center py-1 transition-all duration-1000 ease-out ${
                     isTextVisible 
                       ? 'opacity-100 translate-y-0 scale-100' 
                       : 'opacity-0 translate-y-4 scale-95'
@@ -360,15 +464,37 @@ const ServicesSection = () => {
                 >
                   FUEL YOUR BUSINESS WITH AI
                 </h3>
-                {/* Black overlay to hide watermark */}
-                <div className="absolute bottom-0 left-0 w-full h-16 bg-black"></div>
+                {/* TeamSection-style overlay to hide watermark */}
+                <div 
+                  className="absolute bg-white bottom-0 left-0 w-full h-16 mb-[-1px]"
+                ></div>
               </div>
             </div>
           </div>
         </ScrollAnimation>
 
+        {/* Mobile Parallax Cover (runs once) */}
+        <div className="block md:hidden mb-2">
+          <MobileCoverParallax />
+        </div>
+
+        {/* Services We Provide Section with Parallax - Desktop Only */}
+        <div className="hidden md:block">
+          <ServicesHeaderParallax />
+        </div>
+
+        {/* Mobile Services Accordion */}
+        <div className="mt-8">
+          <MobileServicesAccordion services={accordionServices} />
+        </div>
+
+        {/* Desktop Services Accordion */}
+        <div className="mt-12">
+          <DesktopServicesAccordion services={accordionServices} />
+        </div>
+
         {/* Desktop Grid */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
+        {/* <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -401,7 +527,7 @@ const ServicesSection = () => {
             );
           })}
         </div>
-
+ */}
         {/* Mobile Carousel */}
         {/* <div className="md:hidden px-2">
           <ScrollAnimation>
