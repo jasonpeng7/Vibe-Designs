@@ -143,7 +143,7 @@ const Navbar = () => {
                   variant="ghost"
                   onClick={() => handleNavClick(link.id)}
                   className={cn(
-                    "poppins-regular rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ease-in-out hover:bg-transparent hover:scale-110",
+                    "poppins-regular rounded-full px-4 py-1.5 text-sm transition-all duration-200 ease-in-out hover:bg-transparent hover:scale-110",
                     activeSection === link.id
                       ? "bg-primary/10 hero-text"
                       : "text-black/70"
@@ -217,15 +217,15 @@ const Navbar = () => {
                   : "opacity-0 -translate-y-4 pointer-events-none"
               )}
             >
-              <div className="mx-[20px] rounded-3xl border border-black/70 bg-white/20 p-6 shadow-lg backdrop-blur-md ">
-                <div className="flex flex-col items-center space-y-4">
+              <div className="mx-[20px] rounded-3xl border border-black/70 bg-white/20 p-6  backdrop-blur-md ">
+                <div className="flex flex-col items-center space-y-4 poppins-light">
                   {navLinks.map((link, index) => (
                     <Button
                       key={link.id}
                       variant="ghost"
                       onClick={() => handleNavClick(link.id)}
                       className={cn(
-                        "w-full justify-center gap-x-2 rounded-lg py-3 text-center text-lg font-medium",
+                        "w-full justify-center gap-x-2 rounded-lg py-3 text-center text-lg poppins-regular",
                         activeSection === link.id
                           ? "hero-text"
                           : "text-black",
@@ -250,14 +250,14 @@ const Navbar = () => {
                         : "translate-y-4 opacity-0"
                     )}
                     style={{
-                      transitionDelay: isMobileMenuOpen ? `${navLinks.length * 100 + 300}ms` : "0ms"
+                      transitionDelay: isMobileMenuOpen ? `${navLinks.length}ms` : "0ms"
                     }}
                   >
                     <Button
                       onClick={() => handleNavClick("contact")}
-                      className="btn-gradient w-full text-lg py-3 hover:scale-105 transition-transform duration-200"
+                      className="bg-transparent w-full text-lg py-3 hover:scale-105 transition-transform duration-200"
                     >
-                      Start a Project
+                      <p className="poppins-regular text-lg text-black">Start a Project</p>
                     </Button>
                   </div>
                 </div>
