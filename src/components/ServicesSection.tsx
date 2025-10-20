@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import ScrollAnimation from "./ui/ScrollAnimation";
 import MobileServicesAccordion from "./ui/MobileServicesAccordion";
 import DesktopServicesAccordion from "./ui/DesktopServicesAccordion";
+import DesktopServiceCards from "./ui/DesktopServiceCards";
 import MobileCoverParallax from "./ui/MobileCoverParallax";
 import ServicesHeaderParallax from "./ui/ServicesHeaderParallax";
 // Local images for the mobile accordion
@@ -54,7 +55,7 @@ const ServicesSection = () => {
     },
     {
       icon: Search,
-      title: "Rapid Development",
+      title: "SEO Optimization",
       description:
         "We help you rank higher on Google by directing more organic traffic to your website.",
       features: ["Search Engine Optimization", "Google Search"],
@@ -489,45 +490,13 @@ const ServicesSection = () => {
         </div>
 
         {/* Desktop Services Accordion */}
-        <div className="mt-12">
+        {/* <div className="mt-12">
           <DesktopServicesAccordion services={accordionServices} />
-        </div>
+        </div> */}
 
-        {/* Desktop Grid */}
-        {/* <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <ScrollAnimation key={service.title} delay={index * 0.1}>
-                <Card className="card-glow group hover:scale-105 transition-all duration-300 h-full">
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                      <Icon className="w-6 h-6 text-white" />
-                    </div>
-                    <CardTitle className="text-xl font-bold relative inline-block">
-                      {service.title}
-                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4">
-                      {service.description}
-                    </p>
-                    <ul className="space-y-2">
-                      {service.features.map((feature) => (
-                        <li key={feature} className="flex items-center text-sm">
-                          <div className="w-1.5 h-1.5 bg-accent rounded-full mr-3" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </ScrollAnimation>
-            );
-          })}
-        </div>
- */}
+        {/* Desktop Service Cards */}
+        <DesktopServiceCards services={services} />
+
         {/* Mobile Carousel */}
         {/* <div className="md:hidden px-2">
           <ScrollAnimation>
