@@ -14,7 +14,7 @@ export const portfolioData = [
         caption: "The front door to your brand.",
         layers: [
           {
-            src: "/peng-flooring.png",
+            src: "/peng-flooring.webp",
             mobileSrc: "/peng-floor-mobile.jpg",
             alt: "Screenshot of the Peng Flooring website landing section.",
             parallax: 1.0,
@@ -26,7 +26,7 @@ export const portfolioData = [
         caption: "A page that tells the business' story.",
         layers: [
           {
-            src: "/peng-floor-about.png",
+            src: "/peng-floor-about.webp",
             mobileSrc: "/peng-floor-about-mobile.jpg",
             alt: "Screenshot of the Peng Flooring about section.",
             parallax: 1.0,
@@ -38,7 +38,7 @@ export const portfolioData = [
         caption: "Clear presentation of services offered.",
         layers: [
           {
-            src: "/peng-floor-service.png",
+            src: "/peng-floor-service.webp",
             mobileSrc: "/peng-floor-service-mobile.jpg",
             alt: "Screenshot of the services section of the Peng Flooring website.",
             parallax: 1.0,
@@ -50,7 +50,7 @@ export const portfolioData = [
         caption: "Localization of website to target different languages.",
         layers: [
           {
-            src: "/peng-floor-localization.png",
+            src: "/peng-floor-localization.webp",
             mobileSrc: "/peng-floor-localization-mobile.jpg",
             alt: "Screenshot of the localization section of the Peng Flooring website.",
             parallax: 1.0,
@@ -62,7 +62,7 @@ export const portfolioData = [
         caption: "Direct contact form to generate sales.",
         layers: [
           {
-            src: "/peng-floor-contact.png",
+            src: "/peng-floor-contact.webp",
             mobileSrc: "/peng-floor-booking-mobile.jpg",
             alt: "Screenshot of the contact form on the Peng Flooring website.",
             parallax: 1.0,
@@ -94,7 +94,7 @@ export const portfolioData = [
         caption: "Professional and informative landing page.",
         layers: [
           {
-            src: "/atharva-portfolio.png",
+            src: "/atharva-portfolio.webp",
             mobileSrc: "/atharva-mobile.jpg",
             alt: "Screenshot of Atharva's portfolio hero section.",
             parallax: 1.0,
@@ -106,7 +106,7 @@ export const portfolioData = [
         caption: "Professional and informative landing page.",
         layers: [
           {
-            src: "/atharva-projects.png",
+            src: "/atharva-projects.webp",
             mobileSrc: "/atharva-projects-mobile.jpg",
             alt: "Screenshot of Atharva's projects section.",
             parallax: 1.0,
@@ -118,7 +118,7 @@ export const portfolioData = [
         caption: "Detailed project cards with clear descriptions.",
         layers: [
           {
-            src: "/atharva-project.png",
+            src: "/atharva-project.webp",
             mobileSrc: "/atharva-specific-project-mobile.jpg",
             alt: "Screenshot of the specific project.",
             parallax: 1.0,
