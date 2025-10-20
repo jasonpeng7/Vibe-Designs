@@ -127,7 +127,7 @@ const Navbar = () => {
               className="bg-transparent border-none p-0 cursor-pointer"
             >
               <img
-                src="/vibe_lgo.png"
+                src="/vibe_lgo.webp"
                 alt="VBE Design Logo"
                 className="h-7 w-auto"
               />
@@ -177,7 +177,7 @@ const Navbar = () => {
                 className="flex items-center bg-transparent border-none p-0 cursor-pointer"
               >
                 <img
-                  src="/vibe_lgo.png"
+                  src="/vibe_lgo.webp"
                   alt="VBE Design Logo"
                   className="h-6 w-auto"
                 />

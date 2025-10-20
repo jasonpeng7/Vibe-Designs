@@ -7,12 +7,12 @@ import DesktopServicesAccordion from "./ui/DesktopServicesAccordion";
 import MobileCoverParallax from "./ui/MobileCoverParallax";
 import ServicesHeaderParallax from "./ui/ServicesHeaderParallax";
 // Local images for the mobile accordion
-import accordionSell from "/accordion-sell.png";
-import accordionRapid from "/accordion-rapid-development.png";
-import accordionSEO from "/accordion-seo.png";
-import accordionMobile from "/accordion-mobile-design.png";
-import accordionBrand from "/accordion-branding.png";
-import accordionPerformance from "/accordion-performance-optimization.png";
+import accordionSell from "/accordion-sell.webp";
+import accordionRapid from "/accordion-rapid-development.webp";
+import accordionSEO from "/accordion-seo.webp";
+import accordionMobile from "/accordion-mobile-design.webp";
+import accordionBrand from "/accordion-branding.webp";
+import accordionPerformance from "/accordion-performance-optimization.webp";
 import "./ServicesSection.css";
 import React, { Suspense } from "react";
 

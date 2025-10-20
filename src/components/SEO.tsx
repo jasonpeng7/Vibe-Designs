@@ -17,7 +17,7 @@ const SEO = ({
   keywords = "creative web agency, digital marketing, website marketing, vibe design, web design, vibe creative agency, website builder, web development, small business websites, seo",
   ogTitle,
   ogDescription,
-  ogImage = "/vibe.png",
+  ogImage = "/vibe.webp",
   ogUrl = "https://www.vbedesign.com",
   children,
 }: SEOProps) => {

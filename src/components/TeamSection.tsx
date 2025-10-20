@@ -9,13 +9,13 @@ const teamMembers = [
     name: "Jason Peng",
     role: "Founder & Lead Engineer",
     education: "CompSci @ UC Davis",
-    image: "/jason_crop.png",
+    image: "/jason_crop.webp",
   },
   {
     name: "Amanda Antonious",
     role: "Consultant & Lead Designer",
     education: "CogSci + DataSci @ UC Berkeley",
-    image: "/amanda_crop.png",
+    image: "/amanda_crop.webp",
   },
 ];
 

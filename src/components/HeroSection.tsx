@@ -84,7 +84,7 @@ const HeroSection = () => {
         <div className="tagline-container">
           <div className="mt-3">
             <img 
-              src="/vbe-fav.png" 
+              src="/vbe-fav.webp" 
               alt="ViBE Design Agency" 
               className="description-slide-down w-auto h-auto max-w-full float-animation"
             />

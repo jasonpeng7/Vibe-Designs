@@ -126,7 +126,7 @@ const projects = [
     slug: "peng-flooring",
     client_logo: "/path/to/peng-logo.svg", // Placeholder
     impact: "Elevated a local business with a 200% increase in online leads.",
-    hero_image: "/peng-flooring.png",
+    hero_image: "/peng-flooring.webp",
     services: ["Web Design", "SEO", "Lead Generation"],
     year: "2023",
   },
@@ -136,7 +136,7 @@ const projects = [
     client_logo: "/path/to/atharva-logo.svg", // Placeholder
     impact:
       "Designed a high-performance personal site for a software engineer.",
-    hero_image: "/atharva-portfolio.png",
+    hero_image: "/atharva-portfolio.webp",
     services: ["Web Development", "Performance"],
     year: "2024",
   },

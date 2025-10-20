@@ -51,7 +51,7 @@
   right: 0;
   bottom: 0;
   max-height: 900px;
-  background: url('/phone2.png') center/contain no-repeat;
+  background: url('/phone2.webp') center/contain no-repeat;
   transform: perspective(1000px) rotateY(-15deg) translateY(20%);
   z-index: 0;
   animation: phone-slide-in 1.2s ease-out forwards;
@@ -552,7 +552,7 @@
   }
   /* Use cover for phone background on mobile */
   .hero::before {
-    background: url('/phone2.png') center/cover no-repeat;
+    background: url('/phone2.webp') center/cover no-repeat;
   }
   
   .hero__content {
