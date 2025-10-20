@@ -5,6 +5,7 @@ import ScrollAnimation from "./ui/ScrollAnimation";
 import MobileServicesAccordion from "./ui/MobileServicesAccordion";
 import DesktopServicesAccordion from "./ui/DesktopServicesAccordion";
 import DesktopServiceCards from "./ui/DesktopServiceCards";
+import MobileServiceCards from "./ui/MobileServiceCards";
 import MobileCoverParallax from "./ui/MobileCoverParallax";
 import ServicesHeaderParallax from "./ui/ServicesHeaderParallax";
 // Local images for the mobile accordion
@@ -18,9 +19,7 @@ import "./ServicesSection.css";
 import React, { Suspense } from "react";
 
 const ServicesSection = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
   
   // Scroll-linked fill animation refs (same as hero section)
   const fillRef = useRef<HTMLSpanElement | null>(null);
@@ -325,47 +324,6 @@ const ServicesSection = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Touch/swipe handlers
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe && currentSlide < services.length - 1) {
-      setCurrentSlide(currentSlide + 1);
-    }
-    if (isRightSwipe && currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
-    }
-  };
-
-  const nextSlide = () => {
-    if (currentSlide < services.length - 1) {
-      setCurrentSlide(currentSlide + 1);
-    }
-  };
-
-  const prevSlide = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
-    }
-  };
 
   return (
     <section
@@ -485,9 +443,9 @@ const ServicesSection = () => {
         </div>
 
         {/* Mobile Services Accordion */}
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <MobileServicesAccordion services={accordionServices} />
-        </div>
+        </div> */}
 
         {/* Desktop Services Accordion */}
         {/* <div className="mt-12">
@@ -497,133 +455,8 @@ const ServicesSection = () => {
         {/* Desktop Service Cards */}
         <DesktopServiceCards services={services} />
 
-        {/* Mobile Carousel */}
-        {/* <div className="md:hidden px-2">
-          <ScrollAnimation>
-            <div className="relative overflow-hidden">
-              <div
-                ref={carouselRef}
-                className="flex transition-transform duration-300 ease-in-out"
-                style={{
-                  transform: `translateX(-${currentSlide * 100}%)`,
-                }}
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
-              >
-                {services.map((service) => {
-                  const Icon = service.icon;
-                  return (
-                    <div
-                      key={service.title}
-                      className="w-full flex-shrink-0 px-2"
-                    >
-                      <Card className="card-glow group hover:scale-105 transition-all duration-300">
-                        <CardHeader>
-                          <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                            <Icon className="w-6 h-6 text-white" />
-                          </div>
-                          <CardTitle className="text-xl font-bold relative inline-block">
-                            {service.title}
-                            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-muted-foreground mb-4">
-                            {service.description}
-                          </p>
-                          <ul className="space-y-2">
-                            {service.features.map((feature) => (
-                              <li
-                                key={feature}
-                                className="flex items-center text-sm"
-                              >
-                                <div className="w-1.5 h-1.5 bg-accent rounded-full mr-3" />
-                                {feature}
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </ScrollAnimation>
-
-          <ScrollAnimation delay={0.1}>
-            <div className="flex justify-center mt-6 space-x-2">
-              {services.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === currentSlide
-                      ? "bg-accent w-8"
-                      : "bg-muted-foreground/30"
-                  }`}
-                />
-              ))}
-            </div>
-          </ScrollAnimation>
-
-          <ScrollAnimation delay={0.2}>
-            <div className="flex justify-between items-center mt-4">
-              <button
-                onClick={prevSlide}
-                disabled={currentSlide === 0}
-                className={`p-2 rounded-full transition-all duration-300 ${
-                  currentSlide === 0
-                    ? "text-muted-foreground/30 cursor-not-allowed"
-                    : "text-accent hover:bg-accent/10"
-                }`}
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-
-              <span className="text-sm text-muted-foreground">
-                {currentSlide + 1} of {services.length}
-              </span>
-
-              <button
-                onClick={nextSlide}
-                disabled={currentSlide === services.length - 1}
-                className={`p-2 rounded-full transition-all duration-300 ${
-                  currentSlide === services.length - 1
-                    ? "text-muted-foreground/30 cursor-not-allowed"
-                    : "text-accent hover:bg-accent/10"
-                }`}
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </div>
-          </ScrollAnimation>
-        </div> */}
+        {/* Mobile Service Cards Carousel */}
+        <MobileServiceCards services={services} />
       </div>
     </section>
   );
