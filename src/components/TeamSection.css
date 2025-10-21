@@ -21,6 +21,11 @@
   transform-style: preserve-3d;
 }
 
+body {
+  @apply bg-background text-foreground;
+  background-color: black;
+}
+
 .sticker-wrapper {
   position: relative;
   width: 100%;
