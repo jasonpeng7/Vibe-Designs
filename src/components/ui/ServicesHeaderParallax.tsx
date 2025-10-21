@@ -61,23 +61,25 @@ export default function ServicesHeaderParallax({ className = "" }: Props) {
   }, [active, hasRun]);
 
   return (
-    <div ref={coverRef} className={`relative py-16 overflow-hidden ${className}`}>
+    <div ref={coverRef} className={`relative py-16 overflow-hidden ${className} bg-white`}>
       <div className="relative">
-        <div className="relative px-4 py-1">
+        <div className="relative px-4 py-1 poppins-regular">
           <div
             ref={textRef}
-            className="text-center"
+            className="text-left"
             style={{
               transform: hasRun ? "translateX(0)" : "translateX(-100%)",
               transition: active ? "transform 3500ms cubic-bezier(0.22,1,0.36,1)" : "none",
             }}
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">
+            <div className="mx-20">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-black mb-6">
               Services We Provide
             </h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+            <p className="text-lg md:text-xl text-gray-500 max-w-3xl">
               Comprehensive digital solutions designed to fuel your business growth and maximize your online potential.
             </p>
+              </div>
           </div>
         </div>
       </div>
