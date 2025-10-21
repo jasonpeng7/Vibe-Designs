@@ -1,5 +1,6 @@
 import HeroSection from "@/components/HeroSection";
 import PortfolioSection from "@/components/PortfolioSection";
+import SectionSeparator from "@/components/SectionSeparator";
 import ServicesSection from "@/components/ServicesSection";
 import TeamSection from "@/components/TeamSection";
 import ContactSection from "@/components/ContactSection";
@@ -37,6 +38,9 @@ const Index = () => {
         <MaxWidthWrapper>
           <HeroSection />
           <PortfolioSection />
+        </MaxWidthWrapper>
+        <SectionSeparator />
+        <MaxWidthWrapper>
           <ServicesSection />
           <TeamSection />
           <ContactSection />
