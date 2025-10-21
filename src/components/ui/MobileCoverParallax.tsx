@@ -58,7 +58,7 @@ export default function MobileCoverParallax() {
   }, [active, hasRun]);
 
   return (
-    <div ref={coverRef} className="lg:hidden w-full">
+    <div ref={coverRef} className="lg:hidden w-full bg-white py-10">
       <div className="relative">
         <div className="relative px-4 py-1">
           <div
@@ -69,7 +69,11 @@ export default function MobileCoverParallax() {
               transition: active ? "transform 900ms cubic-bezier(0.22,1,0.36,1)" : "none",
             }}
           >
-            <h1 className="text-5xl hero-text m-0">We Provide ...</h1>
+            <h1 className="text-4xl text-black mb-2 text-left">Services We Provide</h1>
+            <p className="text-md md:text-lg text-gray-500  text-left">
+              Comprehensive digital solutions designed to fuel your business growth and maximize your online potential.
+            </p>
+
           </div>
         </div>
       </div>
