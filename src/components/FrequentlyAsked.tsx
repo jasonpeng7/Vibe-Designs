@@ -42,8 +42,8 @@ const FrequentlyAsked = () => {
   };
 
   return (
-    <section className="px-10 pb-20 poppins-light text-black">
-      <div className="text-center mb-12">
+    <section className="px-10 pb-20 poppins-light text-black bg-white text-left">
+      <div className="mb-12">
         <h2 className="hero-text text-4xl md:text-5xl font-bold mb-4">
           Frequently Asked Questions
         </h2>
@@ -52,7 +52,7 @@ const FrequentlyAsked = () => {
           ask your questions!
         </p>
       </div>
-      <div className="max-w-3xl mx-auto">
+      <div className="mx-auto">
         {faqs.map((faq, index) => (
           <div key={index} className="border-b border-gray-200 py-4">
             <button
