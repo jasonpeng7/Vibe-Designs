@@ -57,7 +57,7 @@ const ExperienceRibbon = () => {
   return (
     <ScrollAnimation delay={0.5}>
       <div ref={ref} className="mt-20 border-b border-white/10 pt-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div className="grid grid-cols-3 gap-8 text-leftr">
           <div className="text-white">
             <p className="text-4xl font-bold">
               <span>{yearsCount}</span>+
@@ -81,12 +81,12 @@ const ExperienceRibbon = () => {
             <p className="text-sm text-muted-foreground mt-2">Happy Clients</p>
           </div>
         </div>
-        {/* <div className="mt-16">
+        <div className="mt-16">
           <p className="text-center text-sm text-muted-foreground mb-6">
             Trusted by industry leaders
           </p>
-          <div className="flex justify-center items-center gap-8 opacity-60">
-            {["Peng Flooring", "Antonious Cosmetics", ""].map(
+          <div className="flex justify-center items-center gap-8 opacity-60 mb-10">
+            {["Peng Flooring", "A+ Home Improvement", "Dalshi Group"].map(
               (logo) => (
                 <div key={logo} className="px-4 py-2 bg-white/5 rounded-lg">
                   <span className="font-semibold text-xs text-white/70">
@@ -96,7 +96,7 @@ const ExperienceRibbon = () => {
               )
             )}
           </div>
-        </div> */}
+        </div>
       </div>
     </ScrollAnimation>
   );
@@ -159,7 +159,7 @@ const TeamCard = ({
 const TeamSection = () => {
   return (
     <section id="team" className="team-section-container py-24">
-      <div className="container mx-auto max-w-6xl text-center">
+      <div className="container mx-auto max-w-6xl text-left sm:text-center">
         {/* Header */}
         <ScrollAnimation>
           <h2 className="text-3xl md:text-5xl font-bold mb-4 relative inline-block text-white">
