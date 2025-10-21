@@ -143,15 +143,15 @@ const ContactSection = () => {
   return (
     <section
       id="contact"
-      className="py-24 bg-gradient-to-b from-background to-secondary/20"
+      className="py-24 bg-white"
     >
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="poppins-semibold text-3xl md:text-5xl text-black  mb-4">
+        <div className="mb-16 text-left">
+          <h2 className="poppins-semibold text-3xl md:text-5xl text-black   mb-4">
             Ready to <span className="hero-text">Transform</span> Your Business?
           </h2>
-          <p className="text-sm text-black max-w-2xl mx-auto poppins-regular">
+          <p className="text-sm text-black max-w-2xl  poppins-regular">
             <span className="poppins-semibold">Free</span> consultations. Let's
             discuss your project and create something amazing together.
           </p>
