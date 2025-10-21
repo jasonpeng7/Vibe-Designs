@@ -329,7 +329,7 @@ const ServicesSection = () => {
     <section
       ref={sectionRef}
       id="services"
-      className="relative bg-white overflow-hidden mt-[-1px] w-full"
+      className="services-section relative bg-black overflow-hidden mt-[-1px] w-full"
     >
       {/* Floating Decorative Elements */}
       {/* <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
@@ -345,95 +345,203 @@ const ServicesSection = () => {
           <div className="text-center">
             <div className="flex justify-center">
               <div className="hidden xl:block relative w-full">
-                <video 
-                  loop 
-                  muted 
-                  playsInline 
-                  autoPlay
-                  className="w-full h-auto object-cover w-full"
-                  preload="metadata"
-                >
-                  <source src="/services-chatbot-desktop.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                {/* Text overlay on top of video */}
-                <h3 
-                  ref={textRef}
-                  className={`text-[#f0f0f0] absolute top-4 left-1/2  transform -translate-x-1/2  poppins-regular text-[35px] text-center py-1 transition-all duration-1000 ease-out ${
-                    isTextVisible 
-                      ? 'opacity-100 translate-y-0 scale-100' 
-                      : 'opacity-0 translate-y-4 scale-95'
-                  }`}
-                >
-                  FUEL YOUR BUSINESS WITH AI
-                </h3>
-                {/* TeamSection-style overlay to hide watermark */}
-                <div 
-                  className="absolute bg-white bottom-0 left-0 w-full h-20 mb-[-1px]"
-                ></div>
+                <div className="w-full max-w-[1500px] mx-auto px-5 md:px-20">
+                <div className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-15 mb-10">
+                  <span className="text-grey-400 poppins-extralight text-sm leading-tight tracking-wider uppercase" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                    ELEVATE
+                  </span>
+                  <span className="text-white poppins-regular text-sm leading-tight tracking-wider uppercase" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                    AI SOLUTIONS
+                  </span>
+                  <span className="text-grey-400 poppins-extralight text-sm leading-tight tracking-wider uppercase" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                    CHATBOT INTEGRATION
+                  </span>
+                </div>
+                  
+                  <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                  {/* Video */}
+                  <div className="flex-1 lg:flex-[2]">
+                    <video 
+                      loop 
+                      muted 
+                      playsInline 
+                      autoPlay
+                      className="w-full"
+                      preload="metadata"
+                    >
+                      <source src="/services-chatbot-desktop.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                    {/* TeamSection-style overlay to hide watermark */}
+                    <div 
+                      className="absolute bg-black bottom-0 left-0 w-full h-10 mb-[-1px]"
+                    ></div>
+                  </div>
+
+                  {/* Blog Content - Desktop: Right of video, Mobile: Below video */}
+                  <div className="flex-1 lg:flex-[1] min-w-0">
+                    <div className="space-y-6 text-left">
+                      <div>
+                        <h3 className="text-white text-2xl uppercase poppins-light leading-tight block mt-1">
+                          AI SOLUTIONS
+                        </h3>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <p className="text-white text-sm leading-relaxed poppins-light uppercase ">
+                        An AI-powered chatbot that answers questions instantly. 
+                        We build smart and automated chatbots that enhance customer support, 
+                        capture leads, and personalize your website experience.
+                        </p>
+                      </div>
+
+                      <div className="pt-4">
+                        <p className="text-white text-xs uppercase tracking-wider poppins-light">
+                          Chatbot • AI • Customer Service
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
               </div>
-              <div className="hidden md:block xl:hidden w-full">
-                <video 
-                  loop 
-                  muted 
-                  playsInline 
-                  autoPlay
-                  className="w-full object-cover "
-                  preload="metadata"
-                >
-                  <source src="/services-chatbot-tablet.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                {/* Text overlay on top of video */}
-                <h3 
-                  ref={textRef}
-                  className={`text-[#f0f0f0] absolute top-4 left-1/2  transform -translate-x-1/2  poppins-regular text-[35px] text-center py-1 transition-all duration-1000 ease-out ${
-                    isTextVisible 
-                      ? 'opacity-100 translate-y-0 scale-100' 
-                      : 'opacity-0 translate-y-4 scale-95'
-                  }`}
-                >
-                  FUEL YOUR BUSINESS WITH AI
-                </h3>
-                {/* TeamSection-style overlay to hide watermark */}
-                <div 
-                  className="absolute bg-white bottom-0 left-0 w-full h-20 mb-[-1px]"
-                ></div>
+
+              <div className="hidden sm:block xl:hidden w-full">
+                <div className="w-full max-w-[1500px] mx-auto px-5 md:px-20">
+                  <div className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-15 mb-10">
+                    <span className="text-grey-400 poppins-extralight text-sm leading-tight tracking-wider uppercase" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                      ELEVATE
+                    </span>
+                    <span className="text-white poppins-regular text-sm leading-tight tracking-wider uppercase" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                      AI SOLUTIONS
+                    </span>
+                    <span className="text-grey-400 poppins-extralight text-sm leading-tight tracking-wider uppercase" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                      CHATBOT INTEGRATION
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                    {/* Video */}
+                    <div className="flex-1 lg:flex-[2] relative">
+                      <video 
+                        loop 
+                        muted 
+                        playsInline 
+                        autoPlay
+                        className="w-full"
+                        preload="metadata"
+                      >
+                        <source src="/services-chatbot-tablet.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                      <div 
+                        className="absolute bg-black bottom-0 left-0 w-full h-12 mb-[-1px]"
+                      ></div>
+
+                    </div>
+
+                    <div className="flex-1 lg:flex-[1] min-w-0 mb-10">
+                      <div className="space-y-6 text-left">
+                        <div>
+                          <h3 className="text-white text-2xl uppercase poppins-light leading-tight block mt-1">
+                            AI SOLUTIONS
+                          </h3>
+                        </div>
+                        
+                        <div className="space-y-4">
+                          <p className="text-white text-sm leading-relaxed poppins-light uppercase ">
+                            An AI-powered chatbot that answers questions instantly. 
+                            We build smart and automated chatbots that enhance customer support, 
+                            capture leads, and personalize your website experience.
+                          </p>
+                        </div>
+
+                        <div className="pt-4">
+                          <p className="text-white text-xs uppercase tracking-wider poppins-light">
+                            Chatbot • AI • Customer Service
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="block md:hidden relative w-full">
-                <video 
-                  loop 
-                  muted 
-                  playsInline 
-                  autoPlay
-                  className="w-full h-auto object-cover"
-                  preload="metadata"
-                >
-                  <source src="/services-chatbot-mobile.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                {/* Text overlay on top of video */}
-                <h3 
-                  ref={textRef}
-                  className={`text-[#f0f0f0] absolute top-4 left-1/2  transform -translate-x-1/2  poppins-regular text-[35px] text-center py-1 transition-all duration-1000 ease-out ${
-                    isTextVisible 
-                      ? 'opacity-100 translate-y-0 scale-100' 
-                      : 'opacity-0 translate-y-4 scale-95'
-                  }`}
-                >
-                  FUEL YOUR BUSINESS WITH AI
-                </h3>
-                {/* TeamSection-style overlay to hide watermark */}
-                <div 
-                  className="absolute bg-white bottom-0 left-0 w-full h-16 mb-[-1px]"
-                ></div>
+              
+              <div className="block sm:hidden relative w-full">
+                <div className="w-full">
+                <div className="flex md:hidden items-start justify-between w-full px-5">
+                    {/* Left side - HOME IMPROVEMENT */}
+                    <span className="text-white poppins-regular text-sm leading-tight tracking-wider uppercase" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                      AI SOLUTIONS
+                    </span>
+                    
+                    {/* Right side - VISION, APLUS4HOME, VIEW CASE STUDY stacked vertically */}
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="text-white poppins-extralight text-sm leading-tight tracking-wider uppercase" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                        ELEVATE
+                      </span>
+                      <span className="text-white poppins-extralight text-sm leading-tight tracking-wider uppercase" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                        CHATBOT INTEGRATION
+                      </span>
+                    </div>
+                  </div>
+
+                  
+                  <div className="flex flex-col gap-8 -mx-[20px]">
+                    {/* Video */}
+                    <div className="flex-1 relative">
+                      <video 
+                        loop 
+                        muted 
+                        playsInline 
+                        autoPlay
+                        className="w-full"
+                        preload="metadata"
+                      >
+                        <source src="/services-chatbot-mobile.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+
+
+                      </video>  
+                      <div 
+                        className="absolute bg-black bottom-0 left-0 w-full h-20 mb-[-1px]"
+                      ></div>
+                    </div>
+
+                    {/* Blog Content - Mobile: Below video */}
+                    <div className="flex-1 min-w-0">
+                      <div className="space-y-6 text-left px-10">
+                        <div>
+                          <h3 className="text-white text-2xl uppercase poppins-light leading-tight block mt-1">
+                            AI SOLUTIONS
+                          </h3>
+                        </div>
+                        
+                        <div className="space-y-4">
+                          <p className="text-white text-sm leading-relaxed poppins-light uppercase ">
+                            An AI-powered chatbot that answers questions instantly. 
+                            We build smart and automated chatbots that enhance customer support, 
+                            capture leads, and personalize your website experience.
+                          </p>
+                        </div>
+
+                        <div className="pt-4">
+                          <p className="text-white text-xs uppercase tracking-wider poppins-light">
+                            Chatbot • AI • Customer Service
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
           </div>
         </ScrollAnimation>
 
         {/* Mobile Parallax Cover (runs once) */}
-        <div className="block md:hidden mb-2">
+        <div className="block md:hidden mt-10 sm:mt-0">
           <MobileCoverParallax />
         </div>
 
@@ -441,16 +549,6 @@ const ServicesSection = () => {
         <div className="hidden md:block">
           <ServicesHeaderParallax />
         </div>
-
-        {/* Mobile Services Accordion */}
-        {/* <div className="mt-8">
-          <MobileServicesAccordion services={accordionServices} />
-        </div> */}
-
-        {/* Desktop Services Accordion */}
-        {/* <div className="mt-12">
-          <DesktopServicesAccordion services={accordionServices} />
-        </div> */}
 
         {/* Desktop Service Cards */}
         <DesktopServiceCards services={services} />
