@@ -42,7 +42,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="py-12 px-2">
+    <footer className="py-12 px-2 bg-white">
       {/* Desktop: Full-width VIBE DESIGN Layout - bypasses container constraints */}
       <div className="hidden md:block w-full" ref={footerRef}>
         <div className="text-center mb-8 flex items-center justify-center w-full min-h-[200px]">
