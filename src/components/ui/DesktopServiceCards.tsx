@@ -37,14 +37,14 @@ export default function DesktopServiceCards({ services, className = "" }: Props)
   };
 
   return (
-    <div className={`hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-2 mx-4 mb-20 ${className}`}>
+    <div className={`hidden sm:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-24 px-6 pb-20 ${className} bg-white`}>
       {services.map((service, index) => {
         const Icon = service.icon;
         
         return (
           <ScrollAnimation key={service.title} delay={index * 0.1}>
             <Card 
-              className="card-glow group hover:scale-105 transition-all duration-300 h-full relative overflow-hidden p-0"
+              className="card-glow group scale-105 transition-all duration-300 h-full relative overflow-hidden p-0"
               style={{
                 backgroundImage: `url(${getBackgroundImage(service.title)})`,
                 backgroundSize: 'cover',
@@ -83,7 +83,7 @@ export default function DesktopServiceCards({ services, className = "" }: Props)
                 </CardTitle>
                 
                 <p 
-                  className="text-white mb-4 leading-relaxed text-left text-sm"
+                  className="text-white mb-4 leading-relaxed text-left text-sm min-h-[60px]"
                   style={{
                     textShadow: '0 2px 6px rgba(0,0,0,0.6)',
                     maxWidth: '40ch'
@@ -92,16 +92,16 @@ export default function DesktopServiceCards({ services, className = "" }: Props)
                   {service.description}
                 </p>
                 
-                <ul className="space-y-2 max-w-xs">
+                <ul className="space-y-2 max-w-xs min-h-[70px] ">
                   {service.features.map((feature) => (
                     <li 
                       key={feature} 
-                      className="flex items-center text-sm text-white text-left"
+                      className="flex items-center text-sm text-white text-left  "
                       style={{
                         textShadow: '0 2px 6px rgba(0,0,0,0.6)'
                       }}
                     >
-                      <div className="w-1.5 h-1.5 bg-accent rounded-full mr-3 flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full mr-3 flex-shrink-0 min-h-[15px]" />
                       {feature}
                     </li>
                   ))}
