@@ -92,7 +92,6 @@
   .card-glow {
     background: white;
     backdrop-filter: blur(20px);
-    border: 1px solid hsl(var(--border));
     box-shadow: var(--shadow-elegant);
     transition: var(--transition-smooth);
   }
@@ -149,13 +148,28 @@
     }
   }
 
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-wave {
+    animation: wave 2s ease-in-out infinite;
+  }
+
+  @keyframes wave {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
   * {
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
-  }
+
 }
 
 /* IBM Plex Sans Font Class */
