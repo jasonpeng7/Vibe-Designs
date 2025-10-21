@@ -81,7 +81,7 @@ export default function MobileServiceCards({ services, className = "" }: Props) 
   };
 
   return (
-    <div className={`md:hidden px-2 ${className}`}>
+    <div className={`sm:hidden px-2 ${className} bg-white pb-10`}>
       <ScrollAnimation>
         <div className="relative overflow-visible">
           <div
@@ -198,11 +198,11 @@ export default function MobileServiceCards({ services, className = "" }: Props) 
             className={`p-2 rounded-full transition-all duration-300 ${
               currentSlide === 0
                 ? "text-muted-foreground/30 cursor-not-allowed"
-                : "text-accent hover:bg-accent/10"
+                : "text-black"
             }`}
           >
             <svg
-              className="w-6 h-6"
+              className="w-10 h-10"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -216,7 +216,7 @@ export default function MobileServiceCards({ services, className = "" }: Props) 
             </svg>
           </button>
 
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-black">
             {currentSlide + 1} of {services.length}
           </span>
 
@@ -226,11 +226,11 @@ export default function MobileServiceCards({ services, className = "" }: Props) 
             className={`p-2 rounded-full transition-all duration-300 ${
               currentSlide === services.length - 1
                 ? "text-muted-foreground/30 cursor-not-allowed"
-                : "text-accent hover:bg-accent/10"
+                : "text-black "
             }`}
           >
             <svg
-              className="w-6 h-6"
+              className="w-10 h-10"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
