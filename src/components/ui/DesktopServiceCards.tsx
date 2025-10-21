@@ -37,7 +37,7 @@ export default function DesktopServiceCards({ services, className = "" }: Props)
   };
 
   return (
-    <div className={`hidden sm:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-24 px-6 pb-20 ${className} bg-white`}>
+    <div className={`hidden sm:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-20 px-6 pb-20 ${className} bg-white`}>
       {services.map((service, index) => {
         const Icon = service.icon;
         

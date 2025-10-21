@@ -72,7 +72,7 @@ export default function ServicesHeaderParallax({ className = "" }: Props) {
               transition: active ? "transform 3500ms cubic-bezier(0.22,1,0.36,1)" : "none",
             }}
           >
-            <div className="mx-20">
+            <div className="mx-14">
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-black mb-6">
               Services We Provide
             </h2>
