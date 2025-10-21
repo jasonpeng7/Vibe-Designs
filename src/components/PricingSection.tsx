@@ -207,7 +207,7 @@ const PricingSection = () => {
       }}
       aria-labelledby="pricing-heading"
     >
-      <div className="max-w-7xl mx-auto relative z-10 px-2 lg:px-10 w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto relative z-10 px-2 lg:px-10 w-full overflow-hidden bg-white">
         {/* Hero Section */}
         <ScrollAnimation duration={500}>
           <header className="text-center mb-16 poppins-regular">
